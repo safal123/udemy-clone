@@ -1,11 +1,14 @@
 import {Logo} from "@/app/(dashbaord)/_components/Logo";
 import {SidebarRoutes} from "@/app/(dashbaord)/_components/SidebarRoutes";
+import Link from "next/link";
 
 const Sidebar = () => {
     return (
         <div className={"h-full border-r flex flex-col overflow-y-auto bg-white shadow-sm w-full"}>
             <div className="p-6">
-                <Logo/>
+                <Link href={"/"}>
+                    <Logo />
+                </Link>
             </div>
             <div className={"flex flex-col w-full"}>
                 <SidebarRoutes />
