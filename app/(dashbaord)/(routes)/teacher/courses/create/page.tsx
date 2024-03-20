@@ -30,17 +30,18 @@ const CreateCoursePage = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const resposne = await axios.post("/api/courses", values)
-            console.log(resposne.data)
-            router.push(`/teacher/courses/${resposne.data.id}`)
+            const response = await axios.post("/api/courses", values)
+            await router.refresh()
+            toast.success("Course created")
+            router.push(`/teacher/courses/${response.data.id}`)
         } catch (error) {
             toast.error("Something went wrong")
         }
     }
 
     return (
-        <div className={"max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6"}>
-            <div>
+        <div className={"max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 shadow-xl"}>
+            <div className={"bg-white"}>
                 <h1 className={"text-2xl"}>Name your course</h1>
                 <p className={"text-slate-500 text-sm"}>
                     Give your course a name that will help students identify it.

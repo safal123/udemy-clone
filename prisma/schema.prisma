@@ -9,18 +9,22 @@ datasource db {
 }
 
 model Course {
-  id          String       @id @default(uuid())
+  id          String    @id @default(uuid())
   userId      String
-  title       String?      @db.Text
-  description String?      @db.Text
-  imageUri    String?      @db.Text
+  title       String?   @db.Text
+  description String?   @db.Text
+  imageUri    String?   @db.Text
   price       Float?
-  isPublished Boolean      @default(false)
+  isPublished Boolean   @default(false)
   categoryId  String?
-  category    Category?    @relation(fields: [categoryId], references: [id])
+  category    Category? @relation(fields: [categoryId], references: [id])
+
+  purchases   Purchase[]
   attachments Attachment[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  chapters    Chapter[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([categoryId])
   @@map("courses")
@@ -47,4 +51,81 @@ model Attachment {
 
   @@index([courseId])
   @@map("attachments")
+}
+
+model Chapter {
+  id          String  @id @default(uuid())
+  title       String  @db.Text
+  description String? @db.Text
+  order       Int
+  isPublished Boolean @default(false)
+  isFree      Boolean @default(false)
+  videoUrl    String? @db.Text
+
+  muxData MuxData?
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  userProgress UserProgress[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+  @@map("chapters")
+}
+
+model MuxData {
+  id         String  @id @default(uuid())
+  assetId    String  @unique
+  playbackId String? @unique
+
+  chapterId String  @unique
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  @@index([chapterId])
+  @@map("mux_data")
+}
+
+model UserProgress {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  chapterId String
+  chapter   Chapter @relation(fields: [chapterId], references: [id])
+
+  isCompleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, chapterId])
+  @@index([chapterId])
+  @@map("user_progress")
+}
+
+model Purchase {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+  @@map("purchases")
+}
+
+model Customer {
+  id               String @id @default(uuid())
+  userId           String @unique
+  stripeCustomerId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("customers")
 }
