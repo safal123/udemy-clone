@@ -7,14 +7,14 @@ import {Grip, Pencil} from "lucide-react";
 
 import {cn} from "@/lib/utils";
 import {Badge} from "@/components/ui/badge";
+import Link from "next/link";
 
 interface ChaptersListProps {
   items: Chapter[];
   onReorder: (updateData: { id: string; position: number }[]) => void;
-  onEdit: (id: string) => void;
 }
 
-export const ChaptersList = ({ items, onReorder, onEdit }: ChaptersListProps) => {
+export const ChaptersList = ({items, onReorder}: ChaptersListProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [chapters, setChapters] = useState(items);
 
@@ -98,10 +98,9 @@ export const ChaptersList = ({ items, onReorder, onEdit }: ChaptersListProps) =>
                       >
                         {chapter.isPublished ? "Published" : "Draft"}
                       </Badge>
-                      <Pencil
-                        onClick={() => onEdit(chapter.id)}
-                        className="w-4 h-4 cursor-pointer hover:opacity-75 transition"
-                      />
+                      <Link href={`/teacher/courses/${chapter.courseId}/chapters/${chapter.id}`}>
+                        <Pencil className="w-4 h-4 cursor-pointer hover:opacity-75 transition"/>
+                      </Link>
                     </div>
                   </div>
                 )}

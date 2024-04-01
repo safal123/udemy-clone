@@ -59,7 +59,6 @@ const ChapterForm = ({initialData, courseId}: ChapterFormProps) => {
   const onReorder = async (updateData: { id: string; position: number }[]) => {
     try {
       setIsUpdating(true);
-
       await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
         list: updateData
       });
@@ -83,7 +82,7 @@ const ChapterForm = ({initialData, courseId}: ChapterFormProps) => {
         <h2 className={"flex items-center space-x-4"}>
           <span className={"text-xl"}>Course chapters</span>
           <Badge
-            className={"bg-sky-500 hover:bg-sky-400 hidden sm:block"}
+            className={"bg-theme hover:bg-theme/90 hidden sm:block"}
             variant={"default"}
           >
             {initialData.chapters.length} chapters
@@ -107,7 +106,6 @@ const ChapterForm = ({initialData, courseId}: ChapterFormProps) => {
           <div>
             <ChaptersList
               items={initialData.chapters || []}
-              onEdit={(id: string) => {}}
               onReorder={onReorder}
             />
           </div>

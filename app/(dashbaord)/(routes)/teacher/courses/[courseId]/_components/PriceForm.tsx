@@ -69,7 +69,7 @@ const PriceForm = ({initialData, courseId}: PriceFormProps) => {
         </Button>
       </div>
       {!isEditing ? <>
-          <p className={"text-sm mt-2 text-sky-500 font-semibold"}>
+          <p className={"text-sm mt-2 text-theme font-semibold"}>
             {initialData.price ? formatPrice(initialData.price) : "No price set"}
           </p>
         </>

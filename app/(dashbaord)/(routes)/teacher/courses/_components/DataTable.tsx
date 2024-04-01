@@ -16,6 +16,8 @@ import {
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input"
+import Link from "next/link";
+import {PlusCircle} from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -24,9 +26,7 @@ interface DataTableProps<TData, TValue> {
 
 export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
   const table = useReactTable({
     data,
@@ -45,15 +45,21 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between py-4">
         <Input
-          placeholder="Filter emails..."
+          placeholder="Filter courses..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="w-full md:max-w-sm"
         />
+        <Link href={`/teacher/courses/create`} className={"ml-4 xs:ml-0"}>
+          <Button className={"bg-theme hover:bg-theme/90"}>
+            <PlusCircle className="mr-2"/>
+            New Course
+          </Button>
+        </Link>
       </div>
       <div className="rounded-md border">
         <Table>

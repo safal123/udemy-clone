@@ -29,7 +29,7 @@ export const columns: ColumnDef<Course>[] = [
       const {id} = row.original
       return (
         <Link href={`/teacher/courses/${id}`}>
-          <span className={"text-blue-600 font-semibold"}>
+          <span className={"text-theme font-semibold"}>
             {title}
           </span>
         </Link>
@@ -54,12 +54,6 @@ export const columns: ColumnDef<Course>[] = [
       return (
         <span className={"ml-4"}>
           {formatPrice(price)}
-          {
-            row.original.price === null ||
-            row.original.price === 0 ?
-              <Badge variant={"default"} className={"ml-2"}>Free</Badge> :
-              null
-          }
         </span>
       )
     }
