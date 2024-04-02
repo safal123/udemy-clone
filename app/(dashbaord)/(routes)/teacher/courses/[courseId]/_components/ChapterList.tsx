@@ -1,12 +1,12 @@
 "use client";
 
-import {Chapter} from "@prisma/client";
-import {useEffect, useState} from "react";
-import {DragDropContext, Draggable, Droppable, DropResult,} from "@hello-pangea/dnd";
-import {Grip, Pencil} from "lucide-react";
+import { Chapter } from "@prisma/client";
+import React, { useEffect, useState } from "react";
+import { DragDropContext, Draggable, Droppable, DropResult, } from "@hello-pangea/dnd";
+import { Grip, Pencil } from "lucide-react";
 
-import {cn} from "@/lib/utils";
-import {Badge} from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
 interface ChaptersListProps {
@@ -14,7 +14,7 @@ interface ChaptersListProps {
   onReorder: (updateData: { id: string; position: number }[]) => void;
 }
 
-export const ChaptersList = ({items, onReorder}: ChaptersListProps) => {
+export const ChaptersList = ({ items, onReorder }: ChaptersListProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [chapters, setChapters] = useState(items);
 
@@ -71,6 +71,7 @@ export const ChaptersList = ({items, onReorder}: ChaptersListProps) => {
                     )}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
+                    style={provided.draggableProps.style as React.CSSProperties}
                   >
                     <div
                       className={cn(
@@ -99,14 +100,14 @@ export const ChaptersList = ({items, onReorder}: ChaptersListProps) => {
                         {chapter.isPublished ? "Published" : "Draft"}
                       </Badge>
                       <Link href={`/teacher/courses/${chapter.courseId}/chapters/${chapter.id}`}>
-                        <Pencil className="w-4 h-4 cursor-pointer hover:opacity-75 transition"/>
+                        <Pencil className="w-4 h-4 cursor-pointer hover:opacity-75 transition" />
                       </Link>
                     </div>
                   </div>
                 )}
               </Draggable>
             ))}
-            {provided.placeholder}
+            {provided?.placeholder}
           </div>
         )}
       </Droppable>
