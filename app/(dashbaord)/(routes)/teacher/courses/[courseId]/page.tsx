@@ -91,7 +91,7 @@ const CoursePage = async ({params}: {
             <CourseActions course={course} courseId={params.courseId} isDisabled={completedPercentage < 100}/>
           </div>
         </div>
-        <div className={"grid grid-cols-1 xl:grid-cols-2 gap-6 mt-16"}>
+        <div className={"grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8"}>
           <div>
             <div className={"flex flex-row items-center justify-between"}>
               <div className={"flex items-center gap-x-2"}>

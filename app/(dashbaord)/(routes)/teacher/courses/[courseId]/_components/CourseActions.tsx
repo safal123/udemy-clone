@@ -54,6 +54,7 @@ const CourseActions =
         <ConfirmModal onConfirm={handleChapterDelete}>
           <Button
             size={"sm"}
+            variant={"destructive"}
           >
             <Trash className={"h-4 w-4"}/>
           </Button>

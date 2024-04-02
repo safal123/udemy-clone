@@ -1,11 +1,11 @@
-import {auth} from "@clerk/nextjs";
-import {db} from "@/lib/db";
+import { auth } from "@clerk/nextjs";
+import { db } from "@/lib/db";
 import React from "react";
 import IconBadge from "@/components/shared/IconBadge";
-import {ArrowLeft, Eye, LayoutDashboard, Video} from "lucide-react";
+import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 import ChapterTitleForm
   from "@/app/(dashbaord)/(routes)/teacher/courses/[courseId]/chapters/[chapterId]/_components/ChapterTitleForm";
-import {Banner} from "@/components/shared/Banner";
+import { Banner } from "@/components/shared/Banner";
 import Link from "next/link";
 import ChapterDescriptionForm
   from "@/app/(dashbaord)/(routes)/teacher/courses/[courseId]/chapters/[chapterId]/_components/ChapterDescriptionFrom";
@@ -17,17 +17,18 @@ import {
 } from "@/app/(dashbaord)/(routes)/teacher/courses/[courseId]/chapters/[chapterId]/_components/ChapterVideoForm";
 import ChapterActions
   from "@/app/(dashbaord)/(routes)/teacher/courses/[courseId]/chapters/[chapterId]/_components/ChapterActions";
-import {Badge} from "@/components/ui/badge";
-import {Progress} from "@/components/ui/progress";
-import {cn} from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
-const ChapterPage = async ({params}: {
+const ChapterPage = async ({ params }: {
   params: {
     courseId: string;
     chapterId: string;
   }
 }) => {
-  const {userId} = auth()
+  const { userId } = auth()
   if (!userId) return
 
   const chapter = await db.chapter.findUnique({
@@ -61,17 +62,21 @@ const ChapterPage = async ({params}: {
         />
       )}
       <div className={"p-6"}>
-        <Link
-          href={`/teacher/courses/${params.courseId}`}
-          className="flex items-center text-sm hover:opacity-75 transition mb-6"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2"/>
-          Back to course setup
-        </Link>
-        <div className={"flex items-center justify-between space-x-2"}>
-          <h1 className={"text-2xl font-medium"}>
-            Chapter setup
-          </h1>
+        <div className={"flex flex-col md:flex-row space-y-4 md:space-y-0 items-center justify-between space-x-2"}>
+          <div className="flex items-center justify-between space-x-2 w-full md:w-auto ">
+            <h1 className={"text-2xl font-medium"}>
+              Chapter setup
+            </h1>
+            <Link
+              href={`/teacher/courses/${params.courseId}`}
+              className="flex items-center text-sm hover:opacity-75 transition"
+            >
+              <Button variant={"link"} className="border">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to course
+              </Button>
+            </Link>
+          </div>
           <ChapterActions
             chapter={chapter}
             courseId={params.courseId}
@@ -79,19 +84,20 @@ const ChapterPage = async ({params}: {
             isDisabled={completedPercentage < 100}
           />
         </div>
-        <div className={"grid grid-cols-1 xl:grid-cols-2 gap-6 mt-16"}>
+        <div className={"grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8"}>
           <div>
-            <div className={"flex flex-row items-center justify-between"}>
-              <div className={"flex items-center gap-x-2"}>
+            <div className={"flex flex-col md:flex-row md:items-center justify-between"}>
+              <div className={"flex items-center gap-x-2 w-full"}>
                 <IconBadge icon={LayoutDashboard} />
                 <h2 className={"text-xl"}>Customise your chapter</h2>
               </div>
-              <Badge variant={"default"} className={"bg-theme hover:bg-theme/90"}>
+              {/* TODO: Add badge component */}
+              {/* <Badge variant={"default"} className={"bg-theme hover:bg-theme/90 mt-4 md:mt-0 max:w-64"}>
                 Complete all fields {completionText}
-              </Badge>
+              </Badge> */}
             </div>
             <div className={"relative"}>
-              <Progress value={completedPercentage} className={"mt-4 bg-theme/60"}/>
+              <Progress value={completedPercentage} className={"mt-4 bg-theme/60"} />
               <p className={cn("text-sky-100 absolute top-[-0.5px] left-[40%] text-xs")}>
                 {Math.round(completedPercentage)}% completed
               </p>
@@ -110,7 +116,7 @@ const ChapterPage = async ({params}: {
               <div>
                 <div className={"flex flex-row items-center justify-between mt-4"}>
                   <div className={"flex items-center gap-x-2"}>
-                    <IconBadge icon={Eye}/>
+                    <IconBadge icon={Eye} />
                     <h2 className={"text-xl"}>Chapter Access</h2>
                   </div>
                 </div>
@@ -126,7 +132,7 @@ const ChapterPage = async ({params}: {
             <div>
               <div className={"flex flex-row items-center justify-between mt-4"}>
                 <div className={"flex items-center gap-x-2"}>
-                  <IconBadge icon={Video}/>
+                  <IconBadge icon={Video} />
                   <h2 className={"text-xl"}>Add video content</h2>
                 </div>
               </div>
@@ -138,7 +144,7 @@ const ChapterPage = async ({params}: {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }

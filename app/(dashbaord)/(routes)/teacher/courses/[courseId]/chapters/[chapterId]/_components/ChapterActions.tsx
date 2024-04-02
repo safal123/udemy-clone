@@ -49,7 +49,7 @@ const ChapterActions =
     }
 
     return (
-      <div className={"flex items-center gap-x-2"}>
+      <div className={"flex items-center justify-between gap-x-2 w-full md:w-auto"}>
         <Button
           disabled={isDisabled}
           onClick={handleChapterPublish}
@@ -60,6 +60,7 @@ const ChapterActions =
         <ConfirmModal onConfirm={handleChapterDelete}>
           <Button
             size={"sm"}
+            variant={"destructive"}
           >
             <Trash className={"h-4 w-4"}/>
           </Button>

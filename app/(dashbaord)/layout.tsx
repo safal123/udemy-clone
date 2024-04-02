@@ -2,12 +2,14 @@ import React from "react"
 import Sidebar from "@/app/(dashbaord)/_components/Sidebar";
 import MobileSidebar from "@/app/(dashbaord)/_components/MobileSidebar";
 import {NavbarRoutes} from "@/components/ui/shared/NavbarRoutes";
+import { auth } from '@clerk/nextjs'
 
 export const revalidate = 0
 
 const DashboardLayout = ({children}: {
   children: React.ReactNode
 }) => {
+  const user = auth()
   return (
     <div className={"h-full"}>
       <div className={"h-[80px] md:pl-56 fixed w-full inset-y-0 z-50"}>
