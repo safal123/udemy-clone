@@ -5,7 +5,8 @@ import {redirect} from "next/navigation";
 
 const getCourses = async () => {
   const token = await auth().getToken()
-  const res = await fetch("http://localhost:8000/api/courses", {
+  const url = process.env.NEXT_PUBLIC_API_URL
+  const res = await fetch(url + "/api/courses", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
