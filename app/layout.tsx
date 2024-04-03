@@ -33,7 +33,7 @@ export default function RootLayout ({children}: Readonly<{ children: React.React
       />
       <ThemeProvider
         attribute="class"
-        defaultTheme="dark"
+        defaultTheme="light"
         enableSystem={ true }
         disableTransitionOnChange
       >

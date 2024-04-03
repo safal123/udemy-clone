@@ -14,7 +14,8 @@ const getCategories = async () => {
 }
 
 const getCourses = async () => {
-  const res = await fetch("http://localhost:8000/api/courses/all")
+  const url = process.env.NEXT_PUBLIC_API_URL
+  const res = await fetch(url + "/api/courses/all")
 
   if (!res.ok) {
     return
