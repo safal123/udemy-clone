@@ -1,58 +1,62 @@
-"use client"
+'use client'
 
-import {Course} from ".prisma/client";
-import {Button} from "@/components/ui/button"
-import {Card, CardDescription, CardFooter, CardHeader, CardImage, CardTitle,} from "@/components/ui/card"
-import {CheckIcon} from "lucide-react";
-import Image from "next/image";
-import {formatPrice} from "@/lib/format";
-import {useRouter} from "next/navigation";
-import {FaEdit} from "react-icons/fa";
-import {Badge} from "@/components/ui/badge";
+import { Category, Course } from '.prisma/client'
+import { Button } from '@/components/ui/button'
+import { Card, CardDescription, CardFooter, CardHeader, CardImage } from '@/components/ui/card'
+import { Book, BookAIcon, CheckIcon } from 'lucide-react'
+import Image from 'next/image'
+import { formatPrice } from '@/lib/format'
+import { useRouter } from 'next/navigation'
+import { FaEdit } from 'react-icons/fa'
+import { Badge } from '@/components/ui/badge'
+import Link from 'next/link'
 
 interface CourseCardProps {
-  course: Course,
+  course: Course & { category: Category }
   isOwner?: boolean
 }
 
 const CourseCard = ({course, isOwner}: CourseCardProps) => {
-  const router = useRouter()
+  const router = useRouter ()
   return (
     <Card>
       <CardHeader>
-        <CardTitle className={"line-clamp-1 mb-4"}>
-          <p>
-            {course.title}
-          </p>
-        </CardTitle>
         <CardImage>
-          {course.imageUri &&
-            <Image
-              src={course?.imageUri}
-              alt={course.title || "Course Image"}
-              width={100}
-              height={50}
-              className={"rounded-md w-full h-64 object-cover"}
-            />
-          }
+          <Link href={`/courses/${course.id}`}>
+            { course.imageUri &&
+              <Image
+                src={ course?.imageUri }
+                alt={ course.title || 'Course Image' }
+                width={ 100 }
+                height={ 50 }
+                className={ 'rounded-md w-full h-64 object-cover' }
+              />
+            }
+          </Link>
         </CardImage>
-        <CardDescription>
-
+        <CardDescription className={ 'flex flex-col' }>
+          <h3 className={ 'font-bold text-lg text-theme flex items-center' }>
+            <Book className={ 'h-4 w-4 mr-2' }/>
+            { course.title }
+          </h3>
+          <Badge variant={'secondary'} className={ 'mt-2 block w-36' }>
+            { course?.category?.name }
+          </Badge>
           {
             course?.price ?
-              <span className={"font-bold text-theme mt-2 text-3xl"}>
-                {formatPrice(course?.price)}
+              <span className={ 'font-bold text-theme mt-2 text-xl' }>
+                { formatPrice (course?.price) }
               </span> :
-              <Badge className={"mt-4"}>Free</Badge>
+              <Badge className={ 'mt-4' }>Free</Badge>
           }
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        {isOwner ?
+        { isOwner ?
           <Button
-            onClick={() => {
-              router.push(`/teacher/courses/${course.id}`)
-            }}
+            onClick={ () => {
+              router.push (`/teacher/courses/${ course.id }`)
+            } }
             className="w-full bg-theme hover:bg-theme/80">
             <FaEdit className="mr-2 h-4 w-4"/>
             Edit Course
@@ -61,7 +65,7 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
           <Button className="w-full bg-theme hover:bg-theme/80">
             <CheckIcon className="mr-2 h-4 w-4"/>
             Enroll Now
-          </Button>}
+          </Button> }
       </CardFooter>
     </Card>
   )

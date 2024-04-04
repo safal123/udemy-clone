@@ -2,7 +2,7 @@ import {db} from "@/lib/db";
 import {Categories} from "@/app/(dashbaord)/dashboard/search/_components/Categories";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import CourseCard from "@/components/shared/CourseCard";
-import {Course} from ".prisma/client";
+import { Category, Course } from '.prisma/client'
 import {auth} from "@clerk/nextjs";
 
 const getCategories = async () => {
@@ -40,8 +40,12 @@ const SearchPage = async () => {
         <Categories items={categories}/>
       </ScrollArea>
       <div className={"grid xl:grid-cols-4 grid-cols-1 sm:grid-cols-2 gap-4 mt-4"}>
-        {courses.length > 0 ? courses?.map((course: Course) => (
-          <CourseCard key={course.id} course={course} isOwner = {isOwner(course.userId)}/>
+        {courses.length > 0 ? courses?.map((course: Course & { category: Category }) => (
+          <CourseCard
+            key={course.id}
+            course={course}
+            isOwner = {isOwner(course.userId)}
+          />
         )) : 'No courses found'}
       </div>
     </div>

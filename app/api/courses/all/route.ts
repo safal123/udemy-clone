@@ -11,6 +11,9 @@ export async function GET(req: Request) {
       orderBy: {
         createdAt: "desc"
       },
+      include: {
+        category: true
+      }
     })
     return NextResponse.json(courses)
   } catch (error) {

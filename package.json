@@ -25,6 +25,7 @@
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.3",
     "@tanstack/react-table": "^8.14.0",
@@ -38,6 +39,7 @@
     "next-themes": "^0.3.0",
     "next-video": "^0.17.1",
     "nextjs-toploader": "^1.6.6",
+    "prisma": "^5.11.0",
     "query-string": "^9.0.0",
     "quill": "^2.0.0-rc.4",
     "react": "^18",
@@ -51,8 +53,7 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^6.6.0",
-    "zod": "^3.22.4",
-    "prisma": "^5.11.0"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",

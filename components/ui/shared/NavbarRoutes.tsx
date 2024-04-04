@@ -13,11 +13,11 @@ export const NavbarRoutes = ({showTeacherMode = true, ...props}: {
 }) => {
   const pathName = usePathname ()
   const isTeacherPage = pathName?.startsWith ('/teacher')
-  const isPlayerPage = pathName?.includes ('/chapter')
+  const isCoursePage = pathName?.includes ('/courses')
 
   return (
     <div className={ 'flex items-center gap-x-2 ml-auto' } {...props}>
-      { showTeacherMode ? (isTeacherPage || isPlayerPage) ? (
+      { showTeacherMode ? (isTeacherPage || isCoursePage) ? (
         <Link href={ '/dashboard' }>
           <Button size={ 'sm' } variant={ 'ghost' }>
             <LogOut className={ 'h-4 w-4 mr-2' }/>
