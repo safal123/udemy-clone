@@ -39,9 +39,11 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
             <Book className={ 'h-4 w-4 mr-2' }/>
             { course.title }
           </h3>
-          <Badge variant={'secondary'} className={ 'mt-2 block w-36' }>
-            { course?.category?.name }
-          </Badge>
+          <div className={ 'mt-2 inline-block' }>
+            <Badge>
+              { course?.category?.name }
+            </Badge>
+          </div>
           {
             course?.price ?
               <span className={ 'font-bold text-theme mt-2 text-xl' }>

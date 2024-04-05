@@ -18,6 +18,9 @@ export const getChapter = async ({courseId, userId, chapterId}: GetChapterProps)
           id: courseId,
         }
       },
+      include: {
+        course: true
+      }
     })
 
     return {

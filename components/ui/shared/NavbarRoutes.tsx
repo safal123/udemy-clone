@@ -17,6 +17,13 @@ export const NavbarRoutes = ({showTeacherMode = true, ...props}: {
 
   return (
     <div className={ 'flex items-center gap-x-2 ml-auto' } {...props}>
+      {isCoursePage &&
+      <Link href={ '/dashboard/search' }>
+        <Button size={ 'sm' } variant={ 'ghost' }>
+          Back to courses
+        </Button>
+      </Link>
+      }
       { showTeacherMode ? (isTeacherPage || isCoursePage) ? (
         <Link href={ '/dashboard' }>
           <Button size={ 'sm' } variant={ 'ghost' }>

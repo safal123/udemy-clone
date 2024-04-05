@@ -3,6 +3,8 @@ import {columns} from "@/app/(dashbaord)/(routes)/teacher/courses/_components/Co
 import {auth} from "@clerk/nextjs";
 import {redirect} from "next/navigation";
 
+export const dynamic = 'force-dynamic'
+
 const getCourses = async () => {
   const token = await auth().getToken()
   const url = process.env.NEXT_PUBLIC_API_URL
@@ -10,7 +12,7 @@ const getCourses = async () => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    cache: "no-store",
+    cache: "no-cache",
   })
 
   if (!res.ok) {

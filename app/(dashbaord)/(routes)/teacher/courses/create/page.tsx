@@ -11,8 +11,10 @@ import {Button} from "@/components/ui/button";
 import axios from "axios";
 import {useRouter} from "next/navigation";
 import toast from "react-hot-toast";
-import {ArrowRight} from "lucide-react";
+import { ArrowRight } from 'lucide-react'
 import {CgClose} from "react-icons/cg";
+import { Logo } from '@/app/(dashbaord)/_components/Logo'
+import { useState } from 'react'
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -28,17 +30,33 @@ const CreateCoursePage = () => {
       title: ""
     }
   })
+  const [isCourseCreating, setIsCourseCreating] = useState(false)
   const {isSubmitting, isValid} = form.formState
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      setIsCourseCreating(true)
       const response = await axios.post("/api/courses", values)
       await router.refresh()
-      toast.success("Course created")
-      router.push(`/teacher/courses/${response.data.id}`)
+      setTimeout(() => {
+        setIsCourseCreating(false);
+        toast.success("Course created");
+        router.push(`/teacher/courses/${response.data.id}`);
+      }, 2000);
     } catch (error) {
       toast.error("Something went wrong")
     }
+  }
+
+  if(isSubmitting || isCourseCreating) {
+    return <div className={"flex flex-col md:items-center md:justify-center h-full p-6"}>
+      <span className={"mb-6"}>
+        Your course is being created
+      </span>
+      <div className={"animate-pulse"}>
+        <Logo />
+      </div>
+    </div>
   }
 
   return (

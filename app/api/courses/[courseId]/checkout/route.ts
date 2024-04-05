@@ -1,32 +1,107 @@
-import {auth} from "@clerk/nextjs";
-import {NextResponse} from "next/server";
-import {db} from "@/lib/db";
+import { auth, currentUser } from '@clerk/nextjs'
+import { NextResponse } from 'next/server'
+import { db } from '@/lib/db'
+import Stripe from 'stripe'
+import { stripe } from '@/lib/stripe'
 
-export async function POST(req: Request, {params}: {params: {courseId: string}}) {
-  const {userId} = auth()
+export async function POST (req: Request, {params}: { params: { courseId: string } }) {
   try {
+    const {userId} = auth ()
+    const user = await currentUser ()
     if (!userId) {
-      return new NextResponse("Unauthorized", {status: 401})
+      return new NextResponse ('Unauthorized', {status: 401})
     }
-    const {list} = await req.json()
-    const ownCourse = await db.course.findUnique({
+
+    const course = await db.course.findFirst ({
       where: {
         id: params.courseId,
-        userId: userId
+        isPublished: true
       }
     })
-    if (!ownCourse) {
-      return new NextResponse("Unauthorized", {status: 401})
+
+    const purchase = await db.purchase.findUnique ({
+      where: {
+        userId,
+        courseId: params.courseId
+      }
+    })
+
+    if (purchase) {
+      return new NextResponse ('Already purchased', {status: 400})
     }
-    for (let item of list) {
-      await db.chapter.update({
-        where: {id: item.id},
-        data: {order: item.position}
+
+    if (!course) {
+      return new NextResponse ('Not found', {status: 404})
+    }
+
+    const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
+      {
+        quantity: 1,
+        price_data: {
+          currency: 'aud',
+          product_data: {
+            name: course.title!,
+            description: course.description!
+          },
+          unit_amount: Math.round (course.price! * 100)
+        }
+      }
+    ]
+
+    let stripeCustomer = await db.user.findUnique ({
+      where: {
+        userId
+      },
+      select: {
+        stripeCustomerId: true
+      }
+    })
+
+    if (!stripeCustomer || !stripeCustomer.stripeCustomerId) {
+      const customer = await stripe.customers.create ({
+        email: user?.emailAddresses[0].emailAddress
       })
+
+      const data = {
+        stripeCustomerId: customer.id,
+        userId
+      }
+
+      // TODO: simplify this
+      if (!stripeCustomer) {
+        stripeCustomer = await db.user.create ({
+          data: {
+            ...data,
+            email: user?.emailAddresses[0].emailAddress!
+          }
+        })
+      } else {
+        stripeCustomer = await db.user.update ({
+          where: {
+            userId
+          },
+          data
+        })
+      }
     }
-    return new NextResponse("Success", {status: 200})
+
+    const session = await stripe.checkout.sessions.create ({
+      customer: stripeCustomer.stripeCustomerId,
+      line_items: lineItems,
+      mode: 'payment',
+      success_url: `${ process.env.NEXT_PUBLIC_SITE_URL }/courses/${ course.id }?success=true`,
+      cancel_url: `${ process.env.NEXT_PUBLIC_SITE_URL }/courses/${ course.id }?canceled=true`,
+      metadata: {
+        courseId: course.id,
+        userId
+      }
+    })
+
+    console.log ('[REORDER]', session)
+
+    return NextResponse.json ({url: session.url})
   } catch (error) {
-    console.log("[REORDER]", error)
-    return new NextResponse("Internal Error", {status: 500})
+    console.log ('[REORDER]', error)
+    return new NextResponse ('Internal Error', {status: 500})
   }
 }

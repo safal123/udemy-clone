@@ -9,7 +9,7 @@ datasource db {
 }
 
 model Course {
-  id          String    @id @default(uuid())
+  id          String    @id @unique @default(uuid())
   userId      String
   title       String?   @db.Text
   description String?   @db.Text
@@ -89,16 +89,13 @@ model MuxData {
 }
 
 model UserProgress {
-  id     String @id @default(uuid())
-  userId String @unique
-
-  chapterId String
-  chapter   Chapter @relation(fields: [chapterId], references: [id])
-
-  isCompleted Boolean @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  chapterId   String
+  chapter     Chapter  @relation(fields: [chapterId], references: [id])
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@unique([userId, chapterId])
   @@index([chapterId])
@@ -106,26 +103,29 @@ model UserProgress {
 }
 
 model Purchase {
-  id     String @id @default(uuid())
-  userId String @unique
-
-  courseId String
-  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
-
+  id        String   @id @default(uuid())
+  userId    String
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([userId, courseId])
   @@index([courseId])
   @@map("purchases")
 }
 
-model Customer {
-  id               String @id @default(uuid())
-  userId           String @unique
+model User {
+  id               String  @id @default(uuid())
+  userId           String  @unique
+  email            String  @unique
+  firstName        String?
+  imageUri         String?
+  lastName         String?
   stripeCustomerId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("customers")
+  @@map("users")
 }

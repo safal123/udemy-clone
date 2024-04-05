@@ -20,9 +20,9 @@ const CourseActions =
     const handleChapterDelete = async () => {
       try {
         await axios.delete(`/api/courses/${courseId}`)
+        await router.refresh()
         toast.success("Chapter deleted")
-        router.refresh()
-        router.push(`/teacher/courses/${courseId}`)
+        await router.push(`/teacher/courses`)
       } catch (e) {
         toast.error("Something went wrong")
       }

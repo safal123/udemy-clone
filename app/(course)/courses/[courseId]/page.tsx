@@ -29,6 +29,7 @@ const CoursePage =
 
     return (
       <>
+        <h1>{ course.title }</h1>
       </>
     )
   }

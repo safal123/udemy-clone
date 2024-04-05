@@ -5,19 +5,21 @@ import { db } from '@/lib/db'
 import CourseSidebar from '@/app/(course)/courses/[courseId]/_components/CourseSidebar'
 import { CourseNavbar } from '@/app/(course)/courses/[courseId]/_components/CourseNavbar'
 
+interface CourseLayoutProps {
+  children: React.ReactNode;
+  params: {
+    courseId: string;
+  }
+}
+
 const CourseLayout =
-  async ({children, params}: {
-    children: React.ReactNode
-    params: {
-      courseId: string;
-    }
-  }) => {
+  async ({children, params}: CourseLayoutProps) => {
     const {userId} = auth ()
     if (!userId) redirect ('/sign-in')
 
-    const course = await db.course.findFirst ({
+    const course = await db.course.findUnique ({
       where: {
-        id: params.courseId
+        id: params?.courseId
       },
       include: {
         chapters: {
