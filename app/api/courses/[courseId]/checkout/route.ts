@@ -21,8 +21,10 @@ export async function POST (req: Request, {params}: { params: { courseId: string
 
     const purchase = await db.purchase.findUnique ({
       where: {
-        userId,
-        courseId: params.courseId
+        userId_courseId: {
+          courseId: params.courseId,
+          userId
+        }
       }
     })
 
