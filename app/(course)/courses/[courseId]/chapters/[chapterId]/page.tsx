@@ -5,7 +5,7 @@ import { Separator } from '@/components/ui/separator'
 import { getChapter } from '@/actions/get-chapters'
 import { Banner } from '@/components/shared/Banner'
 import CourseEnrolButton from '@/app/(course)/courses/[courseId]/chapters/[chapterId]/_components/CourseEnrolButton'
-import { db } from '@/lib/db'
+import { getHasPurchased } from '@/actions/get-has-purchased'
 
 const ChapterIdPage =
   async ({params}: { params: { courseId: string; chapterId: string } }) => {
@@ -15,18 +15,14 @@ const ChapterIdPage =
     }
 
     const {chapter} = await getChapter ({courseId: params.courseId, chapterId: params.chapterId, userId: userId})
+
     if (!chapter) {
       return redirect ('/')
     }
 
-    const isLocked = chapter?.isFree
+    const isLocked = !chapter.isFree
     const isCompleted = false
-    const hasPurchased = await db.purchase.findFirst ({
-      where: {
-        userId,
-        courseId: params.courseId
-      }
-    })
+    const hasPurchased = await getHasPurchased({userId, courseId: params.courseId})
 
     return (
       <>
@@ -43,7 +39,9 @@ const ChapterIdPage =
               <h2 className="text-2xl font-semibold mb-2">
                 { chapter?.title }
               </h2>
-              {!hasPurchased && <CourseEnrolButton chapter={ chapter }/>}
+              <div>
+                {!hasPurchased && <CourseEnrolButton course={ chapter.course }/>}
+              </div>
             </div>
             <Separator/>
           </div>

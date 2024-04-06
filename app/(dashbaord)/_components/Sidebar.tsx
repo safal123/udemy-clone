@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Sidebar = () => {
   return (
-    <div className={"h-full border-r flex flex-col overflow-y-auto bg-white shadow-sm w-full"}>
+    <div className={"h-full border-r flex flex-col overflow-y-auto bg-background shadow-sm w-full"}>
       <div className="p-3.5 flex items-center justify-center">
         <Link href={"/"}>
           <Logo/>

@@ -4,6 +4,7 @@ import {ScrollArea} from "@/components/ui/scroll-area";
 import CourseCard from "@/components/shared/CourseCard";
 import { Category, Course } from '.prisma/client'
 import {auth} from "@clerk/nextjs";
+import { getHasPurchased } from '@/actions/get-has-purchased'
 
 const getCategories = async () => {
   return db.category.findMany({
@@ -33,6 +34,7 @@ const SearchPage = async () => {
     if (!userId) return false
     return userId === id
   }
+
 
   return (
     <div className={"p-6"}>

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { LogOut } from 'lucide-react'
 import Link from 'next/link'
+import { ToggleTheme } from '@/components/shared/ToggleTheme'
 
 
 export const NavbarRoutes = ({showTeacherMode = true, ...props}: {
@@ -17,6 +18,7 @@ export const NavbarRoutes = ({showTeacherMode = true, ...props}: {
 
   return (
     <div className={ 'flex items-center gap-x-2 ml-auto' } {...props}>
+      <ToggleTheme/>
       {isCoursePage &&
       <Link href={ '/dashboard/search' }>
         <Button size={ 'sm' } variant={ 'ghost' }>

@@ -3,24 +3,23 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { formatPrice } from '@/lib/format'
-import { Chapter } from '@prisma/client'
 import { Course } from '.prisma/client'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 
 interface CourseEnrolButtonProps {
-  chapter: Chapter & { course: Course }
+  course: Course
 }
 
-const CourseEnrolButton = ({chapter}: CourseEnrolButtonProps) => {
+const CourseEnrolButton = ({course}: CourseEnrolButtonProps) => {
   const [isLoading, setIsLoading] = useState (false)
-  if (!chapter?.course.price) return null
+  if (!course.price) return null
+  
   const handleEnrollment = async () => {
     try {
       setIsLoading (true)
-      const response = await axios.post(`/api/courses/${chapter.courseId}/checkout`)
+      const response = await axios.post(`/api/courses/${course.id}/checkout`)
       await window.location.assign(response.data.url)
-      toast.success ('You have been enrolled for the course')
     } catch (error) {
       console.error (error)
       toast.error ('Failed to enroll for the course')
@@ -32,9 +31,9 @@ const CourseEnrolButton = ({chapter}: CourseEnrolButtonProps) => {
     <Button
       onClick={ handleEnrollment }
       disabled={ isLoading}
-      className={ 'w-full md:w-auto' }
+      className={ 'w-full' }
     >
-      Enroll for { formatPrice (chapter?.course?.price) }
+      Enroll for { formatPrice (course?.price) }
     </Button>
   )
 }

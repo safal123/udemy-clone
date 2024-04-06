@@ -4,6 +4,7 @@ import { auth, UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import { ToggleTheme } from '@/components/shared/ToggleTheme'
 
 const Layout =
   ({
@@ -21,30 +22,32 @@ const Layout =
                 <Image src="/logo.svg" alt="logo" width={100} height={100} />
               </Link>
             </div>
-            {userId ?
-              <div className={'flex items-center justify-between space-x-4'}>
-                <Button variant={'outline'}>
-                  <Link href={'/dashboard'} className={'text-theme text-sm'}>
-                    Dashboard
+            <div className={'flex items-center space-x-2'}>
+              <ToggleTheme />
+              {userId ?
+                <div className={'flex items-center justify-between space-x-4'}>
+                  <Button variant={'outline'}>
+                    <Link href={'/dashboard'} className={'text-theme text-sm'}>
+                      Dashboard
+                    </Link>
+                  </Button>
+                  <UserButton afterSignOutUrl={'/'} />
+                </div>
+                :
+                <div className={'flex items-center justify-between space-x-4'}>
+                  <Link href={'/sign-in'}>
+                    <Button variant={'outline'} size={'sm'}>
+                      Login
+                    </Button>
                   </Link>
-                </Button>
-                <UserButton afterSignOutUrl={'/'} />
-              </div>
-              :
-              <div className={'flex items-center justify-between space-x-4'}>
-
-                <Link href={'/sign-in'}>
-                  <Button variant={'outline'} size={'sm'}>
-                    Login
-                  </Button>
-                </Link>
-                <Link href={'/sign-up'}>
-                  <Button variant={'outline'} size={'sm'} >
-                    Sign up
-                  </Button>
-                </Link>
-              </div>
-            }
+                  <Link href={'/sign-up'}>
+                    <Button variant={'outline'} size={'sm'} >
+                      Sign up
+                    </Button>
+                  </Link>
+                </div>
+              }
+            </div>
           </div>
         </div>
         <div className={'mt-[80px]'}>
