@@ -19,6 +19,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="icon" href="/icon.svg" />
+          <title>
+            {metadata.title as string}
+          </title>
+        </head>
         <body className={inter.className}>
           <NextTopLoader
             color="#2299DD"

@@ -12,10 +12,10 @@ const Layout =
   }: Readonly<{ children: React.ReactNode }>) => {
     const { userId } = auth()
     return (
-      <div className={'min-h-screen bg-gray-100'}>
+      <div className={'min-h-screen bg-background'}>
         <div className={'h-[80px] fixed w-full inset-y-0 z-50'}>
           <div
-            className={'flex items-center justify-between h-full p-4 border-b bg-white dark:bg-gray-900 shadow-sm lg:px-16'}>
+            className={'flex items-center justify-between h-full p-4 border-b shadow-sm lg:px-16'}>
             <MobileSidebar />
             <div className={'hidden md:flex items-center space-x-4'}>
               <Link href={'/'} className={'text-gray-500'}>

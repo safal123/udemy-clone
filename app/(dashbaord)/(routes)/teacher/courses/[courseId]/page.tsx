@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils'
 import React from 'react'
 import axios from 'axios'
 import CourseActions from '@/app/(dashbaord)/(routes)/teacher/courses/[courseId]/_components/CourseActions'
+import TooltipButton from '@/components/shared/TooltipButton'
 
 
 const CoursePage = async ({params}: {
@@ -64,7 +65,7 @@ const CoursePage = async ({params}: {
   ]
   const totalFields = requiredFields.length
   const completedFields = requiredFields.filter (field => field).length
-  const completionText = `${ completedFields }/${ totalFields }`
+  const completionText = `${ completedFields }/${ totalFields } fields completed`
   const completedPercentage = (completedFields / totalFields) * 100
 
   const handleCoursePublish = async () => {
@@ -82,7 +83,7 @@ const CoursePage = async ({params}: {
       ) }
       <div className={ 'p-6' }>
         <div className={ 'flex items-center justify-between space-x-2' }>
-          <h1 className={ 'text-2xl font-medium' }>
+          <h1 className={ 'text-2xl font-bold' }>
             Course setup
           </h1>
           <div className={ 'flex items-center space-x-4' }>
@@ -91,14 +92,18 @@ const CoursePage = async ({params}: {
         </div>
         <div className={ 'grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8' }>
           <div>
-            <div className={ 'flex flex-row items-center justify-between' }>
+            <div className={ 'flex flex-col md:flex-row md:items-center justify-between' }>
               <div className={ 'flex items-center gap-x-2' }>
                 <IconBadge icon={ LayoutDashboard }/>
-                <h2 className={ 'text-xl' }>Customise your course</h2>
+                <h2 className={ 'text-xl font-bold' }>Customise your course</h2>
               </div>
-              <Badge variant={ 'default' } className={ 'bg-theme hover:bg-theme/90' }>
-                Complete all fields { completionText }
-              </Badge>
+              <div className={"mt-2 md:mt-0 cursor-pointer"}>
+                <TooltipButton tooltip={"Complete all fields to publish the course"}>
+                  <Badge variant={ 'default' } className={ 'bg-theme hover:bg-theme/90' }>
+                    { completionText }
+                  </Badge>
+                </TooltipButton>
+              </div>
             </div>
             <div className={ 'relative' }>
               <Progress value={ completedPercentage } className={ 'mt-4 bg-theme/60' }/>
@@ -111,13 +116,11 @@ const CoursePage = async ({params}: {
                 initialData={ course }
                 courseId={ course.id }
               />
-
               <DescriptionFrom
                 initialData={ course }
                 courseId={ course.id }
               />
               <ImageForm initialData={ course } courseId={ course.id }/>
-
               <CategoryForm
                 initialData={ course }
                 courseId={ course.id }
@@ -132,7 +135,7 @@ const CoursePage = async ({params}: {
             <div>
               <div className={ 'flex items-center gap-x-2' }>
                 <IconBadge icon={ ListChecks }/>
-                <h2 className={ 'text-xl' }>Course chapters</h2>
+                <h2 className={ 'text-xl font-bold' }>Course chapters</h2>
               </div>
               <div>
                 <ChapterForm
@@ -144,14 +147,14 @@ const CoursePage = async ({params}: {
             <div>
               <div className={ 'flex items-center gap-x-2' }>
                 <IconBadge icon={ CircleDollarSign }/>
-                <h2 className={ 'text-xl' }>Sell your course</h2>
+                <h2 className={ 'text-xl font-bold' }>Sell your course</h2>
               </div>
               <PriceForm initialData={ course } courseId={ course.id }/>
             </div>
             <div>
               <div className={ 'flex items-center gap-x-2' }>
                 <IconBadge icon={ File }/>
-                <h2 className={ 'text-xl' }>
+                <h2 className={ 'text-xl font-bold' }>
                   Resources &amp; Attachments
                 </h2>
               </div>

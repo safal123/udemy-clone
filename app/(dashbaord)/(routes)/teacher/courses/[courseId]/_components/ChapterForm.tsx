@@ -15,6 +15,7 @@ import {Input} from "@/components/ui/input";
 import {Badge} from "@/components/ui/badge";
 import {ChaptersList} from "@/app/(dashbaord)/(routes)/teacher/courses/[courseId]/_components/ChapterList";
 import {Chapter} from "@prisma/client";
+import AddEditButton from '@/components/shared/AddEditButton'
 
 interface ChapterFormProps {
   initialData: Course & { chapters: Chapter[] }
@@ -73,12 +74,12 @@ const ChapterForm = ({initialData, courseId}: ChapterFormProps) => {
 
 
   return (
-    <div className={"relative mt-6 border bg-slate-100 rounded-md p-4"}>
+    <div className={"relative mt-6 border bg-slate-100 dark:bg-black rounded-md p-4"}>
       {isUpdating && <div
         className={"absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-md flex items-center justify-center"}>
         <Loader2 className={"animate-spin h-6 w-6"}/>
       </div>}
-      <div className={"font-medium flex items-center justify-between"}>
+      <div className={"font-medium flex items-center justify-between mb-2"}>
         <h2 className={"flex items-center space-x-4"}>
           <span className={"text-xl"}>Course chapters</span>
           <Badge
@@ -88,19 +89,12 @@ const ChapterForm = ({initialData, courseId}: ChapterFormProps) => {
             {initialData.chapters.length} chapters
           </Badge>
         </h2>
-        <Button variant={"ghost"} onClick={toggleEditing}>
-          {isEditing ?
-            <div className={"text-red-500"}>
-              Cancel
-            </div>
-            :
-            <>
-              <CirclePlus className={"h-4 w-4 mr-2"}/>
-              Add Chapter
-            </>
-          }
-
-        </Button>
+        <AddEditButton
+          isEditing={isEditing}
+          toggleEditing={toggleEditing}
+          tooltip={!isEditing ? "Add new chapter" : "Cancel adding chapter"}
+          mode={ 'add' }
+        />
       </div>
       {!isEditing ? <>
           <div>
