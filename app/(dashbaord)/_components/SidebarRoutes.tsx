@@ -1,9 +1,10 @@
 'use client'
 
-import { BarChart, Compass, Layout, List, LogInIcon, UserIcon } from 'lucide-react'
+import { BarChart, Compass, DollarSign, Layout, List, LogInIcon, Settings, UserIcon } from 'lucide-react'
 import SidebarItem from '@/app/(dashbaord)/_components/SidebarItem'
 import { usePathname } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
+
 
 const studentRoutes = [
   {
@@ -17,6 +18,18 @@ const studentRoutes = [
     label: 'Explore',
     href: '/dashboard/search',
     key: 'explore'
+  },
+  {
+    icon: Settings,
+    label: 'Settings',
+    href: '/dashboard/settings',
+    key: 'settings'
+  },
+  {
+    icon: DollarSign,
+    label: 'Billing',
+    href: '/dashboard/billing',
+    key: 'billing'
   }
 ]
 

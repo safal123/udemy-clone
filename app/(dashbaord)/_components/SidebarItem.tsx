@@ -14,7 +14,7 @@ const SidebarItem = ({icon: Icon, label, href}: SidebarItemProps) => {
 
   const isActive =
     (pathName === '/' && href === '/') ||
-    pathName === href || pathName.startsWith (href)
+    pathName === href || (pathName.startsWith(href) && href !== '/dashboard')
 
   return (
     <Link
