@@ -2,8 +2,7 @@ import {DataTable} from "@/app/(dashbaord)/(routes)/teacher/courses/_components/
 import {columns} from "@/app/(dashbaord)/(routes)/teacher/courses/_components/Columns";
 import {auth} from "@clerk/nextjs";
 import {redirect} from "next/navigation";
-
-export const dynamic = 'force-dynamic'
+import { unstable_noStore as noStore} from 'next/cache'
 
 const getCourses = async () => {
   const token = await auth().getToken()
@@ -22,6 +21,7 @@ const getCourses = async () => {
 }
 
 const CoursePage = async () => {
+  noStore()
   const {userId} = auth()
   if (!userId) redirect("/sign-in")
 

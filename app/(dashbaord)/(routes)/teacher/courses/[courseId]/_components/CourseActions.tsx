@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import {useRouter} from "next/navigation";
 import {Course} from ".prisma/client";
+import { revalidatePath } from 'next/cache'
 
 interface CourseActionsProps {
   course: Course;

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs'
 import { db } from '@/lib/db'
+import { revalidatePath } from 'next/cache'
 
 export async function PATCH (req: Request, {params}: { params: { courseId: string } }) {
   try {

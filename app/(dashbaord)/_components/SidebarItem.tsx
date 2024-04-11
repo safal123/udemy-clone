@@ -19,18 +19,14 @@ const SidebarItem = ({icon: Icon, label, href}: SidebarItemProps) => {
   return (
     <Link
       href={ href }
-      className={ cn ('flex items-center gap-x-2 hover:text-slate-600 ' +
-        'hover:bg-slate-300/20 text-slate-500 text-sm font-[500]' +
-        'black dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-slate-200',
-        isActive && 'text-sky-700 bg-sky-200/20'
+      className={ cn ('flex items-center gap-x-2 m-2 rounded-md text-primary text-sm font-[500]' +
+        'black dark:hover:bg-foreground/20',
+        isActive && 'bg-foreground/10 dark:bg-primary/20 dark:bg-primary/40 dark:text-primary'
       ) }>
       <div className={ 'flex items-center gap-x-2 p-4 rounded-md' }>
-        <Icon size={ 22 } className={ cn ('text-slate-500', isActive && 'text-sky-700') }/>
+        <Icon size={ 22 } className={ cn ('text-primary') }/>
         { label }
       </div>
-      <div className={ cn ('ml-auto border-2 opacity-0 border-sky-700 h-full transition-all',
-        isActive && 'opacity-100') }
-      />
     </Link>
   )
 }

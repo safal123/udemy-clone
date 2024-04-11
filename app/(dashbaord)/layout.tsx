@@ -12,7 +12,7 @@ const DashboardLayout = ({children}: {
   return (
     <div className={ 'h-full' }>
       <div className={ 'h-[80px] md:pl-56 fixed w-full inset-y-0 z-50' }>
-        <div className={ 'flex items-center justify-between h-full p-4 border-b bg-white dark:bg-gray-900 shadow-sm' }>
+        <div className={ 'flex items-center justify-between h-full p-4 border-b bg-white dark:bg-black shadow-sm' }>
           <MobileSidebar/>
           <NavbarRoutes/>
         </div>
