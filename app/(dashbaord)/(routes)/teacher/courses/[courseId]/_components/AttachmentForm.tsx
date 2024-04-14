@@ -1,8 +1,7 @@
 'use client'
 
 import * as z from 'zod'
-import { Button } from '@/components/ui/button'
-import { CirclePlus, File, Loader2, Pencil, X } from 'lucide-react'
+import { File, Loader2, X } from 'lucide-react'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import axios from 'axios'
@@ -59,10 +58,10 @@ const AttachmentForm = ({initialData, courseId}: AttachmentProps) => {
       <div className={ 'font-medium flex items-center justify-between' }>
         <h2 className={ 'text-xl' }>Course Attachments</h2>
         <AddEditButton
-          isEditing={isEditing}
-          toggleEditing={toggleEditing}
-          tooltip={!isEditing ? 'Add a new attachment' : 'Cancel adding attachment'}
-          mode={'add'}
+          isEditing={ isEditing }
+          toggleEditing={ toggleEditing }
+          tooltip={ !isEditing ? 'Add a new attachment' : 'Cancel adding attachment' }
+          mode={ 'add' }
         />
       </div>
       { !isEditing ? <>
@@ -82,8 +81,10 @@ const AttachmentForm = ({initialData, courseId}: AttachmentProps) => {
                       <div className={ 'ml-auto' }>
                         <Loader2 className={ 'h-4 w-4 animate-spin' }/>
                       </div> :
-                      <button onClick={ () => onDelete (attachment.id) }
-                              className={ 'ml-auto hover:opacity-75 transition' }>
+                      <button
+                        onClick={ () => onDelete (attachment.id) }
+                        className={ 'ml-auto hover:opacity-75 transition' }
+                      >
                         <X className={ 'h-4 w-4' }/>
                       </button>
 
@@ -93,9 +94,9 @@ const AttachmentForm = ({initialData, courseId}: AttachmentProps) => {
               </>
               :
               <>
-              <p className={"text-sm mt-2 text-primary font-semibold"}>
-                No attachments
-              </p>
+                <p className={ 'text-sm mt-2 text-primary font-semibold' }>
+                  No attachments
+                </p>
               </>
             }
           </div>

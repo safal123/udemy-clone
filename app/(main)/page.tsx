@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 const HomePage = () => {
   return (
@@ -21,9 +22,11 @@ const HomePage = () => {
           </div>
 
           <div className="flex justify-center max-w-sm mx-auto mt-10">
-            <Button className={'rounded-full'}>
-              Get Started and Learn
-            </Button>
+            <Link href={'/dashboard/search'}>
+              <Button className={'rounded-full'}>
+                Get Started and Learn
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

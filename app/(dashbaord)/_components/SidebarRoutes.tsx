@@ -20,10 +20,10 @@ const studentRoutes = [
     key: 'explore'
   },
   {
-    icon: Settings,
-    label: 'Settings',
-    href: '/dashboard/settings',
-    key: 'settings'
+    icon: UserIcon,
+    label: 'Profile',
+    href: '/dashboard/profile',
+    key: 'profile'
   },
   {
     icon: DollarSign,

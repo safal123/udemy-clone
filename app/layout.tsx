@@ -6,6 +6,8 @@ import ToastProvider from '@/components/providers/ToastProvider'
 import ThemeProvider from '@/components/providers/ThemeProvider'
 import NextTopLoader from 'nextjs-toploader'
 import { Loading } from '@/components/shared/Loading'
+import {dark} from "@clerk/themes";
+import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +19,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+        elements: {
+          formButtonPrimary: "bg-primary text-white hover:bg-primary/60",
+        }
+      }}
+    >
       <html lang="en">
         <head>
           <meta charSet="utf-8" />
@@ -45,6 +54,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             enableSystem={true}
             disableTransitionOnChange
           >
+            <Toaster />
             <ToastProvider />
             <ClerkLoading>
               <Loading />
