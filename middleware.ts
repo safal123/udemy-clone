@@ -6,7 +6,11 @@ export default authMiddleware ({
     '/sign-up',
     '/api/uploadthing',
     '/api/courses/all',
-    '/api/webhooks/stripe'
+  ],
+
+  ignoredRoutes: [
+    '/api/webhooks/stripe',
+    '/api/webhooks/clerk',
   ]
 })
 
