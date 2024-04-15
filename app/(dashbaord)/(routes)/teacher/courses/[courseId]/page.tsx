@@ -99,15 +99,15 @@ const CoursePage = async ({params}: {
               </div>
               <div className={"mt-2 md:mt-0 cursor-pointer"}>
                 <TooltipButton tooltip={"Complete all fields to publish the course"}>
-                  <Badge variant={ 'default' } className={ 'bg-theme hover:bg-theme/90' }>
+                  <Badge variant={ 'secondary' }>
                     { completionText }
                   </Badge>
                 </TooltipButton>
               </div>
             </div>
             <div className={ 'relative' }>
-              <Progress value={ completedPercentage } className={ 'mt-4 bg-theme/60' }/>
-              <p className={ cn ('text-sky-100 absolute top-[-0.5px] left-[40%] text-xs') }>
+              <Progress value={ completedPercentage } className={ 'mt-4' }/>
+              <p className={ cn ('text-primary absolute top-[-0.5px] left-[40%] text-xs') }>
                 { Math.round (completedPercentage) }% completed
               </p>
             </div>

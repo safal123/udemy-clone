@@ -1,11 +1,14 @@
 import { db } from '@/lib/db'
-import { auth } from '@clerk/nextjs'
+import { auth, currentUser } from '@clerk/nextjs'
 import ProfileForm from '@/app/(dashbaord)/dashboard/profile/_components/ProfileForm'
 
-const getData = (userId: string) => {
-  return db.user.findUnique ({
+const getData = async () => {
+  const user = await currentUser ()
+  if (!user) return
+
+  let profile = await db.user.findUnique ({
     where: {
-      userId
+      userId: user.id
     },
     select: {
       firstName: true,
@@ -14,14 +17,23 @@ const getData = (userId: string) => {
       userId: true
     }
   })
+  if (!profile) {
+    profile = await db.user.create ({
+      data: {
+        userId: user.id,
+        email: user.emailAddresses[0].emailAddress,
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        stripeCustomerId: ''
+      }
+    })
+  }
+
+  return profile
 }
 
 const SettingPage = async () => {
-  const {userId} = auth ()
-  if (!userId) {
-    return
-  }
-  const data = await getData (userId)
+  const data = await getData ()
 
   async function postData (formData: FormData) {
     'use server'

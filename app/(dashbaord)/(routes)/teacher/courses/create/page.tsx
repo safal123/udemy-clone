@@ -38,13 +38,15 @@ const CreateCoursePage = () => {
       setIsCourseCreating(true)
       const response = await axios.post("/api/courses", values)
       await router.refresh()
+      window.location.replace(`/teacher/courses/${response.data.id}`)
       setTimeout(() => {
-        setIsCourseCreating(false);
         toast.success("Course created");
-        router.push(`/teacher/courses/${response.data.id}`);
+        window.location.replace(`/teacher/courses/${response.data.id}`)
       }, 2000);
     } catch (error) {
       toast.error("Something went wrong")
+    } finally {
+      setIsCourseCreating(false)
     }
   }
 

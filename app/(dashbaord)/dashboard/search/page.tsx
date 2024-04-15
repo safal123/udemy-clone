@@ -4,7 +4,7 @@ import {ScrollArea} from "@/components/ui/scroll-area";
 import CourseCard from "@/components/shared/CourseCard";
 import { Category, Course } from '.prisma/client'
 import {auth} from "@clerk/nextjs";
-import { getHasPurchased } from '@/actions/get-has-purchased'
+import { revalidatePath } from 'next/cache'
 
 const getCategories = async () => {
   return db.category.findMany({
@@ -26,6 +26,7 @@ const getCourses = async () => {
 
 
 const SearchPage = async () => {
+  revalidatePath('/dashboard/search')
   const categories = await getCategories()
   const courses = await getCourses()
 
