@@ -31,8 +31,8 @@ const AttachmentForm = ({initialData, courseId}: AttachmentProps) => {
       toast.success ('Course updated')
       toggleEditing ()
       router.refresh ()
-    } catch {
-      toast.error ('Something went wrong')
+    } catch(error) {
+      toast.error ('Please check the file size and format.')
     }
   }
 
@@ -43,7 +43,7 @@ const AttachmentForm = ({initialData, courseId}: AttachmentProps) => {
       toast.success ('Attachment deleted')
       setDeletingId (null)
       router.refresh ()
-    } catch {
+    } catch(error) {
       toast.error ('Something went wrong')
       setDeletingId (null)
     }

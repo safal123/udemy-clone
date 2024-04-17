@@ -2,8 +2,8 @@ import React from 'react'
 import { auth } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 import { db } from '@/lib/db'
-import CourseSidebar from '@/app/(course)/courses/[courseId]/_components/CourseSidebar'
-import { CourseNavbar } from '@/app/(course)/courses/[courseId]/_components/CourseNavbar'
+import CourseSidebar from '@/app/(courses)/courses/[courseId]/_components/CourseSidebar'
+import { CourseNavbar } from '@/app/(courses)/courses/[courseId]/_components/CourseNavbar'
 
 interface CourseLayoutProps {
   children: React.ReactNode;

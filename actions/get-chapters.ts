@@ -19,7 +19,12 @@ export const getChapter = async ({courseId, userId, chapterId}: GetChapterProps)
         }
       },
       include: {
-        course: true
+        course: {
+          include: {
+            attachments: true,
+          }
+        },
+        muxData: true,
       }
     })
 

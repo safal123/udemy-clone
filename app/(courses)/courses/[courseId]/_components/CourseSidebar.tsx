@@ -1,6 +1,6 @@
 import { Course } from '.prisma/client'
 import { Chapter } from '@prisma/client'
-import { CourseSidebarItem } from '@/app/(course)/courses/[courseId]/_components/CourseSidebarItem'
+import { CourseSidebarItem } from '@/app/(courses)/courses/[courseId]/_components/CourseSidebarItem'
 import { db } from '@/lib/db'
 import { auth } from '@clerk/nextjs'
 import CourseProgress from '@/components/shared/CourseProgress'

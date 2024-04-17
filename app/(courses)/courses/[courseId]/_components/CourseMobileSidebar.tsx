@@ -2,7 +2,7 @@ import { Menu } from 'lucide-react'
 import { Chapter, Course, UserProgress } from '@prisma/client'
 
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import CourseSidebar from '@/app/(course)/courses/[courseId]/_components/CourseSidebar'
+import CourseSidebar from '@/app/(courses)/courses/[courseId]/_components/CourseSidebar'
 
 
 interface CourseMobileSidebarProps {
