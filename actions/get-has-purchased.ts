@@ -9,10 +9,12 @@ interface GetHasPurchasedProps {
 
 export const getHasPurchased = async ({courseId, userId}: GetHasPurchasedProps) => {
   try {
-    const hasPurchased = await db.course.findUnique({
+    const hasPurchased = await db.purchase.findUnique({
       where: {
-        id: courseId,
-        userId,
+        userId_courseId: {
+          userId,
+          courseId
+        }
       }
     })
 

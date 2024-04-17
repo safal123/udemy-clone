@@ -1,7 +1,7 @@
 import React from 'react'
 import Sidebar from '@/app/(dashbaord)/_components/Sidebar'
 import MobileSidebar from '@/app/(dashbaord)/_components/MobileSidebar'
-import { NavbarRoutes } from '@/components/ui/shared/NavbarRoutes'
+import { NavbarRoutes } from '@/components/shared/NavbarRoutes'
 import { auth } from '@clerk/nextjs'
 
 export const revalidate = 0

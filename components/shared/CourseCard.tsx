@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation'
 import { FaEdit } from 'react-icons/fa'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
+import CourseProgress from '@/components/shared/CourseProgress'
+import { Simulate } from 'react-dom/test-utils'
 
 interface CourseCardProps {
   course: Course & { category: Category }
@@ -18,6 +20,7 @@ interface CourseCardProps {
 
 const CourseCard = ({course, isOwner}: CourseCardProps) => {
   const router = useRouter ()
+  const progress = 50
   return (
     <Card>
       <CardHeader>
@@ -49,6 +52,11 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
               </p> :
               <Badge className={ 'mt-8' }>Free</Badge>
           }
+          <CourseProgress
+            value={progress}
+            variant={progress > 0 ? 'success' : 'default'}
+            size={'sm'}
+            />
         </CardDescription>
       </CardHeader>
 

@@ -15,20 +15,6 @@ async function main () {
         {name: 'Engineering'}
       ]
     })
-
-    // create courses
-    const courses = []
-    for (let i = 0; i < 100; i++) {
-      courses.push ({
-        title: `Course ${ i + 1 }`,
-        description: `This is course ${ i + 1 }`,
-        price: Math.floor (Math.random () * 100),
-        categoryId: Math.floor (Math.random () * categories.length) + 1
-      })
-    }
-
-    await database.course.createMany ({data: courses})
-
   } catch (error) {
     console.error (error)
   } finally {

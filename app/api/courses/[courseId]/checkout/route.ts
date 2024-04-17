@@ -53,38 +53,23 @@ export async function POST (req: Request, {params}: { params: { courseId: string
     let stripeCustomer = await db.user.findUnique ({
       where: {
         userId
-      },
-      select: {
-        stripeCustomerId: true
       }
     })
+
 
     if (!stripeCustomer || !stripeCustomer.stripeCustomerId) {
       const customer = await stripe.customers.create ({
         email: user?.emailAddresses[0].emailAddress
       })
 
-      const data = {
-        stripeCustomerId: customer.id,
-        userId
-      }
-
-      // TODO: simplify this
-      if (!stripeCustomer) {
-        stripeCustomer = await db.user.create ({
-          data: {
-            ...data,
-            email: user?.emailAddresses[0].emailAddress!
-          }
-        })
-      } else {
-        stripeCustomer = await db.user.update ({
-          where: {
-            userId
-          },
-          data
-        })
-      }
+      stripeCustomer = await db.user.update ({
+        where: {
+          userId
+        },
+        data: {
+          stripeCustomerId: customer.id
+        },
+      })
     }
 
     const session = await stripe.checkout.sessions.create ({
@@ -98,8 +83,6 @@ export async function POST (req: Request, {params}: { params: { courseId: string
         userId
       }
     })
-
-    console.log ('[REORDER]', session)
 
     return NextResponse.json ({url: session.url})
   } catch (error) {

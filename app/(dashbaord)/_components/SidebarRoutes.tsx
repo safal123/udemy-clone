@@ -72,7 +72,7 @@ export const SidebarRoutes = () => {
   const routes = user ? isTeacherPage ? teacherRoutes : studentRoutes : guestRoutes
 
   return (
-    <div className={ 'flex flex-col w-full' }>
+    <div className={ 'flex flex-col w-full p-3 border-t' }>
       { routes.map ((route) => (
         <SidebarItem
           icon={ route.icon }

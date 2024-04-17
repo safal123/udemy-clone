@@ -6,7 +6,7 @@ const getData = async () => {
   const user = await currentUser ()
   if (!user) return
 
-  let profile = await db.user.findUnique ({
+  return  db.user.findUnique ({
     where: {
       userId: user.id
     },
@@ -14,22 +14,10 @@ const getData = async () => {
       firstName: true,
       lastName: true,
       email: true,
-      userId: true
+      userId: true,
+      imageUri: true
     }
   })
-  if (!profile) {
-    profile = await db.user.create ({
-      data: {
-        userId: user.id,
-        email: user.emailAddresses[0].emailAddress,
-        firstName: user.firstName || '',
-        lastName: user.lastName || '',
-        stripeCustomerId: ''
-      }
-    })
-  }
-
-  return profile
 }
 
 const SettingPage = async () => {
