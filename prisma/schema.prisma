@@ -90,7 +90,7 @@ model MuxData {
 
 model UserProgress {
   id          String   @id @default(uuid())
-  userId      String   @unique
+  userId      String
   chapterId   String
   chapter     Chapter  @relation(fields: [chapterId], references: [id])
   isCompleted Boolean  @default(false)

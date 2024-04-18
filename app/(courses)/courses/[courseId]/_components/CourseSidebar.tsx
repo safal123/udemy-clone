@@ -1,21 +1,25 @@
+'use server'
+
 import { Course } from '.prisma/client'
-import { Chapter } from '@prisma/client'
+import { Chapter, UserProgress } from '@prisma/client'
 import { CourseSidebarItem } from '@/app/(courses)/courses/[courseId]/_components/CourseSidebarItem'
 import { db } from '@/lib/db'
 import { auth } from '@clerk/nextjs'
 import CourseProgress from '@/components/shared/CourseProgress'
+import { getUserProgress } from '@/actions/get-user-progress'
 
 interface CourseSidebarProps {
   course: Course & {
-    chapters: (Chapter) []
-  }
+    chapters: (Chapter & {
+      userProgress: UserProgress[]
+    }) []
+  },
 }
 
 const CourseSidebar = async ({course}: CourseSidebarProps) => {
-  const isActive = true
-  const {userId} = auth()
+  const {userId} = auth ()
   if (!userId) return null
-  const purchase = await db.purchase.findUnique({
+  const purchase = await db.purchase.findUnique ({
     where: {
       userId_courseId: {
         userId,
@@ -23,6 +27,9 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
       }
     }
   })
+
+  const progress = await getUserProgress({ courseId: course.id, userId })
+
   return (
     <div className={ 'h-full border-r flex-col overflow-y-auto shadow-sm' }>
       <div className={ 'p-6 flex flex-col border-b' }>
@@ -30,18 +37,18 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
           { course.title }
         </h1>
       </div>
-      {purchase && <CourseProgress
-        value={20}
-        variant={100 > 0 ? 'success' : 'default'}
-        size={'default'}
-      />}
+      { purchase && <CourseProgress
+        value={ progress as number }
+        variant={ 100 > 0 ? 'success' : 'default' }
+        size={ 'default' }
+      /> }
       <div className={ 'flex flex-col w-full' }>
         { course.chapters.map ((chapter) => (
           <CourseSidebarItem
             key={ chapter.id }
             label={ chapter.title }
-            id={ chapter.id }
-            isCompleted={ false }
+            chapterId={ chapter.id }
+            isCompleted={ !!chapter.userProgress[0]?.isCompleted }
             courseId={ course.id }
             isLocked={ chapter.isFree }
           />

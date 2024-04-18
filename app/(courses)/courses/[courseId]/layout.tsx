@@ -26,6 +26,13 @@ const CourseLayout =
           where: {
             isPublished: true
           },
+          include: {
+            userProgress: {
+              where: {
+                userId
+              }
+            }
+          },
           orderBy: {
             order: 'asc'
           }
