@@ -28,7 +28,7 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
     }
   })
 
-  const progress = await getUserProgress({ courseId: course.id, userId })
+  const progress = await getUserProgress ({courseId: course.id, userId})
 
   return (
     <div className={ 'h-full border-r flex-col overflow-y-auto shadow-sm' }>
@@ -48,7 +48,7 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
             key={ chapter.id }
             label={ chapter.title }
             chapterId={ chapter.id }
-            isCompleted={ !!chapter.userProgress?.[0].isCompleted || false }
+            isCompleted={ chapter.userProgress ? chapter.userProgress[0].isCompleted : false }
             courseId={ course.id }
             isLocked={ chapter.isFree }
           />

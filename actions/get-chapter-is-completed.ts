@@ -24,7 +24,8 @@ export const getChapterIsCompleted = async ({courseId, userId, chapterId}: GetCh
         isCompleted: true
       }
     })
-    return chapterProgress ? chapterProgress.isCompleted : false
+
+    return chapterProgress ? chapterProgress?.isCompleted : false
   } catch (error) {
     console.error ('[GET_CHAPTER_IS_COMPLETED]', error)
     return {

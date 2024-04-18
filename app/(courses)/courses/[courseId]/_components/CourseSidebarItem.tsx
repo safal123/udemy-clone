@@ -16,7 +16,7 @@ export const CourseSidebarItem =
   ({
      label,
      chapterId,
-     isCompleted = false,
+     isCompleted,
      courseId,
      isLocked = true
    }: CourseSidebarItemProps) => {

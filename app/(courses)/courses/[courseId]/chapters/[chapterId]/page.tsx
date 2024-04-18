@@ -26,7 +26,7 @@ const ChapterIdPage =
 
     const isLocked = !chapter.isFree
     const {hasPurchased} = await getHasPurchased ({userId, courseId: params.courseId})
-    const isCompleted = false
+    const isCompleted = await getChapterIsCompleted ({courseId: params.courseId, userId, chapterId: params.chapterId})
 
     // /courses/05c20586-e576-4345-a1bc-1ee1e714b723
 
