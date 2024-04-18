@@ -4,8 +4,10 @@ import { CourseMobileSidebar } from '@/app/(courses)/courses/[courseId]/_compone
 
 interface CourseNavbarProps {
   course: Course & {
-    chapters: (Chapter)[];
-  };
+    chapters: (Chapter & {
+      userProgress: UserProgress[] | null
+    }) []
+  },
 }
 
 export const CourseNavbar =
