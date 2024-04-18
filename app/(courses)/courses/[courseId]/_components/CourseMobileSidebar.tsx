@@ -7,8 +7,10 @@ import CourseSidebar from '@/app/(courses)/courses/[courseId]/_components/Course
 
 interface CourseMobileSidebarProps {
   course: Course & {
-    chapters: (Chapter)[];
-  };
+    chapters: (Chapter & {
+      userProgress: UserProgress[] | null
+    }) []
+  },
 }
 
 export const CourseMobileSidebar =
