@@ -35,7 +35,7 @@ export const CourseSidebarItem =
         onClick={ onClick }
         type="button"
         className={ cn (
-          'flex items-center gap-x-2 text-sm font-[500] pl-6 transition-all',
+          'w-full flex items-center gap-x-2 text-sm font-[500] pl-6 transition-all',
           isActive && 'bg-slate-800 text-slate-100'
         ) }
       >

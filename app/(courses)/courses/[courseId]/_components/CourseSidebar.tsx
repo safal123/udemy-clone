@@ -44,14 +44,16 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
       /> }
       <div className={ 'flex flex-col w-full' }>
         { course.chapters.map ((chapter) => (
-          <CourseSidebarItem
-            key={ chapter.id }
-            label={ chapter.title }
-            chapterId={ chapter.id }
-            isCompleted={ chapter.userProgress ? chapter.userProgress[0].isCompleted : false }
-            courseId={ course.id }
-            isLocked={ chapter.isFree }
-          />
+          <div key={ chapter.id }>
+            <CourseSidebarItem
+              key={ chapter.id }
+              label={ chapter.title }
+              chapterId={ chapter.id }
+              isCompleted={ false }
+              courseId={ course.id }
+              isLocked={ chapter.isFree }
+            />
+          </div>
         )) }
       </div>
     </div>
