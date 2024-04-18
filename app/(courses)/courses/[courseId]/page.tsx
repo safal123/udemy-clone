@@ -25,10 +25,13 @@ const CoursePage =
       redirect('/')
     }
 
-    await redirect(`/courses/${ params.courseId }/chapters/${ course.chapters[0].id }`)
+    // await redirect(`/courses/${ params.courseId }/chapters/${ course.chapters[0].id }`)
 
     return (
       <>
+        <pre>
+          { JSON.stringify(course, null, 2) }
+        </pre>
         <h1>{ course.title }</h1>
       </>
     )
