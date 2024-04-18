@@ -24,9 +24,9 @@ export const getChapterIsCompleted = async ({courseId, userId, chapterId}: GetCh
         isCompleted: true
       }
     })
-
+    console.log ('[GET_CHAPTER_IS_COMPLETED]', isCompleted)
     return {
-      isCompleted: isCompleted ? isCompleted.isCompleted : false
+      isCompleted: !!isCompleted?.isCompleted || false
     }
   } catch (error) {
     console.error ('[GET_CHAPTER_IS_COMPLETED]', error)

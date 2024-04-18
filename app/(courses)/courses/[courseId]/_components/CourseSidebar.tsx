@@ -32,7 +32,7 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
 
   return (
     <div className={ 'h-full border-r flex-col overflow-y-auto shadow-sm' }>
-      <div className={ 'p-6 flex flex-col border-b' }>
+      <div className={ 'h-[73px] flex flex-col border-b items-center justify-center' }>
         <h1 className={ 'font-semibold' }>
           { course.title }
         </h1>
