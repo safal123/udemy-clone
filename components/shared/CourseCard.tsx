@@ -11,7 +11,6 @@ import { FaEdit } from 'react-icons/fa'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 import CourseProgress from '@/components/shared/CourseProgress'
-import { Simulate } from 'react-dom/test-utils'
 
 interface CourseCardProps {
   course: Course & { category: Category }
@@ -38,12 +37,13 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
           </Link>
         </CardImage>
         <CardDescription className={ 'flex flex-col space-y-2 pt-4' }>
-          <h3 className={ 'flex items-center text-lg md:text-base font-medium group-hover:text-sky-700 transition line-clamp-2' }>
+          <h3
+            className={ 'flex items-center text-lg md:text-base font-medium group-hover:text-sky-700 transition line-clamp-2' }>
             <Book className={ 'h-4 w-4 mr-1' }/>
             <span>{ course.title }</span>
           </h3>
           <p className="text-xs text-muted-foreground">
-            {course.category?.name}
+            { course.category?.name }
           </p>
           {
             course?.price ?
@@ -53,10 +53,10 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
               <Badge className={ 'mt-8' }>Free</Badge>
           }
           <CourseProgress
-            value={progress}
-            variant={progress > 0 ? 'success' : 'default'}
-            size={'sm'}
-            />
+            value={ progress }
+            variant={ progress > 0 ? 'success' : 'default' }
+            size={ 'sm' }
+          />
         </CardDescription>
       </CardHeader>
 
