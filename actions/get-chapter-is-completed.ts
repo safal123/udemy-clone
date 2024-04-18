@@ -10,7 +10,7 @@ interface GetChapterIsCompletedProps {
 
 export const getChapterIsCompleted = async ({courseId, userId, chapterId}: GetChapterIsCompletedProps) => {
   try {
-    const isCompleted = await db.userProgress.findUnique ({
+    const chapterProgress = await db.userProgress.findUnique ({
       where: {
         userId_chapterId: {
           userId,
@@ -24,10 +24,7 @@ export const getChapterIsCompleted = async ({courseId, userId, chapterId}: GetCh
         isCompleted: true
       }
     })
-    console.log ('[GET_CHAPTER_IS_COMPLETED]', isCompleted)
-    return {
-      isCompleted: !!isCompleted?.isCompleted || false
-    }
+    return chapterProgress ? chapterProgress.isCompleted : false
   } catch (error) {
     console.error ('[GET_CHAPTER_IS_COMPLETED]', error)
     return {

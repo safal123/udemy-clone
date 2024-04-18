@@ -26,7 +26,8 @@ const ChapterIdPage =
 
     const isLocked = !chapter.isFree
     const {hasPurchased} = await getHasPurchased ({userId, courseId: params.courseId})
-    const {isCompleted} = await getChapterIsCompleted ({courseId: params.courseId, userId, chapterId: params.chapterId})
+    const isCompleted = await getChapterIsCompleted ({courseId: params.courseId, userId, chapterId: params.chapterId})
+
 
     return (
       <>
@@ -37,7 +38,7 @@ const ChapterIdPage =
         <div className="flex flex-col max-w-3xl px-2 mx-auto">
           <div className="relative">
             { chapter?.muxData && chapter?.muxData.playbackId &&
-              <VideoPlayer chapter={ chapter } userId={ userId } isCompleted={ isCompleted }/> }
+              <VideoPlayer chapter={ chapter } userId={ userId } isCompleted={ isCompleted as boolean }/> }
             { isLocked && !hasPurchased &&
               <div
                 className="z-90 flex flex-col w-full p-12 space-y-12 mx-auto h-full absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -56,7 +57,11 @@ const ChapterIdPage =
                   { chapter?.title }
                   { !hasPurchased && <CourseEnrolButton course={ chapter.course }/> }
                   { hasPurchased &&
-                    <ToggleChapterCompleted chapter={ chapter } isCompleted={ isCompleted } userId={ userId }/> }
+                    <ToggleChapterCompleted
+                      chapter={ chapter }
+                      isCompleted={ isCompleted as boolean }
+                      userId={ userId }/>
+                  }
                 </div>
               </CardHeader>
             </Card>
