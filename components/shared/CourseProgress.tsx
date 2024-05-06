@@ -26,14 +26,15 @@ const CourseProgress =
    }: CourseProgressProps) => {
     return (
       <div className="p-2">
-       <Progress
-         value={ value }
-         className={ `h-2` }
-         variant={ variant }
-        />
-        <Button variant={'secondary'} className={"mt-2 rounded-full w-full"}>
-          <span className={cn('font-medium py-1 px-2 rounded-full', colorByVariant[variant] || 'default', sizeByVariant[size] || 'default')}>
-            { Math.round(value) }% Complete
+        { value > 0 && <Progress
+          value={ value }
+          className={ `h-2` }
+          variant={ variant }
+        /> }
+        <Button variant={ 'secondary' } className={ 'mt-2 rounded-full w-full' }>
+          <span
+            className={ cn ('font-medium py-1 px-2 rounded-full', colorByVariant[variant] || 'default', sizeByVariant[size] || 'default') }>
+            { Math.round (value) }% Complete
           </span>
         </Button>
       </div>

@@ -13,7 +13,7 @@ const Layout =
     const {userId} = auth ()
     return (
       <div className={ 'min-h-screen bg-background' }>
-        <div className={ 'h-[80px] fixed w-full inset-y-0 z-50' }>
+        <div className={ 'h-[80px] fixed w-full inset-y-0 z-50 bg-background' }>
           <div
             className={ 'flex items-center justify-between h-full p-4 border-b shadow-sm lg:px-16' }>
             <MobileSidebar/>

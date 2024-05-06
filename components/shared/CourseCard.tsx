@@ -18,7 +18,10 @@ import { getHasPurchased } from '@/actions/get-has-purchased'
 import CourseEnrolButton from '@/app/(courses)/courses/[courseId]/chapters/[chapterId]/_components/CourseEnrolButton'
 
 interface CourseCardProps {
-  course: Course & { category: Category }
+  course: Course & {
+    category: Category ,
+    chapters: any
+  }
   isOwner?: boolean
 }
 
@@ -36,7 +39,6 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
       })
       setProgress (progress as number)
     }
-
     const checkPurchase = async () => {
       const {hasPurchased} = await getHasPurchased ({
         courseId: course.id,
@@ -75,16 +77,26 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
           </p>
           {
             course?.price ?
-              <p className={ 'text-md md:text-sm font-medium text-slate-700 dark:text-white' }>
-                { formatPrice (course?.price) }
+              <p
+                className={ 'text-md md:text-sm font-medium text-slate-700 dark:text-white flex items-center justify-between' }>
+                <span className={ 'font-bold text-lg md:text-base' }>
+                  { formatPrice (course?.price) }
+                </span>
+                <Badge className={ 'ml-12' }>
+                  { course.chapters && course?.chapters?.length }
+                  {course?.chapters?.length > 1 ? ' Lectures' : ' Lecture'}
+                </Badge>
               </p> :
-              <Badge className={ 'mt-8' }>Free</Badge>
+              <>
+                <Badge className={ 'mt-8' }>Free</Badge>
+              </>
           }
-          <CourseProgress
+
+          { user && <CourseProgress
             value={ progress }
             variant={ progress > 0 ? 'success' : 'default' }
             size={ 'sm' }
-          />
+          /> }
         </CardDescription>
       </CardHeader>
 
@@ -100,13 +112,25 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
           </Button>
         </CardFooter>
       }
-
-      { !isOwner && ! hasPurchase ?
+      { !isOwner && !hasPurchase &&
         <CardFooter>
           <CourseEnrolButton course={ course }/>
         </CardFooter>
-        :
-        ''
+      }
+      { !isOwner && hasPurchase &&
+        <CardFooter>
+          <Button
+            onClick={ () => router.push (`/courses/${ course.id }`) }
+            className="w-full bg-theme hover:bg-theme/80">
+            {
+              progress > 0 ?
+                progress === 100 ?
+                  'Completed' :
+                  'Continue' :
+                'Start'
+            }
+          </Button>
+        </CardFooter>
       }
     </Card>
   )

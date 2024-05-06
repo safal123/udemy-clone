@@ -6,7 +6,9 @@ import { formatPrice } from '@/lib/format'
 import { Course } from '.prisma/client'
 import toast from 'react-hot-toast'
 import axios from 'axios'
-import { Check, DollarSign, Loader2 } from 'lucide-react'
+import { CircleCheck, Loader2 } from 'lucide-react'
+import { useUser } from '@clerk/nextjs'
+import { useRouter } from 'next/navigation'
 
 interface CourseEnrolButtonProps {
   course: Course
@@ -14,13 +16,20 @@ interface CourseEnrolButtonProps {
 
 const CourseEnrolButton = ({course}: CourseEnrolButtonProps) => {
   const [isLoading, setIsLoading] = useState (false)
+  const {user} = useUser ()
+  const router = useRouter ()
   if (!course.price) return null
 
   const handleEnrollment = async () => {
+    if (!user) {
+      toast.error ('You need to login to enroll for the course')
+      router.push ('/signin')
+      return
+    }
     try {
       setIsLoading (true)
-      const response = await axios.post(`/api/courses/${course.id}/checkout`)
-      await window.location.assign(response.data.url)
+      const response = await axios.post (`/api/courses/${ course.id }/checkout`)
+      await window.location.assign (response.data.url)
     } catch (error) {
       console.error (error)
       toast.error ('Failed to enroll for the course')
@@ -31,10 +40,10 @@ const CourseEnrolButton = ({course}: CourseEnrolButtonProps) => {
   return (
     <Button
       onClick={ handleEnrollment }
-      disabled={ isLoading}
+      disabled={ isLoading }
       className={ 'w-full' }
     >
-      { isLoading ? <Loader2 className={ 'mr-2 animate-spin' }/> : <Check className={ 'mr-2 h-4 w-4' }/> }
+      { isLoading ? <Loader2 className={ 'mr-2 animate-spin' }/> : <CircleCheck className={ 'mr-2 h-4 w-4' }/> }
       Enroll for { formatPrice (course?.price) }
     </Button>
   )
