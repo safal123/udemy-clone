@@ -15,6 +15,9 @@ import {Course} from ".prisma/client";
 import {Chapter} from "@prisma/client";
 import {Editor} from "@/components/shared/Editor";
 import {Preview} from "@/components/shared/Preview";
+import Title from '@/components/shared/Title'
+import AddEditButton from '@/components/shared/AddEditButton'
+import SubmitButton from '@/components/shared/SubmitButton'
 
 interface ChapterDescriptionFormProps {
   chapter: Chapter,
@@ -56,22 +59,14 @@ const ChapterDescriptionForm = ({chapter, courseId, chapterId}: ChapterDescripti
   }
 
   return (
-    <div className={"mt-6 border bg-slate-100 rounded-md p-4"}>
+    <div className={"mt-6 border rounded-md p-4"}>
       <div className={"font-medium flex items-center justify-between"}>
-        <h2 className={"text-xl"}>Chapter Description</h2>
-        <Button variant={"ghost"} onClick={toggleEditing}>
-          {isEditing ?
-            <>
-              Cancel
-            </>
-            :
-            <>
-              <Pencil className={"h-4 w-4 mr-2"}/>
-              Edit Description
-            </>
-          }
-
-        </Button>
+        <Title title={ 'Chapter Description' }/>
+        <AddEditButton
+          tooltip={ !isEditing ? 'Edit description' : 'Cancel editing' }
+          isEditing={ isEditing }
+          toggleEditing={ toggleEditing }
+        />
       </div>
       {!isEditing ? <>
           <p className={"text-sm mt-2 text-slate-500"}>
@@ -95,14 +90,11 @@ const ChapterDescriptionForm = ({chapter, courseId, chapterId}: ChapterDescripti
                   </FormItem>
                 )}
               />
-              <div className={"flex items-center gap-x-2"}>
-                <Button
-                  type={"submit"}
-                  disabled={!isValid || isSubmitting}
-                >
-                  Save
-                </Button>
-              </div>
+              <SubmitButton
+                isSubmitting={ isSubmitting }
+                savingText={ 'Please wait' }
+                defaultText={ 'Save' }
+              />
             </form>
           </Form>
         </>

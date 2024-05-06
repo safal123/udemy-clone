@@ -2,7 +2,7 @@
 
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
-import {Trash} from "lucide-react";
+import { Loader2, Trash } from 'lucide-react'
 import ConfirmModal from "@/components/shared/ConfirmModal";
 import React from "react";
 import axios from "axios";
@@ -34,6 +34,7 @@ const DeleteCourse = ({courseId}: DeleteCourseProps) => {
   return (
     <ConfirmModal onConfirm={onDelete}>
       <Button variant="outline" disabled={isLoading}>
+        {isLoading && <Loader2 className={"h-6 w-6 text-gray-500 animate-spin"}/>}
         <Trash className={"h-6 w-6 text-gray-500 animate-pulse"}/>
       </Button>
     </ConfirmModal>

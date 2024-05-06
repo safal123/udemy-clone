@@ -1,10 +1,10 @@
 'use client'
-
-import MuxPlayer from '@mux/mux-player-react/lazy'
+import { useState } from 'react'
 import { Chapter, MuxData } from '@prisma/client'
 import axios from 'axios'
 import { toast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
+import Video from 'next-video'
 
 type VideoPlayerProps = {
   chapter: Chapter & { muxData?: MuxData | null }
@@ -14,12 +14,14 @@ type VideoPlayerProps = {
 
 const VideoPlayer = ({chapter, userId, isCompleted}: VideoPlayerProps) => {
   const router = useRouter ()
-  if (!chapter?.muxData) {
+  const [isMarkingAsCompleted, setIsMarkingAsCompleted] = useState<boolean> (false)
+  if (!chapter?.videoUrl) {
     return null
   }
   const markAsCompleted = async () => {
     if (isCompleted) return
     try {
+      setIsMarkingAsCompleted (true)
       await axios.patch (`/api/courses/${ chapter.courseId }/chapters/${ chapter.id }/toggleIsCompleted`, {
         isCompleted: true
       })
@@ -30,21 +32,24 @@ const VideoPlayer = ({chapter, userId, isCompleted}: VideoPlayerProps) => {
       })
     } catch (e) {
       console.error ('Error marking chapter as complete', e)
+    } finally {
+      setIsMarkingAsCompleted (false)
     }
   }
   return (
     <div className={ 'w-full h-full' }>
-      <MuxPlayer
-        playbackId={ chapter?.muxData.playbackId || '' }
-        loading={ 'viewport' }
-        stream-type={ 'on-demand' }
-        metadataViewerUserId={ userId || '' }
+      <Video
+        src={ chapter?.videoUrl }
+        controls
+        title={ chapter?.title }
+        streamType={ 'on-demand' }
         onEnded={ markAsCompleted }
-        thumbnailTime={ 0 }
-        primaryColor={ '#f87315' }
-        title={ chapter?.title || '' }
         style={ {
-          aspectRatio: 16 / 9
+          aspectRatio: 16 / 9,
+          width: '100%',
+          height: '100%',
+          borderRadius: '8px',
+          padding: '4px'
         } }
       />
     </div>

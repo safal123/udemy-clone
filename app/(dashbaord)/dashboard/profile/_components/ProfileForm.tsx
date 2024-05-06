@@ -86,7 +86,11 @@ const ProfileForm = ({data, postData}: ProfileFormProps) => {
             </div>
           </CardContent>
           <CardFooter>
-            <SubmitButton/>
+            <SubmitButton
+              defaultText={ 'Save'}
+              isSubmitting={ false }
+              savingText={ 'Saving...'}
+            />
           </CardFooter>
         </form>
       </Card>

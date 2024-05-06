@@ -28,18 +28,20 @@ const ChapterIdPage =
     const {hasPurchased} = await getHasPurchased ({userId, courseId: params.courseId})
     const isCompleted = await getChapterIsCompleted ({courseId: params.courseId, userId, chapterId: params.chapterId})
 
-    // /courses/05c20586-e576-4345-a1bc-1ee1e714b723
-
     return (
       <>
-        <div className={ 'p-2 max-w-3xl mx-auto' }>
+        <div className={ 'p-2  mx-auto' }>
           { isCompleted && <Banner label={ 'You have completed this chapter' } variant={ 'success' }/> }
           { !hasPurchased && isLocked && <Banner label={ 'This chapter is locked' } variant={ 'warning' }/> }
         </div>
-        <div className="flex flex-col max-w-3xl px-2 mx-auto">
+        <div className="flex flex-col px-2 mx-auto">
           <div className="relative">
-            { chapter?.muxData && chapter?.muxData.playbackId &&
-              <VideoPlayer chapter={ chapter } userId={ userId } isCompleted={ isCompleted as boolean }/> }
+            { chapter?.videoUrl &&
+              <VideoPlayer
+                chapter={ chapter }
+                userId={ userId }
+                isCompleted={ isCompleted as boolean }/>
+            }
             { isLocked && !hasPurchased &&
               <div
                 className="z-90 flex flex-col w-full p-12 space-y-12 mx-auto h-full absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">

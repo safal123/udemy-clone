@@ -78,9 +78,11 @@ const CoursePage = async ({params}: {
 
   return (
     <>
-      { !course.isPublished && (
-        <Banner label="This course is unpublished. It will not be visible to the students."/>
-      ) }
+      <div className={'p-2'}>
+        { !course.isPublished && (
+          <Banner label="This course is unpublished. It will not be visible to the students."/>
+        ) }
+      </div>
       <div className={ 'p-6' }>
         <div className={ 'flex items-center justify-between space-x-2' }>
           <h1 className={ 'text-2xl font-bold' }>

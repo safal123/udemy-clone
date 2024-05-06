@@ -54,12 +54,14 @@ const ChapterPage = async ({params}: {
 
   return (
     <>
-      { !chapter.isPublished && (
-        <Banner
-          variant="warning"
-          label="This chapter is unpublished. It will not be visible in the course"
-        />
-      ) }
+      <div className={'p-2'}>
+        { !chapter.isPublished && (
+          <Banner
+            variant="warning"
+            label="This chapter is unpublished. It will not be visible in the course"
+          />
+        ) }
+      </div>
       <div className={ 'p-6' }>
         <div className={ 'flex flex-col md:flex-row space-y-4 md:space-y-0 items-center justify-between space-x-2' }>
           <div className="flex items-center justify-between space-x-2 w-full md:w-auto ">
