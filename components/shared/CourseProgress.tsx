@@ -31,7 +31,7 @@ const CourseProgress =
          className={ `h-2` }
          variant={ variant }
         />
-        <Button variant={'outline'} className={"mt-2 rounded-full w-full"}>
+        <Button variant={'secondary'} className={"mt-2 rounded-full w-full"}>
           <span className={cn('font-medium py-1 px-2 rounded-full', colorByVariant[variant] || 'default', sizeByVariant[size] || 'default')}>
             { Math.round(value) }% Complete
           </span>

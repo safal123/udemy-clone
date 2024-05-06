@@ -5,14 +5,16 @@ import axios from 'axios'
 import { toast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
 import Video from 'next-video'
+import { Course } from '.prisma/client'
 
 type VideoPlayerProps = {
-  chapter: Chapter & { muxData?: MuxData | null }
+  chapter: Chapter & { course?: Course  }
   userId: string | null
-  isCompleted: boolean
+  isCompleted: boolean,
+  disabled: boolean
 }
 
-const VideoPlayer = ({chapter, userId, isCompleted}: VideoPlayerProps) => {
+const VideoPlayer = ({chapter, userId, isCompleted, disabled}: VideoPlayerProps) => {
   const router = useRouter ()
   const [isMarkingAsCompleted, setIsMarkingAsCompleted] = useState<boolean> (false)
   if (!chapter?.videoUrl) {
@@ -40,17 +42,16 @@ const VideoPlayer = ({chapter, userId, isCompleted}: VideoPlayerProps) => {
     <div className={ 'w-full h-full' }>
       <Video
         src={ chapter?.videoUrl }
-        controls
+        controls = { !disabled }
         title={ chapter?.title }
         streamType={ 'on-demand' }
         onEnded={ markAsCompleted }
-        style={ {
-          aspectRatio: 16 / 9,
+        style={{
+          // make fit for the 100vh-30rem
+          aspectRatio: '16 / 9',
           width: '100%',
-          height: '100%',
-          borderRadius: '8px',
-          padding: '4px'
-        } }
+          height: '100%'
+        }}
       />
     </div>
   )

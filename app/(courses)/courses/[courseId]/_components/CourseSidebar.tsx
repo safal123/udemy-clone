@@ -31,27 +31,30 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
   const progress = await getUserProgress ({courseId: course.id, userId})
 
   return (
-    <div className={ 'h-full border-r flex-col overflow-y-auto shadow-sm' }>
+    <div className={ 'h-full border-r flex-col overflow-y-auto shadow-sm bg-background' }>
       <div className={ 'h-[73px] flex flex-col border-b items-center justify-center' }>
         <h1 className={ 'font-semibold' }>
           { course.title }
         </h1>
       </div>
-      { purchase && <CourseProgress
-        value={ progress as number }
-        variant={ 100 > 0 ? 'success' : 'default' }
-        size={ 'default' }
-      /> }
+      { purchase &&
+        <CourseProgress
+          value={ progress as number }
+          variant={ 100 > 0 ? 'success' : 'default' }
+          size={ 'default' }
+        />
+      }
       <div className={ 'flex flex-col w-full' }>
         { course.chapters.map ((chapter) => (
           <div key={ chapter.id }>
             <CourseSidebarItem
+              progress={ progress as number }
               key={ chapter.id }
               label={ chapter.title }
               chapterId={ chapter.id }
-              isCompleted={ false }
+              isCompleted={ true }
               courseId={ course.id }
-              isLocked={ chapter.isFree }
+              isFree={ chapter.isFree }
             />
           </div>
         )) }

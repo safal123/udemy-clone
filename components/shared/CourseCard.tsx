@@ -11,6 +11,11 @@ import { FaEdit } from 'react-icons/fa'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 import CourseProgress from '@/components/shared/CourseProgress'
+import { useEffect, useState } from 'react'
+import { getUserProgress } from '@/actions/get-user-progress'
+import { useUser } from '@clerk/nextjs'
+import { getHasPurchased } from '@/actions/get-has-purchased'
+import CourseEnrolButton from '@/app/(courses)/courses/[courseId]/chapters/[chapterId]/_components/CourseEnrolButton'
 
 interface CourseCardProps {
   course: Course & { category: Category }
@@ -19,7 +24,30 @@ interface CourseCardProps {
 
 const CourseCard = ({course, isOwner}: CourseCardProps) => {
   const router = useRouter ()
-  const progress = 50
+  const [progress, setProgress] = useState<number> (0)
+  const [hasPurchase, setHasPurchase] = useState<boolean> (false)
+  const {user} = useUser ()
+
+  useEffect (() => {
+    const getProgress = async () => {
+      const progress = await getUserProgress ({
+        courseId: course.id,
+        userId: user?.id as string
+      })
+      setProgress (progress as number)
+    }
+
+    const checkPurchase = async () => {
+      const {hasPurchased} = await getHasPurchased ({
+        courseId: course.id,
+        userId: user?.id as string
+      })
+      setHasPurchase (hasPurchased)
+    }
+    checkPurchase ()
+    getProgress ()
+  }, [])
+
   return (
     <Card>
       <CardHeader>
@@ -71,6 +99,14 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
             Edit Course
           </Button>
         </CardFooter>
+      }
+
+      { !isOwner && ! hasPurchase ?
+        <CardFooter>
+          <CourseEnrolButton course={ course }/>
+        </CardFooter>
+        :
+        ''
       }
     </Card>
   )

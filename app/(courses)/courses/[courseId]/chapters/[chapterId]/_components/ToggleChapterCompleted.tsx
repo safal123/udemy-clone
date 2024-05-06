@@ -46,12 +46,12 @@ const ToggleChapterCompleted = ({chapter, isCompleted, userId}: ToggleChapterCom
       disabled={ isProcessing }
       onClick={ handleChapterComplete }
       className={ cn (isProcessing && 'bg-primary/90 cursor') }
-      variant={ isCompleted ? 'outline' : 'default' }
+      variant={ isCompleted ? 'secondary' : 'default' }
     >
       { isProcessing ? <Loader2 className={ 'mr-2 h-4 w-4 animate-spin' }/> :
         isCompleted ? <Check className={ 'mr-2 h-4 w-4' }/> :
           <CircleCheck className={ 'mr-2 h-4 w-4' }/> }
-      { isCompleted ? 'Mark as incomplete' : 'Mark as completed' }
+      { isCompleted ? 'Completed' : 'Mark as completed' }
     </Button>
   )
 }

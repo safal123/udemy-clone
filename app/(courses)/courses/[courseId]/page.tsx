@@ -25,6 +25,10 @@ const CoursePage =
       redirect('/')
     }
 
+    if (course && course.chapters.length && course.isPublished) {
+      return redirect(`/courses/${params.courseId}/chapters/${course.chapters[0].id}`)
+    }
+
     return (
       <>
         <h1>{ course.title }</h1>
