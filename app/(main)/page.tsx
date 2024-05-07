@@ -22,12 +22,15 @@ const HomePage = async () => {
 
   return (
     <section className="px-4 lg:px-12 py-6">
-      <div className="relative py-16 px-16 bg-white shadow-md rounded-md  bg-gradient-to-r from-cyan-900 to-blue-800 dark:from-slate-800 dark:to-slate-900">
+      <div className="relative py-2 px-16 bg-white shadow-md rounded-md
+        bg-gradient-to-r from-cyan-900 to-blue-800
+        dark:bg-gradient-to-tr dark:from-slate-900 dark:via-gray-800 dark:to-amber-900"
+      >
         <HomePageCarousel
           images={images as any}
         />
       </div>
-      <div className="grid gap-6 items-stretch pt-2 mx-auto md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-6 items-stretch pt-6 mx-auto md:grid-cols-2 xl:grid-cols-4">
         {courses?.map((course: any) => (
           <div key={course.id} className="">
             <CourseCard course={course} />

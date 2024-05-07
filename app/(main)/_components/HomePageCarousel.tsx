@@ -22,25 +22,25 @@ const HomePageCarousel
         { images.map ((image, index) => (
           <CarouselItem key={ index }>
             <div className={ 'h-96 gap-4 flex items-center justify-between' }>
-              <div className={ 'hidden lg:flex flex-col items-center justify-center flex-1 rounded-lg' }>
-                <h1 className={ 'text-[12px] xl:text-4xl text-white font-bold mb-2' }>
+              <div className={ 'hidden xl:flex flex-col items-center justify-center flex-1 rounded-lg' }>
+                <h1 className={ 'text-4xl text-white font-bold mb-2' }>
                   { image.title }
                 </h1>
                 <Button>
                   Enroll Now for { formatPrice(image.price)}
                 </Button>
               </div>
-              <div className={ 'w-full lg:w-[600px] h-full relative' }>
+              <div className={ 'w-full xl:w-[600px] h-full relative' }>
                 <Image
                   src={ image.src }
                   alt=""
-                  width={ 700 }
-                  height={ 700 }
-                  className={ 'rounded-lg h-full w-full' }
+                  width={ 200 }
+                  height={ 250 }
+                  className={ 'rounded-md w-full h-96 object-cover' }
                 />
-                <div className={ 'lg:hidden absolute inset-0 bg-gradient-to-r from-transparent to-black' }>
+                <div className={ 'xl:hidden absolute inset-0 bg-gradient-to-r from-transparent to-black' }>
                   <div className={ 'flex flex-col items-center justify-center h-full text-white' }>
-                    <h1 className={ 'text-[12px] xl:text-4xl font-bold mb-2' }>
+                    <h1 className={ 'text-2xl font-bold mb-2' }>
                       { image.title }
                     </h1>
                     <Button>
