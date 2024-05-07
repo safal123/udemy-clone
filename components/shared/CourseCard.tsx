@@ -19,7 +19,7 @@ import CourseEnrolButton from '@/app/(courses)/courses/[courseId]/chapters/[chap
 
 interface CourseCardProps {
   course: Course & {
-    category: Category ,
+    category: Category,
     chapters: any
   }
   isOwner?: boolean
@@ -84,7 +84,7 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
                 </span>
                 <Badge className={ 'ml-12' }>
                   { course.chapters && course?.chapters?.length }
-                  {course?.chapters?.length > 1 ? ' Lectures' : ' Lecture'}
+                  { course?.chapters?.length > 1 ? ' Lectures' : ' Lecture' }
                 </Badge>
               </p> :
               <>
@@ -92,7 +92,7 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
               </>
           }
 
-          { user && <CourseProgress
+          { user && hasPurchase && <CourseProgress
             value={ progress }
             variant={ progress > 0 ? 'success' : 'default' }
             size={ 'sm' }

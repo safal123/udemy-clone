@@ -12,7 +12,12 @@ export async function GET(req: Request) {
         createdAt: "desc"
       },
       include: {
-        category: true
+        category: true,
+        chapters: {
+          where: {
+            isPublished: true
+          }
+        }
       }
     })
     return NextResponse.json(courses)
