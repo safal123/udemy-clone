@@ -43,7 +43,7 @@ const SearchPage = async () => {
         <Categories items={categories}/>
       </ScrollArea>
       <div className={"grid xl:grid-cols-4 grid-cols-1 sm:grid-cols-2 gap-4 mt-4"}>
-        {courses.length > 0 ? courses?.map((course: Course & { category: Category }) => (
+        {courses.length > 0 ? courses?.map((course: any & { category: Category }) => (
           <CourseCard
             key={course.id}
             course={course}

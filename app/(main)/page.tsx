@@ -5,7 +5,7 @@ import { Course } from '.prisma/client'
 
 const HomePage = async () => {
   const user = await currentUser()
-  const courses = await getAllCourses()
+  const courses = await getAllCourses() as any[]
   if (!courses) return null
   return (
     <section className="lg:px-12">
