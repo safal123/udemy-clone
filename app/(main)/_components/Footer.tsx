@@ -7,7 +7,7 @@ export default function Component() {
       <div className="container max-w-7xl mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div className="flex flex-col gap-4">
           <Link className="flex items-center gap-2 font-bold text-lg" href="#">
-            <Logo className="w-8 h-8" />
+            <Logo />
             <span>
               Udemy Clone
             </span>
