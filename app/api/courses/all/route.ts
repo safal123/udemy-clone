@@ -2,24 +2,41 @@ import {NextResponse} from "next/server";
 import {db} from "@/lib/db";
 
 
-export async function GET(req: Request) {
+
+export async function GET(
+  req: Request,
+) {
   try {
+    const url = new URL(req.url)
+    console.log(req)
+    const limit = url.searchParams.get("limit")
+    const includes = url.searchParams.get("includes")
+    // TODO: add category filter
+    const categoryId = url.searchParams.get("categoryId")
+
+    let include = {}
+
+    if (includes) {
+      const includesArray = includes.split(",")
+      includesArray.forEach(relation => {
+        // @ts-ignore
+        include[relation] = true
+      })
+    }
+
     const courses = await db.course.findMany({
       where: {
-        isPublished: true
+        isPublished: true,
+        categoryId: categoryId ?? undefined
       },
       orderBy: {
         createdAt: "desc"
       },
-      include: {
-        category: true,
-        chapters: {
-          where: {
-            isPublished: true
-          }
-        }
-      }
+      include: include
     })
+
+    if (limit) return NextResponse.json(courses.slice(0, parseInt(limit)))
+
     return NextResponse.json(courses)
   } catch (error) {
     console.error("[COURSES]", error)

@@ -1,6 +1,6 @@
 'use client'
 
-import { Category, Course } from '.prisma/client'
+import { Category, Course, User } from '.prisma/client'
 import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardFooter, CardHeader, CardImage } from '@/components/ui/card'
 import { Book } from 'lucide-react'
@@ -16,11 +16,13 @@ import { getUserProgress } from '@/actions/get-user-progress'
 import { useUser } from '@clerk/nextjs'
 import { getHasPurchased } from '@/actions/get-has-purchased'
 import CourseEnrolButton from '@/app/(courses)/courses/[courseId]/chapters/[chapterId]/_components/CourseEnrolButton'
+import { Chapter } from '@prisma/client'
 
 interface CourseCardProps {
   course: Course & {
     category: Category,
-    chapters: any
+    chapters: Chapter[],
+    author: User
   }
   isOwner?: boolean
 }
@@ -48,7 +50,7 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
     }
     checkPurchase ()
     getProgress ()
-  }, [])
+  }, [course.id, user])
 
   return (
     <Card>
@@ -84,7 +86,7 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
                 </span>
                 <Badge className={ 'ml-12' }>
                   { course.chapters && course?.chapters?.length }
-                  { course?.chapters?.length > 1 ? ' Lectures' : ' Lecture' }
+                  { course?.chapters?.length > 1 ? ' Chapters' : ' Chapter' }
                 </Badge>
               </p> :
               <>
@@ -97,6 +99,27 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
             variant={ progress > 0 ? 'success' : 'default' }
             size={ 'sm' }
           /> }
+          {course.author &&
+            <div className={ 'flex items-center space-x-2' }>
+              <Image
+                src={ course.author?.imageUri || '/avatar.png' }
+                alt={ course.author?.firstName || 'Author Image' }
+                width={ 30 }
+                height={ 30 }
+                className={ 'rounded-full' }
+              />
+              <Link href={`/profile/${ course.author?.id }` }>
+                <p className={ 'text-xs text-muted-foreground flex flex-col' }>
+                <span>
+                  Instructor:
+                </span>
+                  <span className={ 'text-xs dark:text-white underline text-primary' }>
+                    { course.author?.firstName } { course.author?.lastName }
+                  </span>
+                </p>
+              </Link>
+            </div>
+          }
         </CardDescription>
       </CardHeader>
 

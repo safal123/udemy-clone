@@ -1,6 +1,6 @@
 'use client'
 
-import { auth, UserButton } from '@clerk/nextjs'
+import { UserButton } from '@clerk/nextjs'
 import React from 'react'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -17,14 +17,14 @@ export const NavbarRoutes = ({showTeacherMode = true, ...props}: {
   const isCoursePage = pathName?.includes ('/courses')
 
   return (
-    <div className={ 'flex items-center gap-x-2 ml-auto' } {...props}>
+    <div className={ 'flex items-center gap-x-2 ml-auto' } { ...props }>
       <ToggleTheme/>
-      {isCoursePage &&
-      <Link href={ '/dashboard/search' }>
-        <Button size={ 'sm' } variant={ 'ghost' }>
-          Back to courses
-        </Button>
-      </Link>
+      { isCoursePage &&
+        <Link href={ '/dashboard/search' }>
+          <Button size={ 'sm' } variant={ 'ghost' }>
+            Back to courses
+          </Button>
+        </Link>
       }
       { showTeacherMode ? (isTeacherPage || isCoursePage) ? (
         <Link href={ '/dashboard' }>
@@ -39,7 +39,8 @@ export const NavbarRoutes = ({showTeacherMode = true, ...props}: {
             Teacher mode
           </Button>
         </Link>
-      ) : '' }
+      ) : ''
+      }
       <UserButton afterSignOutUrl={ '/' }/>
     </div>
   )

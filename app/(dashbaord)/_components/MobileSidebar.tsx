@@ -5,7 +5,7 @@ import Sidebar from "@/app/(dashbaord)/_components/Sidebar";
 const MobileSidebar = () => {
   return (
     <Sheet>
-      <SheetTrigger className={"md:hidden pr-4 hover:opacity-75"}>
+      <SheetTrigger className={"lg:hidden pr-4 hover:opacity-75"}>
         <Menu/>
       </SheetTrigger>
       <SheetContent side={"left"} className={"bg-white p-0"}>

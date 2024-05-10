@@ -22,11 +22,13 @@ model Course {
   purchases   Purchase[]
   attachments Attachment[]
   chapters    Chapter[]
+  author      User         @relation(fields: [userId], references: [userId])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
+  @@index([userId])
   @@map("courses")
 }
 
@@ -123,9 +125,11 @@ model User {
   imageUri         String?
   lastName         String?
   stripeCustomerId String
+  isTeacher        Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  courses   Course[]
 
   @@map("users")
 }

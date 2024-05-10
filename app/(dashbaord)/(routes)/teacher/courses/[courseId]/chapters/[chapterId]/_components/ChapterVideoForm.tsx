@@ -33,10 +33,13 @@ export const ChapterVideoForm = ({chapter, courseId, chapterId}: ChapterVideoFor
       </div>
       { !isEditing && (
         !chapter?.videoUrl ? (
-          <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md dark:bg-slate-800">
+          <div
+            onClick={ toggleEdit }
+            className="flex flex-col items-center justify-center h-60 bg-gray-100 rounded-md dark:bg-slate-800">
             <VideoIcon
               className="h-10 w-10 text-slate-500 border border-white rounded-full dark:border-bg-slate-100 p-2"
             />
+            <span className="text-sm text-muted-foreground ml-2">No video uploaded</span>
           </div>
         ) : (
           <div className="relative aspect-video mt-2">

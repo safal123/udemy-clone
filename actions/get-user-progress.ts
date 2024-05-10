@@ -25,9 +25,8 @@ export const getUserProgress = async ({courseId, userId}: GetUserProgressProps) 
         courseId
       },
     })
-
+    
     return Math.round ((count / chaptersCount) * 100)
-
   } catch (error) {
     console.error("[GET_HAS_PURCHASED]", error)
     return {

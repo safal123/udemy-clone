@@ -16,20 +16,10 @@ export const getAllCourses = async () => {
           }
         },
       },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        imageUri: true,
-        price: true,
-        chapters: {
-          select: {
-            id: true,
-            title: true,
-            description: true,
-            isPublished: true
-          }
-        }
+      include: {
+        chapters: true,
+        // @ts-ignore
+        author: true,
       },
       orderBy: {
         createdAt: 'desc'

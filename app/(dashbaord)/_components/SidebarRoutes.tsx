@@ -25,12 +25,6 @@ const studentRoutes = [
     href: '/dashboard/profile',
     key: 'profile'
   },
-  {
-    icon: DollarSign,
-    label: 'Billing',
-    href: '/dashboard/billing',
-    key: 'billing'
-  }
 ]
 
 const teacherRoutes = [
