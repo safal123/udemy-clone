@@ -31,7 +31,7 @@ export async function PATCH( req: Request, { params }: { params: { courseId: str
 
     return NextResponse.json(chapter);
   } catch (error) {
-    console.log("[CHAPTER_TOGGLE_IS_COMPLETED]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    console.log("[CHAPTER_TOGGLE_IS_COMPLETED_ERROR]", error);
+    return new NextResponse("Cannot update chapter", { status: 500 });
   }
 }

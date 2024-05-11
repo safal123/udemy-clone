@@ -24,16 +24,16 @@ export const CategoryItem
   const isSelected = currentCategoryId === value
 
   const onClick = () => {
-    const url = qs.stringifyUrl ({
-      url: pathname,
-      query: {
-        title: currentTitle,
-        categoryId: isSelected ? null : value
-      }
-    }, {skipNull: true, skipEmptyString: true})
-
-    router.push (url)
-    router.refresh()
+    // const url = qs.stringifyUrl ({
+    //   url: pathname,
+    //   query: {
+    //     title: currentTitle,
+    //     categoryId: isSelected ? null : value
+    //   }
+    // }, {skipNull: true, skipEmptyString: true})
+    //
+    // router.push (url)
+    // router.refresh()
   }
 
   return (

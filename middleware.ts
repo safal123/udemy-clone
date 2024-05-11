@@ -11,7 +11,7 @@ export default authMiddleware ({
   ignoredRoutes: [
     '/api/webhooks/stripe',
     '/api/webhooks/clerk',
-  ]
+  ],
 })
 
 export const config = {

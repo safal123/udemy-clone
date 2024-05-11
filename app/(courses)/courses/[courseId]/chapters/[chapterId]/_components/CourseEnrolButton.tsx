@@ -9,6 +9,7 @@ import axios from 'axios'
 import { CircleCheck, Loader2 } from 'lucide-react'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
+import { ReloadIcon } from "@radix-ui/react-icons"
 
 interface CourseEnrolButtonProps {
   course: Course
@@ -18,6 +19,7 @@ const CourseEnrolButton = ({course}: CourseEnrolButtonProps) => {
   const [isLoading, setIsLoading] = useState (false)
   const {user} = useUser ()
   const router = useRouter ()
+
   if (!course.price) return null
 
   const handleEnrollment = async () => {
@@ -31,19 +33,22 @@ const CourseEnrolButton = ({course}: CourseEnrolButtonProps) => {
       const response = await axios.post (`/api/courses/${ course.id }/checkout`)
       await window.location.assign (response.data.url)
     } catch (error) {
-      console.error (error)
       toast.error ('Failed to enroll for the course')
     } finally {
       setIsLoading (false)
     }
   }
+
   return (
     <Button
       onClick={ handleEnrollment }
       disabled={ isLoading }
       className={ 'w-full' }
     >
-      { isLoading ? <Loader2 className={ 'mr-2 animate-spin' }/> : <CircleCheck className={ 'mr-2 h-4 w-4' }/> }
+      { isLoading ?
+        <ReloadIcon className={ 'mr-2 animate-spin' }/> :
+        <CircleCheck className={ 'mr-2 h-4 w-4' }/>
+      }
       Enroll for { formatPrice (course?.price) }
     </Button>
   )

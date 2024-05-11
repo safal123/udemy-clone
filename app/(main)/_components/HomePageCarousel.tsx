@@ -22,7 +22,7 @@ const HomePageCarousel
                 <h1 className={ 'text-4xl text-white font-bold mb-2' }>
                   { course.title }
                 </h1>
-                <div className={'w-36'}>
+                <div className={'w-44'}>
                   <CourseEnrolButton course={ course }/>
                 </div>
               </div>
@@ -39,7 +39,7 @@ const HomePageCarousel
                     <h1 className={ 'text-2xl font-bold mb-2' }>
                       { course.title }
                     </h1>
-                    <div className={'w-36'}>
+                    <div className={'w-44'}>
                       <CourseEnrolButton course={ course }/>
                     </div>
                   </div>
