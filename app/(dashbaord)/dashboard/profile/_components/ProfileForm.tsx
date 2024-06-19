@@ -15,8 +15,8 @@ interface ProfileFormProps {
 const ProfileForm = ({data, postData}: ProfileFormProps) => {
   const {toast} = useToast ()
   return (
-    <div className={ 'p-4' }>
-      <Card className={ 'max-w-4xl mx-auto mt-4' }>
+    <div className={ '' }>
+      <Card className={ '' }>
         <form action={ async (formData) => {
           await postData (formData)
           toast ({

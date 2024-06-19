@@ -11,7 +11,8 @@ import {
   FcSportsMode
 } from 'react-icons/fc'
 import {IconType} from "react-icons";
-import {CategoryItem} from "@/app/(dashbaord)/dashboard/search/_components/CategoryItem";
+import { CategoryItem } from '@/components/shared/CategoryItem'
+
 
 interface CategoriesProps {
   items: Category[]

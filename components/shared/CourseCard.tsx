@@ -94,11 +94,12 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
               </>
           }
 
-          { user && hasPurchase && <CourseProgress
-            value={ progress }
-            variant={ progress > 0 ? 'success' : 'default' }
-            size={ 'sm' }
-          /> }
+          { user &&
+            <CourseProgress
+              value={ progress }
+              variant={ progress > 0 ? 'success' : 'default' }
+              size={ 'sm' }
+            /> }
           { course.author &&
             <div className={ 'flex items-center space-x-2' }>
               <Image

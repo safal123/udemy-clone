@@ -1,12 +1,14 @@
 import { db } from '@/lib/db'
-import { auth, currentUser } from '@clerk/nextjs'
+import { currentUser } from '@clerk/nextjs'
 import ProfileForm from '@/app/(dashbaord)/dashboard/profile/_components/ProfileForm'
+import TeacherRequestForm from '@/app/(dashbaord)/dashboard/profile/_components/TeacherRequestForm'
+import { hasRequestedTeacherAccess } from '@/actions/request-teacher-access'
 
 const getData = async () => {
   const user = await currentUser ()
   if (!user) return
 
-  return  db.user.findUnique ({
+  return db.user.findUnique ({
     where: {
       userId: user.id
     },
@@ -40,7 +42,15 @@ const SettingPage = async () => {
     })
   }
 
-  return <ProfileForm data={ data } postData={ postData }/>
+  const {hasRequested} = await hasRequestedTeacherAccess ({userId: data?.userId as string})
+
+  return <div className={ 'grid lg:grid-cols-2 gap-2 p-4' }>
+    <ProfileForm data={ data } postData={ postData }/>
+    <TeacherRequestForm
+      hasRequested={ hasRequested }
+      userId={ data?.userId as string }
+    />
+  </div>
 }
 
 export default SettingPage

@@ -18,7 +18,7 @@ const Layout =
         <div className={ 'h-[80px] fixed w-full inset-y-0 z-50 bg-background shadow-lg' }>
           <div className={ 'flex items-center justify-between h-full p-4 border-b shadow-sm lg:px-16 space-x-2' }>
             <MobileSidebar/>
-            <div className={ 'hidden lg:flex items-center space-x-4' }>
+            <div className={ 'hidden lg:flex items-center md:space-x-4' }>
               <Link href={ '/' } className={ 'text-gray-500' }>
                 <Image src="/logo.svg" alt="logo" width={ 100 } height={ 100 }/>
               </Link>
@@ -58,11 +58,11 @@ const Layout =
               }
             </div>
           </div>
-          <div className={ 'md:hidden px-2 w-full h-[70px] flex items-center space-x-4 bg-background shadow-sm border-b' }>
+          <div className={ 'md:hidden px-4 w-full h-[70px] flex items-center space-x-4 bg-gray-100 shadow-sm border-b' }>
             <input
               type={ 'text' }
               placeholder={ 'Search courses' }
-              className={ 'px-4 py-2 w-full focus:outline-none bg-transparent' }
+              className={ 'py-2 w-full focus:outline-none bg-transparent' }
             />
             <SearchIcon className={ 'cursor-pointer w-6 h-6' }/>
           </div>

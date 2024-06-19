@@ -11,7 +11,7 @@ interface HomePageCarouselProps {
   courses: Course[],
 }
 
-const OPTIONS: EmblaOptionsType = {align: 'end', loop: true}
+const OPTIONS: EmblaOptionsType = {align: 'end', loop: false}
 
 const HomePageCarousel
   = ({courses}: HomePageCarouselProps) => {
@@ -20,7 +20,7 @@ const HomePageCarousel
     <section className="flex w-full flex-col gap-4 overflow-hidden rounded-xl" ref={ emblaRef }>
       <div className={"flex"}>
         { courses.map ((course) => (
-          <figure key={course.id} className={"relative flex h-[500px] aspect-square w-full flex-none cursor-pointer flex-col justify-end rounded-xl border-none"}>
+          <figure key={course.id} className={"relative flex h-[400px] md:h-[500px] aspect-square w-full flex-none cursor-pointer flex-col justify-end rounded-xl border-none"}>
             <Image
               src={ course.imageUri as string }
               alt={ course.title as string }
@@ -30,7 +30,10 @@ const HomePageCarousel
             />
             <div className={ 'absolute inset-0 bg-gradient-to-r from-transparent to-black' }>
               <div className={ 'flex flex-col items-center justify-center h-full text-white' }>
-                <div className={'w-44'}>
+                <h1 className={"text-xl font-medium mb-4"}>
+                  {course.title}
+                </h1>
+                <div className={'w-fit'}>
                   <CourseEnrolButton course={ course }/>
                 </div>
               </div>

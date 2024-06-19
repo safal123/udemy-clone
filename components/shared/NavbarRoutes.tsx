@@ -20,9 +20,9 @@ export const NavbarRoutes = ({showTeacherMode = true, ...props}: {
     <div className={ 'flex items-center gap-x-2 ml-auto' } { ...props }>
       <ToggleTheme/>
       { isCoursePage &&
-        <Link href={ '/dashboard/search' }>
+        <Link href={ '/dashboard' }>
           <Button size={ 'sm' } variant={ 'ghost' }>
-            Back to courses
+            Back to Dashboard
           </Button>
         </Link>
       }

@@ -2,7 +2,8 @@ import { getAllCourses } from '@/actions/get-all-courses'
 import { getAllCategories } from '@/actions/get-all-categories'
 import CourseCard from '@/components/shared/CourseCard'
 import HomePageCarousel from '@/app/(main)/_components/HomePageCarousel'
-import { Categories } from '@/app/(dashbaord)/dashboard/search/_components/Categories'
+import { Categories } from '@/components/shared/Categories'
+
 
 const HomePage = async () => {
   const courses = await getAllCourses () as any[]
@@ -24,7 +25,7 @@ const HomePage = async () => {
       <h2 className={ 'text-3xl font-bold pt-4' }>
         Recently added
       </h2>
-      <div className="grid gap-6 items-stretch pt-6 mx-auto md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-6 items-stretch pt-6 mx-auto md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         { courses?.map ((course: any) => (
           <div key={ course.id } className="">
             <CourseCard course={ course }/>

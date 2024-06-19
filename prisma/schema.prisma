@@ -127,9 +127,32 @@ model User {
   stripeCustomerId String
   isTeacher        Boolean @default(false)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  courses   Course[]
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  courses              Course[]
+  teacherAccessRequest TeacherAccessRequest[]
 
   @@map("users")
+}
+
+model TeacherAccessRequest {
+  id        String         @id @default(uuid())
+  userId    String
+  user      User           @relation(fields: [userId], references: [userId])
+  status    REQUEST_STATUS @default(REQUESTED_BY_USER)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@index([userId])
+  @@map("teacher_access_requests")
+}
+
+enum REQUEST_STATUS {
+  REQUESTED
+  REQUESTED_BY_USER
+  REQUESTED_BY_ADMIN
+  PENDING
+  CANCELLED_BY_USER
+  APPROVED_BY_ADMIN
+  REJECTED_BY_ADMIN
 }

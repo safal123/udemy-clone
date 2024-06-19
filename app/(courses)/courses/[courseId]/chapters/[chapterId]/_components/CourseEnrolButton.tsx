@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { formatPrice } from '@/lib/format'
 import { Course } from '.prisma/client'
@@ -10,6 +10,9 @@ import { CircleCheck, Loader2 } from 'lucide-react'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import { ReloadIcon } from "@radix-ui/react-icons"
+import { getUserProgress } from '@/actions/get-user-progress'
+import { getHasPurchased } from '@/actions/get-has-purchased'
+import Link from 'next/link'
 
 interface CourseEnrolButtonProps {
   course: Course
@@ -19,6 +22,18 @@ const CourseEnrolButton = ({course}: CourseEnrolButtonProps) => {
   const [isLoading, setIsLoading] = useState (false)
   const {user} = useUser ()
   const router = useRouter ()
+  const [hasPurchase, setHasPurchase] = useState(false)
+
+  useEffect (() => {
+    const checkPurchase = async () => {
+      const {hasPurchased} = await getHasPurchased ({
+        courseId: course.id,
+        userId: user?.id as string
+      })
+      setHasPurchase (hasPurchased)
+    }
+    checkPurchase ()
+  }, [course.id, user])
 
   if (!course.price) return null
 
@@ -38,6 +53,14 @@ const CourseEnrolButton = ({course}: CourseEnrolButtonProps) => {
       setIsLoading (false)
     }
   }
+
+  // if (hasPurchase) {
+  //   return <Link href={'/'}>
+  //     <Button>
+  //       Visit Course
+  //     </Button>
+  //   </Link>
+  // }
 
   return (
     <Button

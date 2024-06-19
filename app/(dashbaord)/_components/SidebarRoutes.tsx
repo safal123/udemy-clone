@@ -14,12 +14,6 @@ const studentRoutes = [
     key: 'home'
   },
   {
-    icon: Compass,
-    label: 'Explore',
-    href: '/dashboard/search',
-    key: 'explore'
-  },
-  {
     icon: UserIcon,
     label: 'Profile',
     href: '/dashboard/profile',
