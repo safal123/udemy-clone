@@ -100,7 +100,6 @@ const TitleForm = ({initialData, courseId}: TitleFormProps) => {
             </form>
           </Form>
         </>
-
       }
     </div>
   )

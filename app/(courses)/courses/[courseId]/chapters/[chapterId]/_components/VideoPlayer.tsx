@@ -1,6 +1,6 @@
 'use client'
-import { useState } from 'react'
-import { Chapter, MuxData } from '@prisma/client'
+import { useEffect, useState } from 'react'
+import { Chapter } from '@prisma/client'
 import axios from 'axios'
 import { toast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
@@ -8,18 +8,21 @@ import Video from 'next-video'
 import { Course } from '.prisma/client'
 
 type VideoPlayerProps = {
-  chapter: Chapter & { course?: Course  }
+  chapter: Chapter & { course?: Course }
   userId: string | null
   isCompleted: boolean,
-  disabled: boolean
+  disabled: boolean,
 }
 
 const VideoPlayer = ({chapter, userId, isCompleted, disabled}: VideoPlayerProps) => {
   const router = useRouter ()
   const [isMarkingAsCompleted, setIsMarkingAsCompleted] = useState<boolean> (false)
+
+
   if (!chapter?.videoUrl) {
     return null
   }
+
   const markAsCompleted = async () => {
     if (isCompleted) return
     try {
@@ -38,20 +41,24 @@ const VideoPlayer = ({chapter, userId, isCompleted, disabled}: VideoPlayerProps)
       setIsMarkingAsCompleted (false)
     }
   }
+
   return (
-    <div className={ 'w-full h-full' }>
+    <div className={ 'w-full h-auto rounded-md' }>
       <Video
         src={ chapter?.videoUrl }
-        controls = { !disabled }
+        controls={ !disabled }
         title={ chapter?.title }
         streamType={ 'on-demand' }
         onEnded={ markAsCompleted }
-        style={{
-          // make fit for the 100vh-30rem
-          aspectRatio: '16 / 9',
+        style={ {
           width: '100%',
-          height: '100%'
-        }}
+          height: 'auto',
+          // borderRadius: '20px',
+        } }
+        onPlaying={ () => {
+          console.log ('Video is playing')
+        } }
+        className={"border-4 rounded-md"}
       />
     </div>
   )

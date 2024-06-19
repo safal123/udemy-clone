@@ -44,10 +44,10 @@ const CourseLayout =
 
     return (
       <div className={ 'h-full' }>
-        <div className={ 'hidden md:flex fixed h-full w-72 flex-col inset-y-0 z-50' }>
+        <div className={ 'hidden xl:flex fixed h-full w-72 flex-col inset-y-0 z-50' }>
           <CourseSidebar course={ course }/>
         </div>
-        <main className={ 'md:pl-72 h-full' }>
+        <main className={ 'xl:pl-72 h-full' }>
           <div>
             <CourseNavbar course={ course }/>
           </div>

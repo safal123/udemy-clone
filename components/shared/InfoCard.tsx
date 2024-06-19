@@ -9,7 +9,7 @@ interface InfoCardProps {
 
 const InfoCard = ({ title, description, icon: Icon }: InfoCardProps) => {
   return (
-    <div className={ 'bg-gray-100 dark:bg-gray-800 p-4 rounded-md shadow-md flex items-center space-x-4' }>
+    <div className={ 'bg-white dark:bg-accent p-4 rounded-md shadow-md flex items-center space-x-4' }>
       <IconBadge icon={Icon} variant={'success'} />
       <div>
         <h2 className={ 'text-lg font-semibold text-gray-800 dark:text-gray-100' }>

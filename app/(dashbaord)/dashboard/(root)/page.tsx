@@ -17,7 +17,7 @@ export default async function Dashboard () {
   return (
     <div className={ 'container mx-auto py-12' }>
       <div className={ 'mb-8' }>
-        <div className={ 'grid grid-cols-1 md:grid-cols-3 gap-4 mb-4' }>
+        <div className={ 'grid grid-cols-1 md:grid-cols-2 gap-4 mb-4' }>
           <InfoCard
             title={ 'Courses Completed' }
             description={ `${ completedCourses.length } courses` }

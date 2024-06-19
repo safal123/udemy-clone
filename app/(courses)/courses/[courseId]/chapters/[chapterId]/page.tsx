@@ -18,39 +18,34 @@ const ChapterIdPage =
     if (!userId) {
       return redirect ('/')
     }
-
     const {chapter} = await getChapter ({courseId: params.courseId, chapterId: params.chapterId, userId: userId})
-
     if (!chapter) {
       return redirect ('/')
     }
-
     const isLocked = !chapter.isFree
     const {hasPurchased} = await getHasPurchased ({userId, courseId: params.courseId})
     const isCompleted = await getChapterIsCompleted ({courseId: params.courseId, userId, chapterId: params.chapterId})
 
     return (
       <>
-        {/*<div className={ 'p-2  mx-auto' }>*/}
-        {/*  { isCompleted && <Banner label={ 'You have completed this chapter' } variant={ 'success' }/> }*/}
-        {/*  { !hasPurchased && isLocked && <Banner label={ 'This chapter is locked' } variant={ 'warning' }/> }*/}
-        {/*</div>*/}
+        <div className={ 'p-2  mx-auto' }>
+          { isCompleted && <Banner label={ 'You have completed this chapter' } variant={ 'success' }/> }
+          { !hasPurchased && isLocked && <Banner label={ 'This chapter is locked' } variant={ 'warning' }/> }
+        </div>
         <div className="flex flex-col px-2 mx-auto mt-1">
           <div className="relative">
             { chapter?.videoUrl &&
-              <div className={'h-[calc(100vh-10rem)] w-full'}>
-                <VideoPlayer
-                  chapter={ chapter }
-                  userId={ userId }
-                  disabled={ isLocked && !hasPurchased }
-                  isCompleted={ isCompleted as boolean }
-                />
-              </div>
+              <VideoPlayer
+                chapter={ chapter }
+                userId={ userId }
+                disabled={ isLocked && !hasPurchased }
+                isCompleted={ isCompleted as boolean }
+              />
             }
             { isLocked && !hasPurchased &&
               <div
                 className="z-90 flex flex-col w-full p-12 space-y-12 mx-auto h-full absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                <div className={'max-w-xl gap-y-4 flex flex-col'}>
+                <div className={ 'max-w-xl gap-y-4 flex flex-col' }>
                   <h2 className="text-2xl text-white flex">
                     <LockIcon className="h-8 w-8 mr-2"/>
                     Unlock this chapter by enrolling in the course
@@ -63,7 +58,7 @@ const ChapterIdPage =
           <div className={ 'mt-2' }>
             <Card>
               <CardHeader>
-                <div className={"flex items-center justify-between"}>
+                <div className={ 'flex items-center justify-between' }>
                   { chapter?.title }
                   <div>
                     { !hasPurchased &&
@@ -84,7 +79,7 @@ const ChapterIdPage =
         <div className={ 'p-2 w-full mx-auto' }>
           <Card>
             <CardHeader>
-              <Title title={'Attachments'}/>
+              <Title title={ 'Attachments' }/>
             </CardHeader>
             <CardContent>
               Attachments for this chapter will be available here.

@@ -22,10 +22,11 @@ export const getUserProgress = async ({courseId, userId}: GetUserProgressProps) 
     })
     const chaptersCount = await db.chapter.count({
       where: {
-        courseId
+        courseId,
+        isPublished: true
       },
     })
-    
+
     return Math.round ((count / chaptersCount) * 100)
   } catch (error) {
     console.error("[GET_HAS_PURCHASED]", error)
