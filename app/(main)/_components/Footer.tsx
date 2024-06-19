@@ -3,7 +3,7 @@ import { Logo } from '@/app/(dashbaord)/_components/Logo'
 
 export default function Component() {
   return (
-    <footer className="bg-gray-950 text-gray-50 py-12 md:py-16 lg:py-20 dark:bg-gray-900 dark:text-gray-200">
+    <footer className="bg-gray-50 dark:bg-gray-950 text-gray-50 py-12 md:py-16 lg:py-20 dark:bg-gray-900 dark:text-gray-200">
       <div className="container max-w-7xl mx-auto px-4 md:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div className="flex flex-col gap-4">
           <Link className="flex items-center gap-2 font-bold text-lg" href="#">

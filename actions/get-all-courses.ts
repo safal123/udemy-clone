@@ -10,11 +10,12 @@ export const getAllCourses = async () => {
       where: {
         isPublished: true,
         // exclude courses that the user has already purchased
-        purchases: {
-          none: {
-            userId: userId || ''
-          }
-        },
+        // TODO: need to revisit this logic
+        // purchases: {
+        //   none: {
+        //     userId: userId || ''
+        //   }
+        // },
       },
       include: {
         chapters: true,

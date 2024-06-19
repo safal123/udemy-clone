@@ -87,18 +87,15 @@ const ChapterPage = async ({params}: {
         </div>
         <div className={ 'grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8' }>
           <div>
-            <div className={ 'flex flex-col md:flex-row md:items-center justify-between' }>
+            <div className={ 'flex bg-accent p-4 rounded-md flex-col md:flex-row md:items-center justify-between' }>
               <div className={ 'flex items-center gap-x-2 w-full' }>
                 <IconBadge icon={ LayoutDashboard }/>
                 <h2 className={ 'text-xl' }>Customise your chapter</h2>
               </div>
               {/* TODO: Add badge component */ }
-              {/* <Badge variant={"default"} className={"bg-theme hover:bg-theme/90 mt-4 md:mt-0 max:w-64"}>
-                Complete all fields {completionText}
-              </Badge> */ }
             </div>
             <div className={ 'relative' }>
-              <Progress value={ completedPercentage } className={ 'mt-4 bg-theme/60' }/>
+              <Progress value={ completedPercentage } className={ 'mt-4 bg-accent' }/>
               <p className={ cn ('text-sky-100 absolute top-[-0.5px] left-[40%] text-xs') }>
                 { Math.round (completedPercentage) }% completed
               </p>

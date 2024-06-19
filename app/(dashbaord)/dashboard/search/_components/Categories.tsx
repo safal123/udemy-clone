@@ -5,11 +5,11 @@ import {
   FcEngineering,
   FcFilmReel,
   FcMultipleDevices,
-  FcMusic,
+  FcMusic, FcNeutralTrading,
   FcOldTimeCamera,
   FcSalesPerformance,
-  FcSportsMode,
-} from "react-icons/fc";
+  FcSportsMode
+} from 'react-icons/fc'
 import {IconType} from "react-icons";
 import {CategoryItem} from "@/app/(dashbaord)/dashboard/search/_components/CategoryItem";
 
@@ -24,12 +24,13 @@ const iconMap: Record<Category["name"], IconType> = {
   "Accounting" : FcSalesPerformance,
   "Computer Science" : FcMultipleDevices,
   "Film" : FcFilmReel,
-  "Engineering" : FcEngineering
+  "Engineering" : FcEngineering,
+  "Other": FcNeutralTrading
 }
 
 export const Categories = ({items}: CategoriesProps) => {
   return (
-    <div className="flex items-center gap-x-2 overflow-x-auto pb-2">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
       {items.map((item) => (
         <CategoryItem
           key={item.id}

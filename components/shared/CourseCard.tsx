@@ -99,7 +99,7 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
             variant={ progress > 0 ? 'success' : 'default' }
             size={ 'sm' }
           /> }
-          {course.author &&
+          { course.author &&
             <div className={ 'flex items-center space-x-2' }>
               <Image
                 src={ course.author?.imageUri || '/avatar.png' }
@@ -108,7 +108,7 @@ const CourseCard = ({course, isOwner}: CourseCardProps) => {
                 height={ 30 }
                 className={ 'rounded-full' }
               />
-              <Link href={`/profile/${ course.author?.id }` }>
+              <Link href={ `/profile/${ course.author?.id }` }>
                 <p className={ 'text-xs text-muted-foreground flex flex-col' }>
                 <span>
                   Instructor:

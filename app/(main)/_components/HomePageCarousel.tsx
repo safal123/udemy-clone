@@ -1,57 +1,44 @@
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+'use client'
+
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
-import { formatPrice } from '@/lib/format'
 import { Course } from '.prisma/client'
+import { EmblaOptionsType } from 'embla-carousel'
+import useEmblaCarousel from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
 import CourseEnrolButton from '@/app/(courses)/courses/[courseId]/chapters/[chapterId]/_components/CourseEnrolButton'
 
 interface HomePageCarouselProps {
-  courses: Course[]
+  courses: Course[],
 }
 
+const OPTIONS: EmblaOptionsType = {align: 'end', loop: true}
 
 const HomePageCarousel
   = ({courses}: HomePageCarouselProps) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel (OPTIONS, [Autoplay ()])
   return (
-    <Carousel>
-      <CarouselContent>
-        { courses.map ((course, index) => (
-          <CarouselItem key={ index }>
-            <div className={ 'h-96 gap-4 flex items-center justify-between' }>
-              <div className={ 'hidden xl:flex flex-col items-center justify-center flex-1 rounded-lg' }>
-                <h1 className={ 'text-4xl text-white font-bold mb-2' }>
-                  { course.title }
-                </h1>
+    <section className="flex w-full flex-col gap-4 overflow-hidden rounded-xl" ref={ emblaRef }>
+      <div className={"flex"}>
+        { courses.map ((course) => (
+          <figure key={course.id} className={"relative flex h-[500px] aspect-square w-full flex-none cursor-pointer flex-col justify-end rounded-xl border-none"}>
+            <Image
+              src={ course.imageUri as string }
+              alt={ course.title as string }
+              fill
+              className={"absolute size-full rounded-xl border-none object-cover"}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+            <div className={ 'absolute inset-0 bg-gradient-to-r from-transparent to-black' }>
+              <div className={ 'flex flex-col items-center justify-center h-full text-white' }>
                 <div className={'w-44'}>
                   <CourseEnrolButton course={ course }/>
                 </div>
               </div>
-              <div className={ 'w-full xl:w-[600px] h-full relative pr-[-20px]' }>
-                <Image
-                  src={ course?.imageUri as string }
-                  alt=""
-                  width={ 200 }
-                  height={ 250 }
-                  className={ 'rounded-md w-full h-96 object-cover' }
-                />
-                <div className={ 'xl:hidden absolute inset-0 bg-gradient-to-r from-transparent to-black' }>
-                  <div className={ 'flex flex-col items-center justify-center h-full text-white' }>
-                    <h1 className={ 'text-2xl font-bold mb-2' }>
-                      { course.title }
-                    </h1>
-                    <div className={'w-44'}>
-                      <CourseEnrolButton course={ course }/>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-          </CarouselItem>
+          </figure>
         )) }
-      </CarouselContent>
-      <CarouselPrevious/>
-      <CarouselNext/>
-    </Carousel>
+      </div>
+    </section>
   )
 }
 
