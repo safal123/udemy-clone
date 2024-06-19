@@ -18,7 +18,6 @@ const getCategories = async () => {
 const getCourses = async () => {
   const url = process.env.NEXT_PUBLIC_API_URL
   const res = await axios.get(url + '/api/courses/all?includes=chapters')
-
   return res.data
 }
 

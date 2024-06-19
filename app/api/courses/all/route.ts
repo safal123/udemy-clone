@@ -39,7 +39,6 @@ export async function GET(
 
     return NextResponse.json(courses)
   } catch (error) {
-    console.error("[COURSES]", error)
-    new NextResponse("Internal Server Error", {status: 500})
+    return new NextResponse("Internal Server Error", {status: 500})
   }
 }
