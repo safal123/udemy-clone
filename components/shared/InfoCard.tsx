@@ -9,13 +9,13 @@ interface InfoCardProps {
 
 const InfoCard = ({ title, description, icon: Icon }: InfoCardProps) => {
   return (
-    <div className={ 'bg-white dark:bg-accent p-4 rounded-md shadow-md flex items-center space-x-4' }>
+    <div className={ 'bg-indigo-500 dark:bg-accent border dark:border-indigo-900 p-4 rounded-md flex items-center space-x-4' }>
       <IconBadge icon={Icon} variant={'success'} />
       <div>
-        <h2 className={ 'text-lg font-semibold text-gray-800 dark:text-gray-100' }>
+        <h2 className={ 'text-lg font-semibold text-gray-300 dark:text-gray-100' }>
           { title }
         </h2>
-        <p className={ 'text-3xl font-bold text-gray-800 dark:text-gray-100' }>
+        <p className={ 'text-xl font-bold text-gray-400 dark:text-gray-100' }>
           { description }
         </p>
       </div>

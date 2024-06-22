@@ -148,7 +148,6 @@ model TeacherAccessRequest {
 }
 
 enum REQUEST_STATUS {
-  REQUESTED
   REQUESTED_BY_USER
   REQUESTED_BY_ADMIN
   PENDING

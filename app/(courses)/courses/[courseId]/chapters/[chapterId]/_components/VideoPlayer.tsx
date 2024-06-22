@@ -43,7 +43,7 @@ const VideoPlayer = ({chapter, userId, isCompleted, disabled}: VideoPlayerProps)
   }
 
   return (
-    <div className={ 'w-full h-auto rounded-md' }>
+    <div className={ 'w-full min-h-[400px]' }>
       <Video
         src={ chapter?.videoUrl }
         controls={ !disabled }
@@ -53,7 +53,9 @@ const VideoPlayer = ({chapter, userId, isCompleted, disabled}: VideoPlayerProps)
         style={ {
           width: '100%',
           height: 'auto',
-          // borderRadius: '20px',
+          borderRadius: '10px',
+          borderColor: 'transparent',
+          overflow: 'hidden'
         } }
         onPlaying={ () => {
           console.log ('Video is playing')

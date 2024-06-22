@@ -16,7 +16,8 @@ export const hasRequestedTeacherAccess = async ({userId}: RequestTeacherAccessPr
       }
     })
     return {
-      hasRequested: requests.map(request => request.status === "REQUESTED").includes(true),
+      //@ts-ignore
+      hasRequested: requests.map(request => request.status === REQUEST_STATUS.REQUESTED_BY_USER).includes(true),
     }
   } catch (error) {
     console.error("[HAS_REQUESTED_TEACHER_ACCESS]", error)
@@ -78,7 +79,8 @@ export const cancelTeacherAccessRequest = async ({userId}: RequestTeacherAccessP
     const request = await db.teacherAccessRequest.updateMany({
       where: {
         userId,
-        status: REQUEST_STATUS.REQUESTED
+        // @ts-ignore
+        status: REQUEST_STATUS.REQUESTED_BY_USER
       },
       data: {
         // @ts-ignore

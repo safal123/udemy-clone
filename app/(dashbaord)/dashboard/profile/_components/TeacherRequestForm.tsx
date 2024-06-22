@@ -3,7 +3,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { cancelTeacherAccessRequest, requestTeacherAccess } from '@/actions/request-teacher-access'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
 import { useState } from 'react'
@@ -64,27 +63,29 @@ const TeacherRequestForm = ({userId, hasRequested}: TeacherRequestFormProps) => 
   return <div>
     <Card>
       <CardHeader>
-        <CardTitle>
+        <CardTitle className={'text-lg leading-6 font-medium text-gray-900 dark:text-gray-400'}>
           Request access for teacher role
         </CardTitle>
         <CardDescription>
-          Your request will be reviewed by the admin.
-          Once approved, you will be able to access the teacher dashboard.
-          It may take up to 24 hours to review your request.
+          <div className={ 'mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400' }>
+            Your request will be reviewed by the admin.
+            Once approved, you will be able to access the teacher dashboard.
+            It may take up to 24 hours to review your request.
+          </div>
         </CardDescription>
       </CardHeader>
       <CardContent>
         { hasRequested ?
           <>
             <div className={ 'flex flex-col' }>
-              <p className={ 'text-gray-500' }>
-                Your request has been submitted successfully. It may take up to 24 hours to review your request.
-              </p>
-              <Badge className={ 'w-fit' }>
-                Requested
-              </Badge>
+              <div className={ 'md:block rounded-md bg-indigo-50 p-4 mb-2 mb-4 dark:bg-indigo-900' }>
+                <div className={ 'text-sm text-indigo-700 dark:text-indigo-300' }>
+                  Your request has been submitted successfully. It may take up
+                  to 24 hours to review your request.
+                </div>
+              </div>
             </div>
-            <Button disabled={isCancelling} className={ 'mt-4' } onClick={ handleTeacherRequestAccessCancel }>
+            <Button disabled={ isCancelling } onClick={ handleTeacherRequestAccessCancel }>
               { isCancelling && <Loader2 className={ 'h-4 w-4 animate-spin mr-2' }/> }
               Cancel Request
             </Button>

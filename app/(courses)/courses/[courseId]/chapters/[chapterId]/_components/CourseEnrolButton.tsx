@@ -48,19 +48,20 @@ const CourseEnrolButton = ({course}: CourseEnrolButtonProps) => {
       const response = await axios.post (`/api/courses/${ course.id }/checkout`)
       await window.location.assign (response.data.url)
     } catch (error) {
+      console.log(error)
       toast.error ('Failed to enroll for the course')
     } finally {
       setIsLoading (false)
     }
   }
 
-  // if (hasPurchase) {
-  //   return <Link href={'/'}>
-  //     <Button>
-  //       Visit Course
-  //     </Button>
-  //   </Link>
-  // }
+  if (hasPurchase) {
+    return <Link href={'/'}>
+      <Button>
+        Visit Course
+      </Button>
+    </Link>
+  }
 
   return (
     <Button

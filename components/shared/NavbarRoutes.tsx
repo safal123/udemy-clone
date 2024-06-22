@@ -8,8 +8,7 @@ import { LogOut } from 'lucide-react'
 import Link from 'next/link'
 import { ToggleTheme } from '@/components/shared/ToggleTheme'
 
-
-export const NavbarRoutes = ({showTeacherMode = true, ...props}: {
+export const NavbarRoutes = ({showTeacherMode = false, ...props}: {
   showTeacherMode?: boolean
 }) => {
   const pathName = usePathname ()

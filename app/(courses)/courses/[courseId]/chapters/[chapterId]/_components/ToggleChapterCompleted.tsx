@@ -24,11 +24,12 @@ const ToggleChapterCompleted = ({chapter, isCompleted, userId}: ToggleChapterCom
       await axios.patch (`/api/courses/${ chapter.courseId }/chapters/${ chapter.id }/toggleIsCompleted`, {
         isCompleted: !isCompleted
       })
-      await router.refresh ()
       toast ({
         title: isCompleted ? 'Chapter marked as incomplete' : 'Chapter marked as completed',
         description: isCompleted ? 'You have marked this chapter as incomplete' : 'You have marked this chapter as completed'
       })
+      await router.refresh ()
+      setIsProcessing (false)
     } catch (e) {
       console.log (e)
       console.error ('Error marking chapter as complete', e)
@@ -37,7 +38,7 @@ const ToggleChapterCompleted = ({chapter, isCompleted, userId}: ToggleChapterCom
         description: 'There was an error marking this chapter as complete'
       })
     } finally {
-      setIsProcessing (false)
+      // setIsProcessing (false)
     }
   }
 

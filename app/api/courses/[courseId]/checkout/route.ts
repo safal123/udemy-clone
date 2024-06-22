@@ -19,6 +19,10 @@ export async function POST (req: Request, {params}: { params: { courseId: string
       }
     })
 
+    if (!course) {
+      return new NextResponse ('Not found', {status: 404})
+    }
+
     const purchase = await db.purchase.findUnique ({
       where: {
         userId_courseId: {
@@ -29,7 +33,7 @@ export async function POST (req: Request, {params}: { params: { courseId: string
     })
 
     if (purchase) {
-      return new NextResponse ('Already purchased', {status: 400})
+      return NextResponse.json ('Already purchased', {status: 400})
     }
 
     if (!course) {
