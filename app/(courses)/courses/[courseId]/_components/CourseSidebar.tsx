@@ -11,7 +11,7 @@ import { getUserProgress } from '@/actions/get-user-progress'
 interface CourseSidebarProps {
   course: Course & {
     chapters: (Chapter & {
-      userProgress: UserProgress[] | null
+      userProgress?: UserProgress[] | null
     }) []
   },
 }
@@ -52,7 +52,7 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
               key={ chapter.id }
               label={ chapter.title }
               chapterId={ chapter.id }
-              isCompleted={ chapter?.userProgress[0]?.isCompleted as boolean }
+              isCompleted={ chapter.userProgress ? chapter.userProgress[0]?.isCompleted : false }
               courseId={ course.id }
               isFree={ chapter.isFree }
             />
