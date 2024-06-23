@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Chapter } from '@prisma/client'
 import axios from 'axios'
 import { toast } from '@/components/ui/use-toast'
@@ -13,9 +13,11 @@ type VideoPlayerProps = {
   isCompleted: boolean,
   disabled: boolean,
   nextChapter?: Chapter
+  hasPurchased: boolean
+  isPreviewChapter: boolean
 }
 
-const VideoPlayer = ({chapter, userId, isCompleted, disabled, nextChapter}: VideoPlayerProps) => {
+const VideoPlayer = ({chapter, userId, isCompleted, disabled, nextChapter, hasPurchased, isPreviewChapter}: VideoPlayerProps) => {
   const router = useRouter ()
   const [isMarkingAsCompleted, setIsMarkingAsCompleted] = useState<boolean> (false)
 
@@ -26,7 +28,7 @@ const VideoPlayer = ({chapter, userId, isCompleted, disabled, nextChapter}: Vide
 
   const markAsCompletedAtEnd = async () => {
     if (isCompleted) {
-      if (nextChapter) {
+      if ((nextChapter && hasPurchased ) || nextChapter?.isFree) {
         router.push (`/courses/${ chapter.courseId }/chapters/${ nextChapter.id }`)
       }
       return
@@ -66,7 +68,7 @@ const VideoPlayer = ({chapter, userId, isCompleted, disabled, nextChapter}: Vide
         onPlaying={ () => {
           console.log ('Video is playing')
         } }
-        autoPlay={ true }
+        autoPlay={ hasPurchased || isPreviewChapter }
         className={"border-4 rounded-md"}
       />
     </div>

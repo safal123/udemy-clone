@@ -35,7 +35,7 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
     <>
       <div className="flex flex-col px-2 mx-auto mt-1">
         <div className="relative">
-          <div className="mx-auto absolute top-0 w-fit z-10 p-4">
+          <div className="mx-auto absolute top-0 w-auto z-10 p-4 flex space-x-2">
             { isCompleted && <Banner label="Completed" variant="success"/> }
             { !hasPurchased && isLocked && <Banner label="This chapter is locked" variant="warning"/> }
           </div>
@@ -46,6 +46,8 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
               disabled={ isLocked && !hasPurchased }
               isCompleted={ isCompleted as boolean }
               nextChapter={ nextChapter as Chapter }
+              hasPurchased={ hasPurchased }
+              isPreviewChapter={ chapter.isFree }
             />
           ) }
           { isLocked && !hasPurchased && (

@@ -48,7 +48,7 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
         { course.chapters.map ((chapter) => (
           <div key={ chapter.id }>
             <CourseSidebarItem
-              progress={ progress as number }
+              hasPurchase={ !!purchase }
               key={ chapter.id }
               label={ chapter.title }
               chapterId={ chapter.id }

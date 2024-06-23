@@ -10,7 +10,7 @@ interface CourseSidebarItemProps {
   isCompleted: boolean;
   courseId: string;
   isFree: boolean;
-  progress?: number
+  hasPurchase: boolean;
 }
 
 export const CourseSidebarItem =
@@ -20,7 +20,7 @@ export const CourseSidebarItem =
      isCompleted,
      courseId,
      isFree,
-     progress
+     hasPurchase
    }: CourseSidebarItemProps) => {
     const pathname = usePathname ()
     const router = useRouter ()
@@ -37,9 +37,11 @@ export const CourseSidebarItem =
       <button
         onClick={ onClick }
         type="button"
+        disabled={ !hasPurchase && !isFree }
         className={ cn (
           'w-full flex items-center gap-x-2 text-sm font-[500] pl-6 transition-all',
-          isActive && 'bg-slate-800 text-slate-100'
+          isActive && 'bg-slate-800 text-slate-100',
+          !hasPurchase && !isFree && 'cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800'
         ) }
       >
         <div className="flex gap-x-2 py-4">
