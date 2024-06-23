@@ -10,9 +10,9 @@ export const revalidate = 0
 const DashboardLayout = async ({children}: {
   children: React.ReactNode
 }) => {
-  const {user} = await checkTeacherRole()
-  console.log("User", user)
-  if (!user) {
+  const {isTeacher} = await checkTeacherRole()
+  console.log("User", isTeacher)
+  if (!isTeacher) {
     return redirect('/')
   }
   return (
@@ -21,7 +21,7 @@ const DashboardLayout = async ({children}: {
         <div className={ 'flex items-center justify-between h-full p-4 border-b bg-white dark:bg-black shadow-sm' }>
           <MobileSidebar/>
           <NavbarRoutes
-            showTeacherMode={ !!user }
+            showTeacherMode={ isTeacher }
           />
         </div>
       </div>

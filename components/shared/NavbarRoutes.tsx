@@ -17,10 +17,13 @@ export const NavbarRoutes = ({showTeacherMode = false, ...props}: {
 
   return (
     <div className={ 'flex items-center gap-x-2 ml-auto' } { ...props }>
-      <ToggleTheme/>
       { isCoursePage &&
         <Link href={ '/dashboard' }>
-          <Button size={ 'sm' } variant={ 'ghost' }>
+          <Button
+            size={ 'sm' }
+            variant={ 'ghost' }
+            className="border border-[#FFD700] text-[#FFD700] bg-[#FFD700] text-black hover:bg-black hover:text-[#FFD700] dark:border-[#FFD700] dark:text-[#FFD700] dark:bg-black dark:hover:bg-[#FFD700] dark:hover:text-black"
+          >
             Back to Dashboard
           </Button>
         </Link>
@@ -34,12 +37,17 @@ export const NavbarRoutes = ({showTeacherMode = false, ...props}: {
         </Link>
       ) : (
         <Link href={ '/teacher/courses' }>
-          <Button size={ 'sm' } variant={ 'ghost' }>
-            Teacher mode
+          <Button
+            size={ 'sm' }
+            variant={ 'outline'}
+            className="border border-[#FFD700] text-[#FFD700] bg-[#FFD700] text-black hover:bg-black hover:text-[#FFD700] dark:border-[#FFD700] dark:text-[#FFD700] dark:bg-black dark:hover:bg-[#FFD700] dark:hover:text-black"
+          >
+            Teacher Dashboard
           </Button>
         </Link>
       ) : ''
       }
+      <ToggleTheme/>
       <UserButton afterSignOutUrl={ '/' }/>
     </div>
   )

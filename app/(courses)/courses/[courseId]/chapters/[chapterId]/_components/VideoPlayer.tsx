@@ -12,9 +12,10 @@ type VideoPlayerProps = {
   userId: string | null
   isCompleted: boolean,
   disabled: boolean,
+  nextChapter?: Chapter
 }
 
-const VideoPlayer = ({chapter, userId, isCompleted, disabled}: VideoPlayerProps) => {
+const VideoPlayer = ({chapter, userId, isCompleted, disabled, nextChapter}: VideoPlayerProps) => {
   const router = useRouter ()
   const [isMarkingAsCompleted, setIsMarkingAsCompleted] = useState<boolean> (false)
 
@@ -23,8 +24,13 @@ const VideoPlayer = ({chapter, userId, isCompleted, disabled}: VideoPlayerProps)
     return null
   }
 
-  const markAsCompleted = async () => {
-    if (isCompleted) return
+  const markAsCompletedAtEnd = async () => {
+    if (isCompleted) {
+      if (nextChapter) {
+        router.push (`/courses/${ chapter.courseId }/chapters/${ nextChapter.id }`)
+      }
+      return
+    }
     try {
       setIsMarkingAsCompleted (true)
       await axios.patch (`/api/courses/${ chapter.courseId }/chapters/${ chapter.id }/toggleIsCompleted`, {
@@ -33,7 +39,7 @@ const VideoPlayer = ({chapter, userId, isCompleted, disabled}: VideoPlayerProps)
       await router.refresh ()
       toast ({
         title: 'Chapter marked as completed',
-        description: 'You have marked this chapter as completed'
+        description: '🎉 You have completed this chapter'
       })
     } catch (e) {
       console.error ('Error marking chapter as complete', e)
@@ -49,7 +55,7 @@ const VideoPlayer = ({chapter, userId, isCompleted, disabled}: VideoPlayerProps)
         controls={ !disabled }
         title={ chapter?.title }
         streamType={ 'on-demand' }
-        onEnded={ markAsCompleted }
+        onEnded={ markAsCompletedAtEnd }
         style={ {
           width: '100%',
           height: 'auto',
@@ -60,6 +66,7 @@ const VideoPlayer = ({chapter, userId, isCompleted, disabled}: VideoPlayerProps)
         onPlaying={ () => {
           console.log ('Video is playing')
         } }
+        autoPlay={ true }
         className={"border-4 rounded-md"}
       />
     </div>

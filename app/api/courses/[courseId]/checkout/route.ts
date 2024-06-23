@@ -4,12 +4,12 @@ import { db } from '@/lib/db'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 
-export async function POST (req: Request, {params}: { params: { courseId: string } }) {
+export async function POST (req: Request, { params }: { params: { courseId: string } }) {
   try {
-    const {userId} = auth ()
+    const { userId } = auth ()
     const user = await currentUser ()
     if (!userId) {
-      return new NextResponse ('Unauthorized', {status: 401})
+      return new NextResponse ('Unauthorized', { status: 401 })
     }
 
     const course = await db.course.findFirst ({
@@ -20,7 +20,7 @@ export async function POST (req: Request, {params}: { params: { courseId: string
     })
 
     if (!course) {
-      return new NextResponse ('Not found', {status: 404})
+      return new NextResponse ('Not found', { status: 404 })
     }
 
     const purchase = await db.purchase.findUnique ({
@@ -33,11 +33,11 @@ export async function POST (req: Request, {params}: { params: { courseId: string
     })
 
     if (purchase) {
-      return NextResponse.json ('Already purchased', {status: 400})
+      return NextResponse.json ('Already purchased', { status: 400 })
     }
 
     if (!course) {
-      return new NextResponse ('Not found', {status: 404})
+      return new NextResponse ('Not found', { status: 404 })
     }
 
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
@@ -72,7 +72,7 @@ export async function POST (req: Request, {params}: { params: { courseId: string
         },
         data: {
           stripeCustomerId: customer.id
-        },
+        }
       })
     }
 
@@ -88,9 +88,9 @@ export async function POST (req: Request, {params}: { params: { courseId: string
       }
     })
 
-    return NextResponse.json ({url: session.url})
+    return NextResponse.json ({ url: session.url })
   } catch (error) {
     console.log ('[REORDER]', error)
-    return new NextResponse ('Internal Error', {status: 500})
+    return new NextResponse ('Internal Error', { status: 500 })
   }
 }

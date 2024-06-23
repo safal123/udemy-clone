@@ -4,11 +4,10 @@ import { db } from '@/lib/db'
 
 interface GetChapterProps {
   courseId: string
-  userId: string
   chapterId: string
 }
 
-export const getChapter = async ({courseId, userId, chapterId}: GetChapterProps) => {
+export const getChapter = async ({courseId, chapterId}: GetChapterProps) => {
   try {
     const chapter = await db.chapter.findFirst({
       where: {
@@ -28,8 +27,31 @@ export const getChapter = async ({courseId, userId, chapterId}: GetChapterProps)
       }
     })
 
+    if (!chapter) {
+      return {
+        chapter: null,
+        error: "Chapter not found"
+      }
+    }
+
+    const nextChapter = await db.chapter.findFirst({
+      where: {
+        courseId,
+        order: chapter.order + 1
+      }
+    })
+
+    const previousChapter = await db.chapter.findFirst({
+      where: {
+        courseId,
+        order: chapter.order - 1
+      }
+    })
+
     return {
       chapter,
+      nextChapter,
+      previousChapter
     }
   } catch (error) {
     console.error("[GET_CHAPTER]", error)

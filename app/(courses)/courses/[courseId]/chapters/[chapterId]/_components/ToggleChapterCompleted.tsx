@@ -15,7 +15,7 @@ type ToggleChapterCompletedProps = {
   userId: string
 }
 
-const ToggleChapterCompleted = ({chapter, isCompleted, userId}: ToggleChapterCompletedProps) => {
+const ToggleChapterCompleted = ({ chapter, isCompleted, userId }: ToggleChapterCompletedProps) => {
   const [isProcessing, setIsProcessing] = useState (false)
   const router = useRouter ()
   const handleChapterComplete = async () => {
@@ -29,16 +29,13 @@ const ToggleChapterCompleted = ({chapter, isCompleted, userId}: ToggleChapterCom
         description: isCompleted ? 'You have marked this chapter as incomplete' : 'You have marked this chapter as completed'
       })
       await router.refresh ()
-      setIsProcessing (false)
     } catch (e) {
-      console.log (e)
-      console.error ('Error marking chapter as complete', e)
       toast ({
         title: 'Error marking chapter as complete',
         description: 'There was an error marking this chapter as complete'
       })
     } finally {
-      // setIsProcessing (false)
+      setIsProcessing (false)
     }
   }
 
@@ -46,11 +43,17 @@ const ToggleChapterCompleted = ({chapter, isCompleted, userId}: ToggleChapterCom
     <Button
       disabled={ isProcessing }
       onClick={ handleChapterComplete }
-      className={ cn (isProcessing && 'bg-primary/90 cursor') }
-      variant={ isCompleted ? 'secondary' : 'default' }
+      className={ cn ('w-[200px]',
+        isProcessing && 'bg-primary/90 cursor',
+        !isCompleted && 'border-primary text-primary hover:bg-primary hover:text-white',
+        isCompleted && 'bg-primary text-white hover:bg-primary/90'
+        )}
+      variant={ isCompleted ? 'default' : 'outline' }
     >
-      { isProcessing ? <Loader2 className={ 'mr-2 h-4 w-4 animate-spin' }/> :
-        isCompleted ? <Check className={ 'mr-2 h-4 w-4' }/> :
+      { isProcessing ?
+        <Loader2 className={ 'mr-2 h-4 w-4 animate-spin' }/> :
+        isCompleted ?
+          <Check className={ 'mr-2 h-4 w-4' }/> :
           <CircleCheck className={ 'mr-2 h-4 w-4' }/> }
       { isCompleted ? 'Completed' : 'Mark as completed' }
     </Button>

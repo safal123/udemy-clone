@@ -24,7 +24,7 @@ export const checkTeacherRole = async () => {
       }
     }
     return {
-      user
+      isTeacher: user.isTeacher
     }
   } catch (error) {
     console.error ('[CHECK_TEACHER_ROLE]', error)

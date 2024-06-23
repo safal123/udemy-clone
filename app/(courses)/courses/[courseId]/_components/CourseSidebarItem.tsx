@@ -42,7 +42,7 @@ export const CourseSidebarItem =
           isActive && 'bg-slate-800 text-slate-100'
         ) }
       >
-        <div className="flex items-center gap-x-2 py-4">
+        <div className="flex gap-x-2 py-4">
           <Icon
             size={ 22 }
             className={ cn (
