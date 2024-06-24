@@ -33,12 +33,21 @@ const VideoPlayer = ({
   const [videoUrl, setVideoUrl] = useState<string | null> (null)
 
   const getVideoUrl = async () => {
-    console.log ('Getting video url...')
+    console.log('Getting video url...');
     if (chapter.videoStorageId) {
-      const { objectUrl } = await getObjectFromS3 (chapter.videoStorageId)
-      if (objectUrl) setVideoUrl (objectUrl)
+      try {
+        const { objectUrl } = await getObjectFromS3(chapter.videoStorageId);
+        if (objectUrl) {
+          console.log('Video URL:', objectUrl);
+          setVideoUrl(objectUrl);
+        } else {
+          console.error('No object URL received from S3');
+        }
+      } catch (error) {
+        console.error('Error getting video URL from S3:', error);
+      }
     }
-  }
+  };
 
   useEffect (() => {
     getVideoUrl ()
@@ -96,7 +105,6 @@ const VideoPlayer = ({
         /> :
         <div className={ 'flex items-center justify-center h-[800px] animate-spin' }>
           <Loader2 size={ 64 } className={ 'text-primary' }/>
-          {/*Loading video...*/ }
         </div>
       }
     </div>

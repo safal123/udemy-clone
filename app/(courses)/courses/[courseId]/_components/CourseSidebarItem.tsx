@@ -54,16 +54,16 @@ export const CourseSidebarItem =
             ) }
           />
           { label }
-          { isFree &&
-            <span className={ 'text-xs text-slate-500 ml-auto' }>
+        </div>
+        { isFree &&
+          <span className={ 'text-xs text-slate-500 ml-auto' }>
               <LockOpen size={ 16 } className={ cn (
                 'text-slate-500',
                 isActive && 'text-slate-100',
                 isCompleted && 'text-emerald-700'
               ) }/>
             </span>
-          }
-        </div>
+        }
         <div className={ cn (
           'ml-auto opacity-0 border-2 border-theme h-14 transition-all',
           isActive && 'opacity-100',
