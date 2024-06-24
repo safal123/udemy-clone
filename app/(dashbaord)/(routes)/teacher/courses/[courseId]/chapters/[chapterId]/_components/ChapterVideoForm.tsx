@@ -1,13 +1,14 @@
 'use client'
 
 import { VideoIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Chapter, MuxData } from '@prisma/client'
 import Video from 'next-video'
 import Title from '@/components/shared/Title'
 import UploadVideoToS3
   from '@/app/(dashbaord)/(routes)/teacher/courses/[courseId]/chapters/[chapterId]/_components/UploadVideoToS3'
 import AddEditButton from '@/components/shared/AddEditButton'
+import { getObjectFromS3 } from '@/actions/get-object-from-s3'
 
 interface ChapterVideoFormProps {
   chapter: Chapter & { muxData?: MuxData | null };
@@ -19,6 +20,19 @@ interface ChapterVideoFormProps {
 export const ChapterVideoForm = ({chapter, courseId, chapterId}: ChapterVideoFormProps) => {
   const [isEditing, setIsEditing] = useState (false)
   const toggleEdit = () => setIsEditing ((current) => !current)
+  const [videoUrl, setVideoUrl] = useState<string | null> (null)
+
+  const getVideoUrl = async () => {
+    console.log ('Getting video url...')
+    if (chapter.videoStorageId) {
+      const { objectUrl } = await getObjectFromS3 (chapter.videoStorageId)
+      if (objectUrl) setVideoUrl (objectUrl)
+    }
+  }
+
+  useEffect (() => {
+    getVideoUrl ()
+  }, [chapter.videoStorageId])
 
   return (
     <div className="mt-6 border rounded-md p-4">
@@ -32,10 +46,10 @@ export const ChapterVideoForm = ({chapter, courseId, chapterId}: ChapterVideoFor
         />
       </div>
       { !isEditing && (
-        !chapter?.videoUrl ? (
+        !videoUrl ? (
           <div
             onClick={ toggleEdit }
-            className="flex flex-col items-center justify-center h-60 bg-gray-100 rounded-md dark:bg-slate-800">
+            className="flex flex-col items-center justify-center min-h-200 bg-gray-100 rounded-md dark:bg-slate-800">
             <VideoIcon
               className="h-10 w-10 text-slate-500 border border-white rounded-full dark:border-bg-slate-100 p-2"
             />
@@ -44,8 +58,9 @@ export const ChapterVideoForm = ({chapter, courseId, chapterId}: ChapterVideoFor
         ) : (
           <div className="relative aspect-video mt-2">
             <Video
-              src={ chapter.videoUrl }
+              src={ videoUrl}
               controls
+              onError={ getVideoUrl }
               className="w-full h-full"
               style={ {
                 aspectRatio: '16/9'
@@ -60,6 +75,8 @@ export const ChapterVideoForm = ({chapter, courseId, chapterId}: ChapterVideoFor
           <UploadVideoToS3
             chapterId={ chapterId }
             courseId={ courseId }
+            // @ts-ignore
+            videoStorageId={ chapter.videoStorageId as string }
             toggleEdit={ toggleEdit }
           />
           <div className="text-xs text-muted-foreground mt-4">

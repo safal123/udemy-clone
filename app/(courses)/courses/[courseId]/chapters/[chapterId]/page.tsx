@@ -14,6 +14,7 @@ import Title from '@/components/shared/Title'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Chapter } from '@prisma/client'
+import { Preview } from '@/components/shared/Preview'
 
 const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId: string } }) => {
   const { userId } = auth ()
@@ -39,7 +40,8 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
             { isCompleted && <Banner label="Completed" variant="success"/> }
             { !hasPurchased && isLocked && <Banner label="This chapter is locked" variant="warning"/> }
           </div>
-          { chapter?.videoUrl && (
+
+          { chapter?.videoStorageId && (
             <VideoPlayer
               chapter={ chapter }
               userId={ userId }
@@ -101,10 +103,13 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
       </div>
       <div className="p-2 w-full mx-auto">
         <Card>
-          <CardHeader>
-            <Title title="Attachments"/>
-          </CardHeader>
           <CardContent>
+            { chapter?.description && <Preview value={ chapter?.description }/> }
+          </CardContent>
+          <CardContent>
+            <p>
+              <Title title="Attachments"/>
+            </p>
             { chapter.course.attachments.map ((attachment) => (
               <div
                 key={ attachment.id }

@@ -13,11 +13,13 @@ interface CourseNavbarProps {
 export const CourseNavbar =
   ({course}: CourseNavbarProps) => {
     return (
-      <div className="p-4 border-b h-full flex items-center shadow-sm">
+      <div className="p-4 xl:hidden border-b h-full flex items-center shadow-sm">
         <CourseMobileSidebar
           course={ course }
         />
-        <NavbarRoutes/>
+        <div className={ 'xl:hidden ml-auto' }>
+          <NavbarRoutes/>
+        </div>
       </div>
     )
   }

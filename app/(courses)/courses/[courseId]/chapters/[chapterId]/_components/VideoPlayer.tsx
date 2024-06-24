@@ -1,11 +1,13 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Chapter } from '@prisma/client'
 import axios from 'axios'
 import { toast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
 import Video from 'next-video'
 import { Course } from '.prisma/client'
+import { getObjectFromS3 } from '@/actions/get-object-from-s3'
+import { Loader2 } from 'lucide-react'
 
 type VideoPlayerProps = {
   chapter: Chapter & { course?: Course }
@@ -17,18 +19,38 @@ type VideoPlayerProps = {
   isPreviewChapter: boolean
 }
 
-const VideoPlayer = ({chapter, userId, isCompleted, disabled, nextChapter, hasPurchased, isPreviewChapter}: VideoPlayerProps) => {
+const VideoPlayer = ({
+                       chapter,
+                       userId,
+                       isCompleted,
+                       disabled,
+                       nextChapter,
+                       hasPurchased,
+                       isPreviewChapter
+                     }: VideoPlayerProps) => {
   const router = useRouter ()
   const [isMarkingAsCompleted, setIsMarkingAsCompleted] = useState<boolean> (false)
+  const [videoUrl, setVideoUrl] = useState<string | null> (null)
 
+  const getVideoUrl = async () => {
+    console.log ('Getting video url...')
+    if (chapter.videoStorageId) {
+      const { objectUrl } = await getObjectFromS3 (chapter.videoStorageId)
+      if (objectUrl) setVideoUrl (objectUrl)
+    }
+  }
 
-  if (!chapter?.videoUrl) {
+  useEffect (() => {
+    getVideoUrl ()
+  }, [chapter.videoStorageId])
+
+  if (!chapter?.videoStorageId) {
     return null
   }
 
   const markAsCompletedAtEnd = async () => {
     if (isCompleted) {
-      if ((nextChapter && hasPurchased ) || nextChapter?.isFree) {
+      if ((nextChapter && hasPurchased) || nextChapter?.isFree) {
         router.push (`/courses/${ chapter.courseId }/chapters/${ nextChapter.id }`)
       }
       return
@@ -52,25 +74,31 @@ const VideoPlayer = ({chapter, userId, isCompleted, disabled, nextChapter, hasPu
 
   return (
     <div className={ 'w-full min-h-[400px]' }>
-      <Video
-        src={ chapter?.videoUrl }
-        controls={ !disabled }
-        title={ chapter?.title }
-        streamType={ 'on-demand' }
-        onEnded={ markAsCompletedAtEnd }
-        style={ {
-          width: '100%',
-          height: 'auto',
-          borderRadius: '10px',
-          borderColor: 'transparent',
-          overflow: 'hidden'
-        } }
-        onPlaying={ () => {
-          console.log ('Video is playing')
-        } }
-        autoPlay={ hasPurchased || isPreviewChapter }
-        className={"border-4 rounded-md"}
-      />
+      { videoUrl ? <Video
+          src={ videoUrl }
+          controls={ !disabled }
+          onError={ getVideoUrl }
+          title={ chapter?.title }
+          streamType={ 'on-demand' }
+          onEnded={ markAsCompletedAtEnd }
+          style={ {
+            width: '100%',
+            height: 'auto',
+            borderRadius: '10px',
+            borderColor: 'transparent',
+            overflow: 'hidden'
+          } }
+          onPlaying={ () => {
+            console.log ('Video is playing')
+          } }
+          autoPlay={ hasPurchased || isPreviewChapter }
+          className={ 'border-4 rounded-md' }
+        /> :
+        <div className={ 'flex items-center justify-center h-[800px] animate-spin' }>
+          <Loader2 size={ 64 } className={ 'text-primary' }/>
+          {/*Loading video...*/ }
+        </div>
+      }
     </div>
   )
 }

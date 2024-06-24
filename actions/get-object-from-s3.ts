@@ -1,7 +1,7 @@
 'use server'
 
 import { auth } from '@clerk/nextjs'
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
+import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3'
 import {getSignedUrl} from '@aws-sdk/s3-request-presigner'
 
 const s3 = new S3Client({
@@ -13,7 +13,7 @@ const s3 = new S3Client({
 })
 
 
-export const getS3SignedUrl = async (chapterId: string) => {
+export const getObjectFromS3 = async (objectId: string) => {
   try {
     const {userId} = auth ()
     if (!userId) {
@@ -22,28 +22,27 @@ export const getS3SignedUrl = async (chapterId: string) => {
       }
     }
 
-    if (!chapterId) {
+    if (!objectId) {
       return {
         error: 'Invalid request'
       }
     }
 
-    const putObjectCommand = new PutObjectCommand({
+    const getObjectCommand = new GetObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME!,
-      Key: chapterId,
-      ContentType: 'video/mp4'
+      Key: objectId,
     })
 
-    const signedUrl = await getSignedUrl(s3, putObjectCommand, { expiresIn: 3600 })
+    const objectUrl = await getSignedUrl(s3, getObjectCommand, { expiresIn: 3600 })
 
     return {
       success: true,
-      signedUrl
+      objectUrl
     }
   } catch (error) {
-    console.error ('[GET_SIGNED_URL]', error)
+    console.error ('[GET_OBJECT_FROM_S3]', error)
     return {
-      error: 'Internal Server Error'
+      error: 'Cannot get object from S3'
     }
   }
 }

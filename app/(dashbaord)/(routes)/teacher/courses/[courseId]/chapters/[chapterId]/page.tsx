@@ -44,7 +44,7 @@ const ChapterPage = async ({params}: {
 
   const requiredFields = [
     chapter.title,
-    chapter.videoUrl
+    chapter.videoStorageId
   ]
 
   const totalFields = requiredFields.length

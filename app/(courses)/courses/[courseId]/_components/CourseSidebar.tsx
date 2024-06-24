@@ -7,6 +7,7 @@ import { db } from '@/lib/db'
 import { auth } from '@clerk/nextjs'
 import CourseProgress from '@/components/shared/CourseProgress'
 import { getUserProgress } from '@/actions/get-user-progress'
+import Link from 'next/link'
 
 interface CourseSidebarProps {
   course: Course & {
@@ -36,6 +37,9 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
         <h1 className={ 'font-semibold' }>
           { course.title }
         </h1>
+        <Link href={'/dashboard'} className={ 'text-primary underline mt-2 text-xs' }>
+          Back to dashboard
+        </Link>
       </div>
       { purchase &&
         <CourseProgress

@@ -32,7 +32,7 @@ export async function PATCH(
       }
     });
 
-    if (!chapter  || !chapter.title  || !chapter.videoUrl) {
+    if (!chapter  || !chapter.title  || !chapter.videoStorageId) {
       return new NextResponse("Missing required fields", { status: 400 });
     }
 

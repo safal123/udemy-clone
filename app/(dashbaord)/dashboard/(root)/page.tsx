@@ -5,6 +5,7 @@ import CourseCard from '@/components/shared/CourseCard'
 import IconBadge from '@/components/shared/IconBadge'
 import { CheckCircle, CircleCheck, Clock, Clock3Icon } from 'lucide-react'
 import InfoCard from '@/components/shared/InfoCard'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 export default async function Dashboard () {
   const {userId} = auth ()
@@ -39,18 +40,27 @@ export default async function Dashboard () {
         </div>
       </div>
       <div className={ 'mb-8' }>
-        <h2 className={ 'text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4' }>Courses in Progress</h2>
-        <div className={ 'grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3' }>
-          { coursesInProgress.length > 0 ? coursesInProgress.map (course => (
-            <div key={ course.id }>
-              <CourseCard course={ course as any }/>
+        <Card>
+          <CardHeader>
+            <div className={ 'flex items-center' }>
+              <IconBadge icon={ Clock3Icon }/>
+              <h2 className={ 'text-2xl font-bold text-gray-800 dark:text-gray-100 ml-2' }>Courses in Progress</h2>
             </div>
-          )) :
-            <div className={ 'text-gray-500 dark:text-gray-400 text-lg' }>
-              No courses in progress
+          </CardHeader>
+          <CardContent>
+            <div className={ 'grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3' }>
+              { coursesInProgress.length > 0 ? coursesInProgress.map (course => (
+                  <div key={ course.id }>
+                    <CourseCard course={ course as any }/>
+                  </div>
+                )) :
+                <div className={ 'text-gray-500 dark:text-gray-400 text-lg' }>
+                  No courses in progress
+                </div>
+              }
             </div>
-          }
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

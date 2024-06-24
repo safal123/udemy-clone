@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { VideoIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Video from 'next-video'
@@ -6,21 +6,22 @@ import { getS3SignedUrl } from '@/actions/get-signed-url'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
+import { getObjectFromS3 } from '@/actions/get-object-from-s3'
 
 interface UploadToS3Props {
   chapterId: string,
   courseId: string,
   toggleEdit: () => void
+  videoStorageId: string | null
 }
 
-const UploadVideoToS3
-  = ({chapterId, courseId, toggleEdit}: UploadToS3Props) => {
+const UploadVideoToS3 = ({ chapterId, courseId, toggleEdit, videoStorageId }: UploadToS3Props) => {
   const router = useRouter ()
-  const {toast} = useToast()
+  const { toast } = useToast ()
   const [file, setFile] = useState<File | null> (null)
   const [fileUrl, setFileUrl] = useState<string | null> (null)
   const [isUploading, setIsUploading] = useState<boolean> (false)
-  const hiddenFileInput = useRef <HTMLInputElement | null>(null);
+  const hiddenFileInput = useRef<HTMLInputElement | null> (null)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -40,7 +41,7 @@ const UploadVideoToS3
     try {
       if (!file) return
       setIsUploading (true)
-      const {signedUrl, success} = await getS3SignedUrl (chapterId)
+      const { signedUrl, success } = await getS3SignedUrl (chapterId)
       if (!success) throw new Error ('Failed to get signed url')
       const response = await fetch (signedUrl, {
         method: 'PUT',
@@ -49,19 +50,21 @@ const UploadVideoToS3
       if (!response.ok) {
         throw new Error ('Failed to upload video')
       }
-      const videoUrl = signedUrl.split ('?')[0]
-      await axios.patch (`/api/courses/${ courseId }/chapters/${ chapterId }`, {
-        videoUrl
-      })
+      if (!videoStorageId) {
+        await axios.patch (`/api/courses/${ courseId }/chapters/${ chapterId }`, {
+          videoStorageId: chapterId
+        })
+      }
+
       await router.refresh ()
       toggleEdit ()
-      toast({
+      toast ({
         variant: 'default',
         title: 'Video uploaded successfully',
         description: 'You can now view the video in the chapter'
       })
     } catch (error) {
-      toast({
+      toast ({
         variant: 'destructive',
         title: 'Uh oh! Something went wrong',
         description: 'Please try again later, or contact support if the problem persists'

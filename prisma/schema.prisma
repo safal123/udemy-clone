@@ -56,13 +56,14 @@ model Attachment {
 }
 
 model Chapter {
-  id          String  @id @default(uuid())
-  title       String  @db.Text
-  description String? @db.Text
-  order       Int
-  isPublished Boolean @default(false)
-  isFree      Boolean @default(false)
-  videoUrl    String? @db.Text
+  id             String  @id @default(uuid())
+  title          String  @db.Text
+  description    String? @db.Text
+  order          Int
+  isPublished    Boolean @default(false)
+  isFree         Boolean @default(false)
+  videoUrl       String? @db.Text
+  videoStorageId String? @db.Text
 
   muxData MuxData?
 

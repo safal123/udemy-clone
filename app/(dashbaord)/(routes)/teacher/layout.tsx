@@ -11,7 +11,6 @@ const DashboardLayout = async ({children}: {
   children: React.ReactNode
 }) => {
   const {isTeacher} = await checkTeacherRole()
-  console.log("User", isTeacher)
   if (!isTeacher) {
     return redirect('/')
   }
