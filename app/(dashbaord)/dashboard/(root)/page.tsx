@@ -30,14 +30,6 @@ export default async function Dashboard () {
             icon={ Clock }
           />
         </div>
-        <h2 className={ 'text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4' }>Completed Courses</h2>
-        <div className={ 'grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3' }>
-          { completedCourses.length && completedCourses.map (course => (
-            <div key={ course.id }>
-              <CourseCard course={ course as any }/>
-            </div>
-          )) }
-        </div>
       </div>
       <div className={ 'mb-8' }>
         <Card>
@@ -56,6 +48,29 @@ export default async function Dashboard () {
                 )) :
                 <div className={ 'text-gray-500 dark:text-gray-400 text-lg' }>
                   No courses in progress
+                </div>
+              }
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+      <div className={ 'mb-8' }>
+        <Card>
+          <CardHeader>
+            <div className={ 'flex items-center' }>
+              <IconBadge icon={ CheckCircle }/>
+              <h2 className={ 'text-2xl font-bold text-gray-800 dark:text-gray-100 ml-2' }>Completed Courses</h2>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className={ 'grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3' }>
+              { completedCourses.length > 0 ? completedCourses.map (course => (
+                  <div key={ course.id }>
+                    <CourseCard course={ course as any }/>
+                  </div>
+                )) :
+                <div className={ 'text-gray-500 dark:text-gray-400 text-lg' }>
+                  No completed courses
                 </div>
               }
             </div>

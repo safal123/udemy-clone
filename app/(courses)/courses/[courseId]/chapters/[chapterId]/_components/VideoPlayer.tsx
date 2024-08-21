@@ -19,96 +19,97 @@ type VideoPlayerProps = {
   isPreviewChapter: boolean
 }
 
-const VideoPlayer = ({
-                       chapter,
-                       userId,
-                       isCompleted,
-                       disabled,
-                       nextChapter,
-                       hasPurchased,
-                       isPreviewChapter
-                     }: VideoPlayerProps) => {
-  const router = useRouter ()
-  const [isMarkingAsCompleted, setIsMarkingAsCompleted] = useState<boolean> (false)
-  const [videoUrl, setVideoUrl] = useState<string | null> (null)
+const VideoPlayer =
+  ({
+     chapter,
+     userId,
+     isCompleted,
+     disabled,
+     nextChapter,
+     hasPurchased,
+     isPreviewChapter
+   }: VideoPlayerProps) => {
+    const router = useRouter ()
+    const [isMarkingAsCompleted, setIsMarkingAsCompleted] = useState<boolean> (false)
+    const [videoUrl, setVideoUrl] = useState<string | null> (null)
 
-  const getVideoUrl = async () => {
-    console.log('Getting video url...');
-    if (chapter.videoStorageId) {
-      try {
-        const { objectUrl } = await getObjectFromS3(chapter.videoStorageId);
-        if (objectUrl) {
-          console.log('Video URL:', objectUrl);
-          setVideoUrl(objectUrl);
-        } else {
-          console.error('No object URL received from S3');
+    const getVideoUrl = async () => {
+      console.log ('Getting video url...')
+      if (chapter.videoStorageId) {
+        try {
+          const { objectUrl } = await getObjectFromS3 (chapter.videoStorageId)
+          if (objectUrl) {
+            console.log ('Video URL:', objectUrl)
+            setVideoUrl (objectUrl)
+          } else {
+            console.error ('No object URL received from S3')
+          }
+        } catch (error) {
+          console.error ('Error getting video URL from S3:', error)
         }
-      } catch (error) {
-        console.error('Error getting video URL from S3:', error);
       }
     }
-  };
 
-  useEffect (() => {
-    getVideoUrl ()
-  }, [chapter.videoStorageId])
+    useEffect (() => {
+      getVideoUrl ()
+    }, [chapter.videoStorageId])
 
-  if (!chapter?.videoStorageId) {
-    return null
+    if (!chapter?.videoStorageId) {
+      return null
+    }
+
+    const markAsCompletedAtEnd = async () => {
+      if (isCompleted) {
+        if ((nextChapter && hasPurchased) || nextChapter?.isFree) {
+          router.push (`/courses/${ chapter.courseId }/chapters/${ nextChapter.id }`)
+        }
+        return
+      }
+      try {
+        setIsMarkingAsCompleted (true)
+        await axios.patch (`/api/courses/${ chapter.courseId }/chapters/${ chapter.id }/toggleIsCompleted`, {
+          isCompleted: true
+        })
+        await router.refresh ()
+        toast ({
+          title: 'Chapter marked as completed',
+          description: '🎉 You have completed this chapter'
+        })
+      } catch (e) {
+        console.error ('Error marking chapter as complete', e)
+      } finally {
+        setIsMarkingAsCompleted (false)
+      }
+    }
+
+    return (
+      <div className={ 'w-full min-h-[400px]' }>
+        { videoUrl ? <Video
+            src={ videoUrl }
+            controls={ !disabled }
+            onError={ getVideoUrl }
+            title={ chapter?.title }
+            streamType={ 'on-demand' }
+            onEnded={ markAsCompletedAtEnd }
+            style={ {
+              width: '100%',
+              height: 'auto',
+              borderRadius: '10px',
+              borderColor: 'transparent',
+              overflow: 'hidden'
+            } }
+            onPlaying={ () => {
+              console.log ('Video is playing')
+            } }
+            autoPlay={ false }
+            className={ 'border-4 rounded-md' }
+          /> :
+          <div className={ 'flex items-center justify-center h-[800px] animate-spin' }>
+            <Loader2 size={ 64 } className={ 'text-primary' }/>
+          </div>
+        }
+      </div>
+    )
   }
-
-  const markAsCompletedAtEnd = async () => {
-    if (isCompleted) {
-      if ((nextChapter && hasPurchased) || nextChapter?.isFree) {
-        router.push (`/courses/${ chapter.courseId }/chapters/${ nextChapter.id }`)
-      }
-      return
-    }
-    try {
-      setIsMarkingAsCompleted (true)
-      await axios.patch (`/api/courses/${ chapter.courseId }/chapters/${ chapter.id }/toggleIsCompleted`, {
-        isCompleted: true
-      })
-      await router.refresh ()
-      toast ({
-        title: 'Chapter marked as completed',
-        description: '🎉 You have completed this chapter'
-      })
-    } catch (e) {
-      console.error ('Error marking chapter as complete', e)
-    } finally {
-      setIsMarkingAsCompleted (false)
-    }
-  }
-
-  return (
-    <div className={ 'w-full min-h-[400px]' }>
-      { videoUrl ? <Video
-          src={ videoUrl }
-          controls={ !disabled }
-          onError={ getVideoUrl }
-          title={ chapter?.title }
-          streamType={ 'on-demand' }
-          onEnded={ markAsCompletedAtEnd }
-          style={ {
-            width: '100%',
-            height: 'auto',
-            borderRadius: '10px',
-            borderColor: 'transparent',
-            overflow: 'hidden'
-          } }
-          onPlaying={ () => {
-            console.log ('Video is playing')
-          } }
-          autoPlay={ hasPurchased || isPreviewChapter }
-          className={ 'border-4 rounded-md' }
-        /> :
-        <div className={ 'flex items-center justify-center h-[800px] animate-spin' }>
-          <Loader2 size={ 64 } className={ 'text-primary' }/>
-        </div>
-      }
-    </div>
-  )
-}
 
 export default VideoPlayer

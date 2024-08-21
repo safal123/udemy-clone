@@ -54,15 +54,6 @@ const CourseEnrolButton = ({course}: CourseEnrolButtonProps) => {
       setIsLoading (false)
     }
   }
-
-  if (hasPurchase) {
-    return <Link href={'/'}>
-      <Button>
-        Visit Course
-      </Button>
-    </Link>
-  }
-
   return (
     <Button
       onClick={ handleEnrollment }
@@ -76,6 +67,28 @@ const CourseEnrolButton = ({course}: CourseEnrolButtonProps) => {
       Enroll for { formatPrice (course?.price) }
     </Button>
   )
+
+  // if (hasPurchase) {
+  //   return <Link href={'/'}>
+  //     <Button>
+  //       Visit Course
+  //     </Button>
+  //   </Link>
+  // } else {
+  //   return (
+  //     <Button
+  //       onClick={ handleEnrollment }
+  //       disabled={ isLoading }
+  //       className={ 'w-full' }
+  //     >
+  //       { isLoading ?
+  //         <ReloadIcon className={ 'mr-2 animate-spin' }/> :
+  //         <CircleCheck className={ 'mr-2 h-4 w-4' }/>
+  //       }
+  //       Enroll for { formatPrice (course?.price) }
+  //     </Button>
+  //   )
+  // }
 }
 
 export default CourseEnrolButton
