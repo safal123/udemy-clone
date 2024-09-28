@@ -30,9 +30,9 @@ export const ChapterVideoForm = ({chapter, courseId, chapterId}: ChapterVideoFor
     }
   }
 
-  useEffect (() => {
-    getVideoUrl ()
-  }, [chapter.videoStorageId])
+  // useEffect (() => {
+  //   getVideoUrl ()
+  // }, [chapter, chapter.videoStorageId])
 
   return (
     <div className="mt-6 border rounded-md p-4">
@@ -75,8 +75,7 @@ export const ChapterVideoForm = ({chapter, courseId, chapterId}: ChapterVideoFor
           <UploadVideoToS3
             chapterId={ chapterId }
             courseId={ courseId }
-            // @ts-ignore
-            videoStorageId={ chapter.videoStorageId as string }
+            videoStorageId={ chapter.videoStorageId }
             toggleEdit={ toggleEdit }
           />
           <div className="text-xs text-muted-foreground mt-4">

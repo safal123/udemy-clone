@@ -24,13 +24,13 @@ const UploadVideoToS3 = ({ chapterId, courseId, toggleEdit, videoStorageId }: Up
   const hiddenFileInput = useRef<HTMLInputElement | null> (null)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      console.log('File Name:', file.name);
-      console.log('File Type:', file.type);
-      console.log('File Size:', file.size);
-      setFile (file)
-      setFileUrl (URL.createObjectURL (file))
+    const uploadedFile = event.target.files?.[0]
+    if (uploadedFile) {
+      console.log('File Name:', uploadedFile.name);
+      console.log('File Type:', uploadedFile.type);
+      console.log('File Size:', uploadedFile.size);
+      setFile (uploadedFile)
+      // setFileUrl (URL.createObjectURL (uploadedFile))
     }
   }
 
@@ -42,7 +42,7 @@ const UploadVideoToS3 = ({ chapterId, courseId, toggleEdit, videoStorageId }: Up
 
   const handleUpload = async () => {
     try {
-      if (!file) return
+      if (!file || !chapterId) return
       setIsUploading (true)
       const contentType = file.type
       const { signedUrl, success } = await getS3SignedUrl (chapterId, contentType)

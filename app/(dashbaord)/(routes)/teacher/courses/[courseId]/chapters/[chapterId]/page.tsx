@@ -80,8 +80,8 @@ const ChapterPage = async ({params}: {
           </div>
           <ChapterActions
             chapter={ chapter }
-            courseId={ params.courseId }
-            chapterId={ params.chapterId }
+            courseId={ chapter.courseId }
+            chapterId={ chapter.id }
             isDisabled={ completedPercentage < 100 }
           />
         </div>
@@ -136,8 +136,8 @@ const ChapterPage = async ({params}: {
               </div>
               <ChapterVideoForm
                 chapter={ chapter }
-                chapterId={ params.chapterId }
-                courseId={ params.courseId }
+                chapterId={ chapter.id }
+                courseId={ chapter.courseId }
               />
             </div>
           </div>
