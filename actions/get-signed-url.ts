@@ -13,7 +13,7 @@ const s3 = new S3Client({
 })
 
 
-export const getS3SignedUrl = async (chapterId: string) => {
+export const getS3SignedUrl = async (chapterId: string, contentType: string) => {
   try {
     const {userId} = auth ()
     if (!userId) {
@@ -31,7 +31,7 @@ export const getS3SignedUrl = async (chapterId: string) => {
     const putObjectCommand = new PutObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME!,
       Key: chapterId,
-      ContentType: 'video/mp4'
+      ContentType: contentType
     })
 
     const signedUrl = await getSignedUrl(s3, putObjectCommand, { expiresIn: 3600 })
