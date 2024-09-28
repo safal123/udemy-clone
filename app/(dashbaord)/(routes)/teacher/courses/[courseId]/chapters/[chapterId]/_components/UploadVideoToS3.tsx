@@ -64,6 +64,7 @@ const UploadVideoToS3 = ({ chapterId, courseId, toggleEdit, videoStorageId }: Up
         description: 'You can now view the video in the chapter'
       })
     } catch (error) {
+      console.error (error)
       toast ({
         variant: 'destructive',
         title: 'Uh oh! Something went wrong',
