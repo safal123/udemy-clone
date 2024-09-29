@@ -20,7 +20,7 @@ import CourseActions from '@/app/(dashbaord)/(routes)/teacher/courses/[courseId]
 import TooltipButton from '@/components/shared/TooltipButton'
 
 
-const CoursePage = async ({params}: {
+const CoursePage = async ({ params }: {
   params: {
     courseId: string;
   }

@@ -26,11 +26,8 @@ const UploadVideoToS3 = ({ chapterId, courseId, toggleEdit, videoStorageId }: Up
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const uploadedFile = event.target.files?.[0]
     if (uploadedFile) {
-      console.log('File Name:', uploadedFile.name);
-      console.log('File Type:', uploadedFile.type);
-      console.log('File Size:', uploadedFile.size);
       setFile (uploadedFile)
-      // setFileUrl (URL.createObjectURL (uploadedFile))
+      setFileUrl (URL.createObjectURL (uploadedFile))
     }
   }
 
@@ -46,6 +43,7 @@ const UploadVideoToS3 = ({ chapterId, courseId, toggleEdit, videoStorageId }: Up
       setIsUploading (true)
       const contentType = file.type
       const { signedUrl, success } = await getS3SignedUrl (chapterId, contentType)
+      console.log(signedUrl, success)
       if (!success) throw new Error ('Failed to get signed url')
       const response = await fetch (signedUrl, {
         method: 'PUT',

@@ -34,7 +34,11 @@ export const getS3SignedUrl = async (chapterId: string, contentType: string) => 
       ContentType: contentType
     })
 
+    console.log('[PUT_OBJECT_COMMAND]', putObjectCommand);
+
     const signedUrl = await getSignedUrl(s3, putObjectCommand, { expiresIn: 3600 })
+    console.log('[GET_SIGNED_URL]')
+    console.log ('[GET_SIGNED_URL]', signedUrl)
 
     return {
       success: true,

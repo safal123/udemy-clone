@@ -23,16 +23,15 @@ export const ChapterVideoForm = ({chapter, courseId, chapterId}: ChapterVideoFor
   const [videoUrl, setVideoUrl] = useState<string | null> (null)
 
   const getVideoUrl = async () => {
-    console.log ('Getting video url...')
     if (chapter.videoStorageId) {
       const { objectUrl } = await getObjectFromS3 (chapter.videoStorageId)
       if (objectUrl) setVideoUrl (objectUrl)
     }
   }
 
-  // useEffect (() => {
-  //   getVideoUrl ()
-  // }, [chapter, chapter.videoStorageId])
+  useEffect (() => {
+    getVideoUrl ()
+  }, [chapter, chapter.videoStorageId])
 
   return (
     <div className="mt-6 border rounded-md p-4">

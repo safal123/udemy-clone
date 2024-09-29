@@ -33,6 +33,8 @@ export const getObjectFromS3 = async (objectId: string) => {
       Key: objectId,
     })
 
+    console.log('[GET_OBJECT_COMMAND]', getObjectCommand);
+
     const objectUrl = await getSignedUrl(s3, getObjectCommand, { expiresIn: 3600 })
 
     return {
