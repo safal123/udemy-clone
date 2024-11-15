@@ -27,10 +27,10 @@ interface CourseCardProps {
 }
 
 const CourseCard = ({ course, isOwner }: CourseCardProps) => {
+  const { user } = useUser ()
   const router = useRouter ()
   const [progress, setProgress] = useState<number> (0)
   const [hasPurchase, setHasPurchase] = useState<boolean> (false)
-  const { user } = useUser ()
   const canEnroll = course.price && !hasPurchase && !isOwner
   const [loading, setLoading] = useState<boolean> (false)
 

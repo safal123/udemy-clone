@@ -7,7 +7,7 @@ import {getSignedUrl} from '@aws-sdk/s3-request-presigner'
 const s3 = new S3Client({
   region: process.env.AWS_BUCKET_REGION,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY!,
+    accessKeyId: process.env.AWS_ACCESS_KEY_SERVER!,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
   }
 })
@@ -33,8 +33,7 @@ export const getObjectFromS3 = async (objectId: string) => {
       Key: objectId,
     })
 
-    console.log('[GET_OBJECT_COMMAND]', getObjectCommand);
-
+    // @ts-ignore
     const objectUrl = await getSignedUrl(s3, getObjectCommand, { expiresIn: 3600 })
 
     return {

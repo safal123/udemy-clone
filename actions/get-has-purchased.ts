@@ -9,6 +9,12 @@ interface GetHasPurchasedProps {
 
 export const getHasPurchased = async ({courseId, userId}: GetHasPurchasedProps) => {
   try {
+    if (!userId) {
+      return {
+        hasPurchased: false,
+        error: "Unauthorized"
+      }
+    }
     const hasPurchased = await db.purchase.findUnique({
       where: {
         userId_courseId: {
