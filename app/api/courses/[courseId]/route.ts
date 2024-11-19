@@ -51,8 +51,8 @@ export async function DELETE (req: Request, {params}: { params: { courseId: stri
     })
 
     return new NextResponse ('Success', {status: 200})
-  } catch (error) {
+  } catch (error: Error | any) {
     console.error ('[COURSES]', error)
-    new NextResponse ('Internal Server Error', {status: 500})
+    return new NextResponse (error, {status: 500})
   }
 }

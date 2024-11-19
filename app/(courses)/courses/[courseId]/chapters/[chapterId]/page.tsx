@@ -1,7 +1,6 @@
 import { auth } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 import { getChapter } from '@/actions/get-chapters'
-import { Banner } from '@/components/shared/Banner'
 import CourseEnrolButton from '@/app/(courses)/courses/[courseId]/chapters/[chapterId]/_components/CourseEnrolButton'
 import { getHasPurchased } from '@/actions/get-has-purchased'
 import ToggleChapterCompleted
@@ -36,11 +35,6 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
     <>
       <div className="flex flex-col px-2 mx-auto mt-1">
         <div className="relative">
-          <div className="mx-auto absolute top-0 w-auto z-10 p-4 flex space-x-2">
-            { isCompleted && <Banner label="Completed" variant="success"/> }
-            { !hasPurchased && isLocked && <Banner label="This chapter is locked" variant="warning"/> }
-          </div>
-
           { chapter?.videoStorageId && (
             <VideoPlayer
               chapter={ chapter }

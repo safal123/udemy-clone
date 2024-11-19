@@ -39,9 +39,9 @@ export const CourseSidebarItem =
         type="button"
         disabled={ !hasPurchase && !isFree }
         className={ cn (
-          'w-full flex items-center gap-x-2 text-sm font-[500] pl-6 transition-all',
-          isActive && 'bg-slate-800 text-slate-100',
-          !hasPurchase && !isFree && 'cursor-not-allowed hover:bg-slate-500 dark:hover:bg-slate-800'
+          'w-full flex items-center gap-x-2 text-sm font-[500] pl-6 transition-all hover:bg-slate-100 dark:hover:bg-slate-800',
+          isActive && 'bg-slate-800 text-slate-100 hover:bg-slate-800',
+          !hasPurchase && !isFree && 'cursor-not-allowed'
         ) }
       >
         <div className="flex gap-x-2 py-4">
@@ -50,7 +50,7 @@ export const CourseSidebarItem =
             className={ cn (
               'text-slate-500',
               isActive && 'text-slate-100',
-              isCompleted && 'text-green-500'
+              isCompleted && 'text-primary'
             ) }
           />
           { label }
@@ -60,14 +60,14 @@ export const CourseSidebarItem =
               <LockOpen size={ 16 } className={ cn (
                 'text-slate-500',
                 isActive && 'text-slate-100',
-                isCompleted && 'text-emerald-700'
+                isCompleted && 'text-primary'
               ) }/>
             </span>
         }
         <div className={ cn (
           'ml-auto opacity-0 border-2 border-theme h-14 transition-all',
           isActive && 'opacity-100',
-          isCompleted && 'border-emerald-700'
+          isCompleted && 'border-primary'
         ) }/>
       </button>
     )

@@ -20,6 +20,7 @@ interface CourseSidebarProps {
 const CourseSidebar = async ({course}: CourseSidebarProps) => {
   const {userId} = auth ()
   if (!userId) return null
+
   const purchase = await db.purchase.findUnique ({
     where: {
       userId_courseId: {
@@ -37,8 +38,8 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
         <h1 className={ 'font-semibold' }>
           { course.title }
         </h1>
-        <Link href={'/dashboard'} className={ 'text-primary underline mt-2 text-xs' }>
-          Back to dashboard
+        <Link href={'/'} className={ 'text-primary underline mt-2 text-xs' }>
+          Home
         </Link>
       </div>
       { purchase &&
@@ -48,7 +49,7 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
           size={ 'default' }
         />
       }
-      <div className={ 'flex flex-col w-full' }>
+      <div className={ 'flex flex-col w-full gap-1' }>
         { course.chapters.map ((chapter) => (
           <div key={ chapter.id }>
             <CourseSidebarItem

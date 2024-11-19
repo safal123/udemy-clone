@@ -41,9 +41,10 @@ const ToggleChapterCompleted = ({ chapter, isCompleted, userId }: ToggleChapterC
 
   return (
     <Button
+      size={'sm'}
       disabled={ isProcessing }
       onClick={ handleChapterComplete }
-      className={ cn ('w-[200px]',
+      className={ cn ('w-auto',
         isProcessing && 'bg-primary/90 cursor',
         !isCompleted && 'border-primary text-primary hover:bg-primary hover:text-white',
         isCompleted && 'bg-primary text-white hover:bg-primary/90'

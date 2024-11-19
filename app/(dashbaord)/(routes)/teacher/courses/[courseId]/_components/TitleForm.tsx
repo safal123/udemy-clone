@@ -4,7 +4,7 @@ import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
-import { Pencil } from 'lucide-react'
+import { Loader2, Pencil } from 'lucide-react'
 import { useState } from 'react'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
@@ -36,7 +36,7 @@ const TitleForm = ({initialData, courseId}: TitleFormProps) => {
     }
   })
 
-  const {isSubmitting, isValid} = form.formState
+  const {isSubmitting, isValid, isDirty} = form.formState
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -54,9 +54,9 @@ const TitleForm = ({initialData, courseId}: TitleFormProps) => {
   }
 
   return (
-    <div className={ 'mt-6 border bg-slate-100 dark:bg-black rounded-md p-4' }>
+    <div className={ 'mt-6 border bg-white dark:bg-black rounded-md p-4' }>
       <div className={ 'font-medium flex items-center justify-between' }>
-        <h2 className={ 'text-xl' }>Course Title</h2>
+        <h2 className={ 'text-xl' }>Title</h2>
         <AddEditButton
           tooltip={ !isEditing ? 'Edit title' : 'Cancel editing' }
           isEditing={isEditing}
@@ -64,20 +64,19 @@ const TitleForm = ({initialData, courseId}: TitleFormProps) => {
         />
       </div>
       { !isEditing ? <>
-          <p className={ 'text-sm mt-2 text-primary font-semibold' }>
+          <p className={ 'text-sm mt-2 text-primary font-bold text-gray-900 dark:text-gray-100' }>
             { initialData.title }
           </p>
         </>
         :
         <>
           <Form { ...form }>
-            <form onSubmit={ form.handleSubmit (onSubmit) } className={ 'space-y-8 mt-8' }>
+            <form onSubmit={ form.handleSubmit (onSubmit) } className={ 'space-y-2 mt-2' }>
               <FormField
                 control={ form.control }
                 name={ 'title' }
                 render={ ({field}) => (
                   <FormItem>
-                    <FormLabel htmlFor={ 'title' }>Title</FormLabel>
                     <FormControl>
                       <Input
                         disabled={ isSubmitting }
@@ -92,9 +91,11 @@ const TitleForm = ({initialData, courseId}: TitleFormProps) => {
               <div className={ 'flex items-center gap-x-2' }>
                 <Button
                   type={ 'submit' }
-                  disabled={ !isValid || isSubmitting }
+                  disabled={ !isValid || isSubmitting || !isDirty }
+                  className={ 'flex items-center gap-x-2' }
                 >
-                  Save
+                  { isSubmitting && <Loader2 className={ 'animate-spin w-4 h-4' }/> }
+                  { isSubmitting ? 'Please wait' : 'Save' }
                 </Button>
               </div>
             </form>

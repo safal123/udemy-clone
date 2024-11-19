@@ -83,7 +83,7 @@ const VideoPlayer =
     }
 
     return (
-      <div className={ 'w-full min-h-[400px]' }>
+      <div className={ 'w-full md:min-h-[400px]' }>
         { videoUrl ? <Video
             src={ videoUrl }
             controls={ !disabled }

@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation'
 import { Course } from '.prisma/client'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import AddEditButton from '@/components/shared/AddEditButton'
+import { Loader2 } from 'lucide-react'
 
 interface CategoryFormProps {
   initialData: Course
@@ -34,6 +35,7 @@ const CategoryForm = ({initialData, courseId, options}: CategoryFormProps) => {
       categoryId: initialData?.categoryId || ''
     }
   })
+  const {isSubmitting, isValid, isDirty} = form.formState
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -64,7 +66,7 @@ const CategoryForm = ({initialData, courseId, options}: CategoryFormProps) => {
       </div>
       { !isEditing ?
         <>
-          <p className={ 'text-sm mt-2 text-primary font-semibold' }>
+          <p className={ 'text-sm mt-2 font-semibold' }>
             { selectedOption?.label || 'No category selected' }
           </p>
         </>
@@ -73,14 +75,13 @@ const CategoryForm = ({initialData, courseId, options}: CategoryFormProps) => {
           <Form { ...form }>
             <form
               onSubmit={ form.handleSubmit (onSubmit) }
-              className="space-y-4 mt-4"
+              className="space-y-2 mt-2"
             >
               <FormField
                 control={ form.control }
                 name="categoryId"
                 render={ ({field}) => (
                   <FormItem>
-                    <FormLabel htmlFor="categoryId">Select category...</FormLabel>
                     <Select onValueChange={ field.onChange } defaultValue={ field.value }>
                       <FormControl>
                         <SelectTrigger>
@@ -104,7 +105,14 @@ const CategoryForm = ({initialData, courseId, options}: CategoryFormProps) => {
                 ) }
               />
               <div className="flex items-center gap-x-2">
-                <Button type="submit">Save</Button>
+                <Button
+                  type={ 'submit' }
+                  disabled={ !isValid || isSubmitting || !isDirty }
+                  className={ 'flex items-center gap-x-2' }
+                >
+                  { isSubmitting && <Loader2 className={ 'animate-spin w-4 h-4' }/> }
+                  { isSubmitting ? 'Please wait' : 'Save' }
+                </Button>
               </div>
             </form>
           </Form>

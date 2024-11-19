@@ -21,17 +21,19 @@ const CoursePage =
       }
     })
 
-    if (!course || !course.chapters.length || !course.isPublished) {
-      redirect('/')
-    }
+    // if (!course || !course.chapters.length || !course.isPublished) {
+    //   redirect('/')
+    // }
 
-    if (course && course.chapters.length && course.isPublished) {
-      return redirect(`/courses/${params.courseId}/chapters/${course.chapters[0].id}`)
-    }
+    // get the query params is Preview mode
+    // if (course && course.chapters.length && course.isPublished) {
+    //   return redirect(`/courses/${params.courseId}/chapters/${course.chapters[0].id}`)
+    // }
 
     return (
       <>
-        <h1>{ course.title }</h1>
+        <h1>{ course?.title }</h1>
+        {JSON.stringify(params)}
       </>
     )
   }

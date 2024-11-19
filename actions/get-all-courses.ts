@@ -19,13 +19,12 @@ export const getAllCourses = async () => {
       },
       include: {
         chapters: true,
-        // @ts-ignore
         author: true,
       },
       orderBy: {
         createdAt: 'desc'
       },
-      take:4
+      take:3
     })
   } catch (error) {
     console.error ('[GET_ALL_COURSES]', error)

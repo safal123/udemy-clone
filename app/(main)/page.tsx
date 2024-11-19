@@ -1,39 +1,25 @@
+import { TopSection } from '@/app/(main)/_components/TopSection'
+import { FeatureSection } from '@/app/(main)/_components/FeatureSection'
+import { RecentlyAddedSection } from '@/app/(main)/_components/RecentlyAddedSection'
+import { CategorySection } from '@/app/(main)/_components/CategorySection'
+import { TestimonialSection } from '@/app/(main)/_components/TestimonialSection'
+import { JoinNowSection } from '@/app/(main)/_components/JoinNowSection'
 import { getAllCourses } from '@/actions/get-all-courses'
-import { getAllCategories } from '@/actions/get-all-categories'
-import CourseCard from '@/components/shared/CourseCard'
-import HomePageCarousel from '@/app/(main)/_components/HomePageCarousel'
-import { Categories } from '@/components/shared/Categories'
+import { Course, User } from '.prisma/client'
 
-
-const HomePage = async () => {
-  const courses = await getAllCourses () as any[]
-  const categories = await getAllCategories () as any[]
-  if (!courses) return null
-
+export default async function Home () {
+  const courses = (await getAllCourses()) as (Course & { author: User })[];
   return (
-    <section className="px-4 lg:px-12 py-6">
-      <div className={"flex flex-col"}>
-        <HomePageCarousel courses={ courses }/>
-        <div className={ 'mb-4 p-2 rounded-md' }>
-          <h2 className={ 'text-3xl font-bold mb-6 pt-4' }>Top Categories</h2>
-          <Categories
-            items={ categories }
-          />
-        </div>
+    <div
+      className="bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-200">
+      <div className={'relative'}>
+        <TopSection/>
+        <FeatureSection/>
+        <RecentlyAddedSection courses={courses}/>
+        <CategorySection/>
+        <TestimonialSection/>
+        <JoinNowSection/>
       </div>
-
-      <h2 className={ 'text-3xl font-bold pt-4' }>
-        Recently added
-      </h2>
-      <div className="grid gap-6 items-stretch pt-6 mx-auto md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        { courses?.map ((course: any) => (
-          <div key={ course.id } className="">
-            <CourseCard course={ course }/>
-          </div>
-        )) }
-      </div>
-    </section>
+    </div>
   )
 }
-
-export default HomePage

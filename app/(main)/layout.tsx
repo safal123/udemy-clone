@@ -20,7 +20,7 @@ const Layout = ({children}: Readonly<{ children: React.ReactNode }>) => {
               <Image src="/logo.svg" alt="logo" width={ 100 } height={ 100 }/>
             </Link>
           </div>
-          <div className={ 'px-4 hidden md:flex items-center space-x-4 bg-background rounded-full shadow-sm border border-primary' }>
+          <div className={ 'px-4 hidden md:flex items-center space-x-4 bg-background rounded-full shadow-sm border focus-within:border-primary' }>
             <input
               type={ 'text' }
               placeholder={ 'Search courses' }

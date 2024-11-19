@@ -19,8 +19,8 @@ const SidebarItem = ({icon: Icon, label, href}: SidebarItemProps) => {
   return (
     <Link
       href={ href }
-      className={ cn ('flex items-center gap-x-2 rounded-md text-sm font-[500]',
-        isActive && 'bg-gray-200 text-gray-900 dark:bg-accent dark:text-white shadow-lg',
+      className={ cn ('flex items-center gap-x-2 rounded-md text-sm font-[500] dark:hover:bg-accent/50 hover:bg-gray-100',
+        isActive && 'bg-gray-100 text-gray-900 dark:bg-accent/50 dark:text-white'
       ) }>
       <div className={ 'flex items-center gap-x-2 p-3 rounded-md' }>
         <Icon size={ 22 } className={ cn ('') }/>
