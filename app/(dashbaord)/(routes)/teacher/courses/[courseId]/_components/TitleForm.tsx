@@ -41,7 +41,7 @@ const TitleForm = ({initialData, courseId}: TitleFormProps) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch (`/api/courses/${ courseId }`, values)
-      toast.success ('Course updated')
+      toast.success ('Course title updated.')
       toggleEditing ()
       router.refresh ()
     } catch {
@@ -54,7 +54,7 @@ const TitleForm = ({initialData, courseId}: TitleFormProps) => {
   }
 
   return (
-    <div className={ 'mt-6 border bg-white dark:bg-black rounded-md p-4' }>
+    <div className={ 'mt-6 border p-4 rounded-md' }>
       <div className={ 'font-medium flex items-center justify-between' }>
         <h2 className={ 'text-xl' }>Title</h2>
         <AddEditButton
@@ -64,7 +64,7 @@ const TitleForm = ({initialData, courseId}: TitleFormProps) => {
         />
       </div>
       { !isEditing ? <>
-          <p className={ 'text-sm mt-2 text-primary font-bold text-gray-900 dark:text-gray-100' }>
+          <p className={ 'text-sm mt-2 font-bold' }>
             { initialData.title }
           </p>
         </>

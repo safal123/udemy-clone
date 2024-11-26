@@ -54,7 +54,7 @@ const AttachmentForm = ({initialData, courseId}: AttachmentProps) => {
   }
 
   return (
-    <div className={ 'mt-6 border bg-slate-100 dark:bg-black rounded-md p-4' }>
+    <div className={ 'mt-6 border dark:bg-black rounded-md p-4' }>
       <div className={ 'font-medium flex items-center justify-between' }>
         <h2 className={ 'text-xl' }>Course Attachments</h2>
         <AddEditButton
@@ -71,7 +71,7 @@ const AttachmentForm = ({initialData, courseId}: AttachmentProps) => {
                 { initialData.attachments.map ((attachment) => (
                   <div
                     key={ attachment.id }
-                    className={ 'p-3 flex items-center gap-x-2 mt-2 bg-sky-100 dark:bg-primary dark:text-white border-sky-200 text-sky-700 rounded-md' }
+                    className={ 'p-3 flex items-center gap-x-2 mt-2 bg-primary dark:bg-primary/10 text-white border-sky-200 text-sky-700 rounded-md' }
                   >
                     <File className={ 'h-4 w-4' }/>
                     <p className={ 'text-xs line-clamp-1' }>
@@ -94,7 +94,7 @@ const AttachmentForm = ({initialData, courseId}: AttachmentProps) => {
               </>
               :
               <>
-                <p className={ 'text-sm mt-2 text-primary font-semibold' }>
+                <p className={ 'text-sm mt-2 font-semibold' }>
                   No attachments
                 </p>
               </>

@@ -50,7 +50,7 @@ export const CourseSidebarItem =
             className={ cn (
               'text-slate-500',
               isActive && 'text-slate-100',
-              isCompleted && 'text-primary'
+              isCompleted && hasPurchase && 'text-primary'
             ) }
           />
           { label }

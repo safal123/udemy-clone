@@ -27,8 +27,12 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
   if (!chapter) {
     return redirect ('/')
   }
+  const isOwner = chapter.course.userId === userId
   const isLocked = !chapter.isFree
   const { hasPurchased } = await getHasPurchased ({ userId, courseId: params.courseId })
+  if (!hasPurchased && !isOwner) {
+    return redirect (`/courses/${ params.courseId }`)
+  }
   const isCompleted = await getChapterIsCompleted ({ courseId: params.courseId, userId, chapterId: params.chapterId })
 
   return (
@@ -39,14 +43,14 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
             <VideoPlayer
               chapter={ chapter }
               userId={ userId }
-              disabled={ isLocked && !hasPurchased }
+              disabled={ isLocked && !hasPurchased && !isOwner }
               isCompleted={ isCompleted as boolean }
               nextChapter={ nextChapter as Chapter }
               hasPurchased={ hasPurchased }
               isPreviewChapter={ chapter.isFree }
             />
           ) }
-          { isLocked && !hasPurchased && (
+          { !isOwner && isLocked && !hasPurchased && (
             <div
               className="z-90 flex flex-col w-full p-12 space-y-12 mx-auto h-full absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
               <div className="max-w-xl gap-y-4 flex flex-col">
@@ -65,7 +69,7 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
               <div className="flex items-center justify-between">
                 { chapter?.title }
                 <div className={'flex items-center gap-x-2'}>
-                  { !hasPurchased && <CourseEnrolButton course={ chapter.course }/> }
+                  { !hasPurchased && !isOwner && <CourseEnrolButton course={ chapter.course }/> }
                   {
                     previousChapter &&
                     <Link href={ `/courses/${ params.courseId }/chapters/${ previousChapter.id }` }>
@@ -82,7 +86,7 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
                       </Button>
                     </Link>
                   }
-                  { hasPurchased && (
+                  { hasPurchased && !isOwner && (
                     <ToggleChapterCompleted
                       chapter={ chapter }
                       isCompleted={ isCompleted as boolean }

@@ -20,6 +20,7 @@ const bannerVariants = cva (
 
 interface BannerProps extends VariantProps<typeof bannerVariants> {
   label: string;
+  className?: string;
 }
 
 const iconMap = {
@@ -30,12 +31,13 @@ const iconMap = {
 export const Banner =
   ({
      label,
-     variant
+     variant,
+    className
    }: BannerProps) => {
     const Icon = iconMap[variant || 'warning']
 
     return (
-      <div className={ cn (bannerVariants ({variant})) }>
+      <div className={ cn (bannerVariants ({variant}), className) }>
         <Icon className="h-4 w-4 mr-2"/>
         { label }
       </div>

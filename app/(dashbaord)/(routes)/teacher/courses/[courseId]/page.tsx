@@ -78,12 +78,12 @@ const CoursePage = async ({ params }: {
 
   return (
     <>
-      <div className={'p-2'}>
-        { !course.isPublished && (
-          <Banner label="This course is unpublished. It will not be visible to the students."/>
-        ) }
+      <div className={'px-6 py-4'}>
+        { !course.isPublished && <Banner
+          className={'bg-primary text-white dark:bg-primary/10'}
+          label="This course is unpublished. It will not be visible to the students."/> }
       </div>
-      <div className={ 'p-6' }>
+      <div className={ 'px-6' }>
         <div className={ 'flex items-center justify-between space-x-2' }>
           <h1 className={ 'text-2xl font-bold' }>
             Course setup
@@ -108,8 +108,12 @@ const CoursePage = async ({ params }: {
               </div>
             </div>
             <div className={ 'relative' }>
-              <Progress value={ completedPercentage } className={ 'mt-4' }/>
-              <p className={ cn ('text-primary absolute top-[-0.5px] left-[40%] text-xs') }>
+              <Progress
+                variant={'primary'}
+                value={ completedPercentage } className={ 'mt-4 bg-gray-200 dark:bg-gray-800' }/>
+              <p className={ cn ('text-white absolute top-[-0.5px] left-[40%] text-xs',
+                completedPercentage < 66 ? 'text-gray-800 dark:text-gray-200' : 'text-white'
+              ) }>
                 { Math.round (completedPercentage) }% completed
               </p>
             </div>

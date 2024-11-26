@@ -43,8 +43,8 @@ const ImageForm = ({initialData, courseId}: ImageProps) => {
   }
 
   return (
-    <div className={ 'mt-6 border bg-slate-100 dark:bg-black rounded-md p-4' }>
-      <div className={ 'font-medium flex items-center justify-between' }>
+    <div className={ 'mt-6 border dark:bg-black rounded-md p-4' }>
+      <div className={ 'font-medium flex items-center justify-between mb-4' }>
         <h2 className={ 'text-xl' }>Course Image</h2>
         <AddEditButton
           isEditing={ isEditing }

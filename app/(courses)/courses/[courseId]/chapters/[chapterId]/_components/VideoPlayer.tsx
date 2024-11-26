@@ -34,12 +34,10 @@ const VideoPlayer =
     const [videoUrl, setVideoUrl] = useState<string | null> (null)
 
     const getVideoUrl = async () => {
-      console.log ('Getting video url...')
       if (chapter.videoStorageId) {
         try {
           const { objectUrl } = await getObjectFromS3 (chapter.videoStorageId)
           if (objectUrl) {
-            console.log ('Video URL:', objectUrl)
             setVideoUrl (objectUrl)
           } else {
             console.error ('No object URL received from S3')

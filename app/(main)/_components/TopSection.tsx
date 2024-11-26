@@ -3,9 +3,9 @@ import Link from 'next/link'
 
 export function TopSection() {
   return (
-    <section className="min-h-[50vh] flex items-center justify-center bg-background overflow-hidden">
+    <section className="min-h-[40vh] flex items-center justify-center overflow-hidden">
       <div className="mx-auto text-center z-10">
-        <h1 className="text-2xl md:text-3xl font-bold mb-6 text-primary rounded-full border border-primary px-12 py-4">
+        <h1 className="text-xl font-bold mb-6 text-primary rounded-full border border-primary py-2">
           Learn Anytime, Anywhere
         </h1>
         <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">

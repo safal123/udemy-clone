@@ -8,7 +8,6 @@ interface EditButtonProps {
   isEditing: boolean
   toggleEditing: () => void
   tooltip: string
-  // default mode is 'edit'
   mode?: 'edit' | 'add'
 }
 
@@ -17,10 +16,10 @@ const AddEditButton = ({isEditing, toggleEditing, tooltip, mode = 'edit'}: EditB
     <TooltipButton tooltip={ tooltip }>
       <Button
         size={ 'sm' }
-        className={ cn ('', isEditing ? 'bg-red-500 hover:bg-red-600' : 'bg-gray-200 dark:bg-gray-800') }
+        className={ cn ('', isEditing ? 'bg-red-500 hover:bg-red-600 text-white' : 'bg-gray-200 dark:bg-gray-800') }
         variant={ 'outline' } onClick={ toggleEditing }>
         { isEditing ?
-          <CircleX className={ 'h-5 w-5 text-gray-900' }/> :
+          <CircleX className={ 'h-4 w-4 text-white' }/> :
           mode === 'edit' ?
             <Pencil className={ 'h-4 w-4' }/>
             :

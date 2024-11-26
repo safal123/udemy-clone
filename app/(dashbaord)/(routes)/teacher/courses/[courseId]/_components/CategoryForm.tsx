@@ -55,7 +55,7 @@ const CategoryForm = ({initialData, courseId, options}: CategoryFormProps) => {
   const selectedOption = options.find (option => option.value === initialData.categoryId)
 
   return (
-    <div className={ 'mt-6 border bg-slate-100 dark:bg-black rounded-md p-4' }>
+    <div className={ 'mt-6 border dark:bg-black rounded-md p-4' }>
       <div className={ 'font-medium flex items-center justify-between' }>
         <h2 className={ 'text-xl' }>Course Category</h2>
         <AddEditButton

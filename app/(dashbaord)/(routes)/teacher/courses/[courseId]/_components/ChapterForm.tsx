@@ -59,6 +59,7 @@ const ChapterForm = ({ initialData, courseId }: ChapterFormProps) => {
 
   const onReorder = async (updateData: { id: string; position: number }[]) => {
     try {
+      if (initialData.chapters.length < 2) return
       setIsUpdating (true)
       await axios.put (`/api/courses/${ courseId }/chapters/reorder`, {
         list: updateData
@@ -74,7 +75,7 @@ const ChapterForm = ({ initialData, courseId }: ChapterFormProps) => {
 
 
   return (
-    <div className={ 'relative mt-6 border bg-slate-100 dark:bg-black rounded-md p-4' }>
+    <div className={ 'relative mt-6 border dark:bg-black rounded-md p-4' }>
       { isUpdating && <div
         className={ 'absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-md flex items-center justify-center' }>
         <Loader2 className={ 'animate-spin h-6 w-6' }/>
@@ -136,7 +137,6 @@ const ChapterForm = ({ initialData, courseId }: ChapterFormProps) => {
             </form>
           </Form>
         </>
-
       }
     </div>
   )

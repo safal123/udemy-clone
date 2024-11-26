@@ -53,7 +53,7 @@ const DescriptionForm = ({initialData, courseId}: DescriptionFormProps) => {
   }
 
   return (
-    <div className={ 'mt-6 border bg-slate-100 dark:bg-black rounded-md p-4' }>
+    <div className={ 'mt-6 border rounded-md p-4' }>
       <div className={ 'font-medium flex items-center justify-between' }>
         <h2 className={ 'text-xl' }>Description</h2>
         <AddEditButton

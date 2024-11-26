@@ -51,7 +51,7 @@ const PriceForm = ({initialData, courseId}: PriceFormProps) => {
   }
 
   return (
-    <div className={ 'mt-6 border bg-slate-100 dark:bg-black rounded-md p-4' }>
+    <div className={ 'mt-6 border dark:bg-black rounded-md p-4' }>
       <div className={ 'font-medium flex items-center justify-between' }>
         <h2 className={ 'text-xl' }>Course Price</h2>
         <AddEditButton
@@ -61,14 +61,14 @@ const PriceForm = ({initialData, courseId}: PriceFormProps) => {
         />
       </div>
       { !isEditing ? <>
-          <p className={ 'text-sm mt-2 text-theme font-semibold' }>
+          <p className={ 'text-sm mt-2 font-semibold' }>
             { initialData.price ? formatPrice (initialData.price) : 'No price set' }
           </p>
         </>
         :
         <>
           <Form { ...form }>
-            <form onSubmit={ form.handleSubmit (onSubmit) } className={ 'space-y-8 mt-8' }>
+            <form onSubmit={ form.handleSubmit (onSubmit) } className={ 'space-y-4 mt-4' }>
               <FormField
                 control={ form.control }
                 name={ 'price' }

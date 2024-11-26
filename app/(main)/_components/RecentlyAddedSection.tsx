@@ -8,11 +8,18 @@ type RecentlyAddedSectionProps = {
 
 export function RecentlyAddedSection ({ courses }: RecentlyAddedSectionProps) {
   return (
-    <section className="py-16 bg-background border-b mb-2">
+    <section className="py-16">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
-          Recently Added Courses
-        </h2>
+        <div className={ 'flex justify-between items-center' }>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">
+            Recently Added Courses
+          </h2>
+          <div className="text-lg text-gray-600">
+            <Link href={ '/courses' } className={ 'underline text-primary' }>
+              View All
+            </Link>
+          </div>
+        </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           { courses?.map ((course, index) => (
             <div key={ index } className="relative rounded-lg overflow-hidden shadow-lg group">
@@ -26,7 +33,7 @@ export function RecentlyAddedSection ({ courses }: RecentlyAddedSectionProps) {
               <div
                 className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300"></div>
               <div className="absolute inset-0 flex items-end p-4">
-                <Link href={ `/courses/${ course.id }?preview=true` }>
+                <Link href={ `/courses/${ course.id }` }>
                   <h3
                     className="text-xl font-semibold text-white group-hover:text-gray-200 transition-colors duration-300"
                   >
