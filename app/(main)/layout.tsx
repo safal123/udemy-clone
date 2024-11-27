@@ -11,16 +11,16 @@ import Footer from '@/app/(main)/_components/Footer'
 const Layout = ({children}: Readonly<{ children: React.ReactNode }>) => {
   const {userId} = auth ()
   return (
-    <div className={ 'min-h-screen bg-background' }>
-      <div className={ 'h-[80px] fixed w-full inset-y-0 z-50 bg-background' }>
-        <div className={ 'flex items-center justify-between h-full p-4 border-b shadow-sm lg:px-16 space-x-2' }>
+    <div className={ 'min-h-screen bg-background ' }>
+      <div className={ 'h-[80px] fixed w-full inset-y-0 z-50 dark:bg-primary/10' }>
+        <div className={ 'container mx-auto flex items-center justify-between h-full p-4 space-x-2 px-8' }>
           <MobileSidebar/>
           <div className={ 'hidden lg:flex items-center md:space-x-4' }>
             <Link href={ '/' } className={ 'text-gray-500' }>
               <Image src="/logo.svg" alt="logo" width={ 100 } height={ 100 }/>
             </Link>
           </div>
-          <div className={ 'px-4 hidden md:flex items-center space-x-4 bg-background rounded-full shadow-sm border focus-within:border-primary' }>
+          <div className={ 'px-4 hidden md:flex items-center space-x-4 rounded-full shadow-sm border border-primary/40 focus-within:border-primary' }>
             <input
               type={ 'text' }
               placeholder={ 'Search courses' }
@@ -55,7 +55,7 @@ const Layout = ({children}: Readonly<{ children: React.ReactNode }>) => {
             }
           </div>
         </div>
-        <div className={ 'md:hidden px-4 w-full h-[70px] flex items-center space-x-4 bg-gray-100 shadow-sm border-b' }>
+        <div className={ 'md:hidden px-8 w-full h-[70px] flex items-center space-x-4 shadow-sm border-b bg-white dark:bg-primary/10' }>
           <input
             type={ 'text' }
             placeholder={ 'Search courses' }

@@ -11,6 +11,7 @@ interface CourseSidebarItemProps {
   courseId: string;
   isFree: boolean;
   hasPurchase: boolean;
+  isOwner: boolean;
 }
 
 export const CourseSidebarItem =
@@ -20,7 +21,8 @@ export const CourseSidebarItem =
      isCompleted,
      courseId,
      isFree,
-     hasPurchase
+     hasPurchase,
+     isOwner
    }: CourseSidebarItemProps) => {
     const pathname = usePathname ()
     const router = useRouter ()
@@ -33,6 +35,8 @@ export const CourseSidebarItem =
       router.push (`/courses/${ courseId }/chapters/${ chapterId }`)
     }
 
+    const canWatch = isFree || hasPurchase || isOwner
+
     return (
       <button
         onClick={ onClick }
@@ -41,7 +45,7 @@ export const CourseSidebarItem =
         className={ cn (
           'w-full flex items-center gap-x-2 text-sm font-[500] pl-6 transition-all hover:bg-slate-100 dark:hover:bg-slate-800',
           isActive && 'bg-slate-800 text-slate-100 hover:bg-slate-800',
-          !hasPurchase && !isFree && 'cursor-not-allowed'
+          !canWatch && 'cursor-not-allowed'
         ) }
       >
         <div className="flex gap-x-2 py-4">

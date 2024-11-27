@@ -4,7 +4,7 @@ import { Course } from '.prisma/client'
 import { Chapter, UserProgress } from '@prisma/client'
 import { CourseSidebarItem } from '@/app/(courses)/courses/[courseId]/_components/CourseSidebarItem'
 import { db } from '@/lib/db'
-import { auth } from '@clerk/nextjs'
+import { auth, currentUser, UserButton } from '@clerk/nextjs'
 import CourseProgress from '@/components/shared/CourseProgress'
 import { getUserProgress } from '@/actions/get-user-progress'
 import Link from 'next/link'
@@ -19,6 +19,8 @@ interface CourseSidebarProps {
 
 const CourseSidebar = async ({course}: CourseSidebarProps) => {
   const {userId} = auth ()
+  const user = await currentUser ()
+  const { firstName, lastName } = user || {}
   if (!userId) return null
 
   const purchase = await db.purchase.findUnique ({
@@ -60,9 +62,21 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
               isCompleted={ chapter.userProgress ? chapter.userProgress[0]?.isCompleted : false }
               courseId={ course.id }
               isFree={ chapter.isFree }
+              isOwner={ course.userId === userId }
             />
           </div>
         )) }
+      </div>
+      <div className={ 'absolute bottom-0 w-full bg-primary/10 p-2' }>
+        <div className={ 'flex items-center gap-2' }>
+          <UserButton/>
+          <p className={ 'text-xs flex flex-col' }>
+            { `${ firstName } ${ lastName }` }
+            <span className={ 'text-primary' }>
+              { `@${ user?.username }` }
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   )
