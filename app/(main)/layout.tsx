@@ -48,7 +48,7 @@ const Layout = ({children}: Readonly<{ children: React.ReactNode }>) => {
                 </Link>
                 <Link href={ '/sign-up' }>
                   <Button variant={ 'outline' } size={ 'sm' }>
-                    Sign up
+                    Join Now
                   </Button>
                 </Link>
               </div>
