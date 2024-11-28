@@ -19,8 +19,8 @@ const Layout = ({children}: Readonly<{ children: React.ReactNode }>) => {
   }
 
   return (
-    <div className={ 'min-h-screen bg-background ' }>
-      <div className={ 'h-[80px] fixed w-full inset-y-0 z-50 dark:bg-primary/10' }>
+    <div className={ 'min-h-screen' }>
+      <div className={ 'h-[80px] fixed w-full inset-y-0 z-50 dark:bg-black z-10' }>
         <div className={ 'container mx-auto flex items-center justify-between h-full p-4 space-x-2 px-8' }>
           <MobileSidebar/>
           <div className={ 'hidden lg:flex items-center md:space-x-4' }>
