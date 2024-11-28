@@ -1,6 +1,8 @@
-import React from 'react'
+"use client"
+
+import React, { useState } from 'react'
 import MobileSidebar from '@/app/(dashbaord)/_components/MobileSidebar'
-import { auth, UserButton } from '@clerk/nextjs'
+import { auth, UserButton, useUser } from '@clerk/nextjs'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
@@ -9,7 +11,13 @@ import { SearchIcon } from 'lucide-react'
 import Footer from '@/app/(main)/_components/Footer'
 
 const Layout = ({children}: Readonly<{ children: React.ReactNode }>) => {
-  const {userId} = auth ()
+  const user = useUser()
+  const [search, setSearch] = useState ('')
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log (search)
+  }
+
   return (
     <div className={ 'min-h-screen bg-background ' }>
       <div className={ 'h-[80px] fixed w-full inset-y-0 z-50 dark:bg-primary/10' }>
@@ -23,6 +31,7 @@ const Layout = ({children}: Readonly<{ children: React.ReactNode }>) => {
           <div className={ 'px-4 hidden md:flex items-center space-x-4 rounded-full shadow-sm border border-primary/40 focus-within:border-primary' }>
             <input
               type={ 'text' }
+              onChange={ (e) => handleSearch(e) }
               placeholder={ 'Search courses' }
               className={ 'px-4 py-2 w-96 rounded-full focus:outline-none bg-transparent' }
             />
@@ -30,7 +39,7 @@ const Layout = ({children}: Readonly<{ children: React.ReactNode }>) => {
           </div>
           <div className={ 'flex items-center space-x-2' }>
             <ToggleTheme/>
-            { userId ?
+            { user.isLoaded ?
               <div className={ 'flex items-center justify-between space-x-4' }>
                 <Link href={ '/dashboard' } className={ 'hidden md:block' }>
                   <Button variant={ 'outline' }>
@@ -55,7 +64,7 @@ const Layout = ({children}: Readonly<{ children: React.ReactNode }>) => {
             }
           </div>
         </div>
-        <div className={ 'md:hidden px-8 w-full h-[70px] flex items-center space-x-4 shadow-sm border-b bg-white dark:bg-primary/10' }>
+        <div className={ 'border-t md:hidden px-8 w-full h-[70px] flex items-center space-x-4 shadow-sm border-b bg-white dark:bg-primary/10' }>
           <input
             type={ 'text' }
             placeholder={ 'Search courses' }

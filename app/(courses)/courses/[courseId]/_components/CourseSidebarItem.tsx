@@ -41,7 +41,7 @@ export const CourseSidebarItem =
       <button
         onClick={ onClick }
         type="button"
-        disabled={ !hasPurchase && !isFree }
+        disabled={ !canWatch }
         className={ cn (
           'w-full flex items-center gap-x-2 text-sm font-[500] pl-6 transition-all hover:bg-slate-100 dark:hover:bg-slate-800',
           isActive && 'bg-slate-800 text-slate-100 hover:bg-slate-800',

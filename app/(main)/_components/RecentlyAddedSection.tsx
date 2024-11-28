@@ -10,11 +10,11 @@ export function RecentlyAddedSection ({ courses }: RecentlyAddedSectionProps) {
   return (
     <section className="px-8 md:px-16 py-12">
       <div className="container mx-auto">
-        <div className={ 'flex justify-between items-center' }>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">
+        <div className={ 'flex flex-col md:flex-row justify-between items-center mb-4' }>
+          <h2 className="text-2xl md:text-4xl font-bold text-primary">
             Recently Added Courses
           </h2>
-          <div className="text-lg text-gray-600">
+          <div className="text-lg text-gray-600 font-bold">
             <Link href={ '/courses' } className={ 'underline text-primary' }>
               View All
             </Link>
@@ -30,6 +30,12 @@ export function RecentlyAddedSection ({ courses }: RecentlyAddedSectionProps) {
                 height={ 300 }
                 className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
               />
+              <Link
+                href={ `/courses/${ course.id }` }
+                className={ 'flex z-10 cursor-pointer absolute p-2 text-xs top-0 right-0 bg-primary text-white rounded-bl-lg' }
+              >
+                View Course
+              </Link>
               <div
                 className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300"></div>
               <div className="absolute inset-0 flex items-end p-4">
@@ -39,62 +45,12 @@ export function RecentlyAddedSection ({ courses }: RecentlyAddedSectionProps) {
                   >
                     { course.title }
                     <span className={ 'block text-sm font-normal underline text-primary mt-1' }>
-                    <Image src={ course.author.imageUri || '' } alt={ 'author' } width={ 24 } height={ 24 }
-                           className={ 'rounded-full inline-block mr-2' }/>
-                      { course.author.firstName }
-                  </span>
-                  </h3>
-                </Link>
-              </div>
-            </div>
-          )) }
-          { courses?.map ((course, index) => (
-            <div key={ index } className="relative rounded-lg overflow-hidden shadow-lg group">
-              <Image
-                src={ course?.imageUri || '/placeholder.jpg' }
-                alt={ course?.title || 'Course Image' }
-                width={ 500 }
-                height={ 300 }
-                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-              />
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300"></div>
-              <div className="absolute inset-0 flex items-end p-4">
-                <Link href={ `/courses/${ course.id }` }>
-                  <h3
-                    className="text-xl font-semibold text-white group-hover:text-gray-200 transition-colors duration-300"
-                  >
-                    { course.title }
-                    <span className={ 'block text-sm font-normal underline text-primary mt-1' }>
-                    <Image src={ course.author.imageUri || '' } alt={ 'author' } width={ 24 } height={ 24 }
-                           className={ 'rounded-full inline-block mr-2' }/>
-                      { course.author.firstName }
-                  </span>
-                  </h3>
-                </Link>
-              </div>
-            </div>
-          )) }
-          { courses?.map ((course, index) => (
-            <div key={ index } className="relative rounded-lg overflow-hidden shadow-lg group">
-              <Image
-                src={ course?.imageUri || '/placeholder.jpg' }
-                alt={ course?.title || 'Course Image' }
-                width={ 500 }
-                height={ 300 }
-                className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-              />
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300"></div>
-              <div className="absolute inset-0 flex items-end p-4">
-                <Link href={ `/courses/${ course.id }` }>
-                  <h3
-                    className="text-xl font-semibold text-white group-hover:text-gray-200 transition-colors duration-300"
-                  >
-                    { course.title }
-                    <span className={ 'block text-sm font-normal underline text-primary mt-1' }>
-                    <Image src={ course.author.imageUri || '' } alt={ 'author' } width={ 24 } height={ 24 }
-                           className={ 'rounded-full inline-block mr-2' }/>
+                    <Image
+                      src={ course.author.imageUri || '' } alt={ 'author' }
+                      width={ 24 }
+                      height={ 24 }
+                      className={ 'rounded-full inline-block mr-2' }
+                    />
                       { course.author.firstName }
                   </span>
                   </h3>

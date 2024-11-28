@@ -8,6 +8,7 @@ import { auth, currentUser, UserButton } from '@clerk/nextjs'
 import CourseProgress from '@/components/shared/CourseProgress'
 import { getUserProgress } from '@/actions/get-user-progress'
 import Link from 'next/link'
+import { ToggleTheme } from '@/components/shared/ToggleTheme'
 
 interface CourseSidebarProps {
   course: Course & {
@@ -67,15 +68,18 @@ const CourseSidebar = async ({course}: CourseSidebarProps) => {
           </div>
         )) }
       </div>
-      <div className={ 'absolute bottom-0 w-full bg-primary/10 p-2' }>
-        <div className={ 'flex items-center gap-2' }>
-          <UserButton/>
-          <p className={ 'text-xs flex flex-col' }>
-            { `${ firstName } ${ lastName }` }
-            <span className={ 'text-primary' }>
+      <div className={ 'absolute bottom-0 w-full bg-primary dark:bg-primary/40 p-2' }>
+        <div className={ 'flex items-center justify-between' }>
+          <div className={ 'flex items-center gap-2' }>
+            <UserButton/>
+            <p className={ 'text-xs flex flex-col text-white' }>
+              { `${ firstName } ${ lastName }` }
+              <span>
               { `@${ user?.username }` }
             </span>
-          </p>
+            </p>
+          </div>
+          <ToggleTheme/>
         </div>
       </div>
     </div>
