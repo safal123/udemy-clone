@@ -32,7 +32,7 @@ export function RecentlyAddedSection ({ courses }: RecentlyAddedSectionProps) {
               />
               <Link
                 href={ `/courses/${ course.id }` }
-                className={ 'flex z-10 cursor-pointer absolute p-2 text-xs top-0 right-0 bg-primary text-white rounded-bl-lg' }
+                className={ 'flex cursor-pointer absolute p-2 text-xs top-0 right-0 bg-primary text-white rounded-bl-lg' }
               >
                 View Course
               </Link>

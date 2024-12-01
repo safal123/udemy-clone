@@ -20,7 +20,7 @@ const Layout = ({children}: Readonly<{ children: React.ReactNode }>) => {
 
   return (
     <div className={ 'min-h-screen' }>
-      <div className={ 'h-[80px] fixed w-full inset-y-0 z-50 dark:bg-black z-10' }>
+      <div className={ 'h-[80px] fixed w-full inset-y-0 z-10 bg-background dark:bg-black z-10' }>
         <div className={ 'container mx-auto flex items-center justify-between h-full p-4 space-x-2 px-8' }>
           <MobileSidebar/>
           <div className={ 'hidden lg:flex items-center md:space-x-4' }>
@@ -64,7 +64,7 @@ const Layout = ({children}: Readonly<{ children: React.ReactNode }>) => {
             }
           </div>
         </div>
-        <div className={ 'border-t md:hidden px-8 w-full h-[70px] flex items-center space-x-4 shadow-sm border-b bg-white dark:bg-primary/10' }>
+        <div className={ 'border-t md:hidden px-8 w-full h-[70px] flex items-center space-x-4 shadow-sm border-b bg-white dark:bg-black' }>
           <input
             type={ 'text' }
             placeholder={ 'Search courses' }

@@ -4,8 +4,8 @@ import Image from 'next/image'
 
 export function CategorySection() {
   return (
-    <section className="py-16 bg-background">
-      <div className="container mx-auto px-6">
+    <section className="px-8 md:px-16 py-12">
+      <div className="container mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary">
           Explore Categories
         </h2>

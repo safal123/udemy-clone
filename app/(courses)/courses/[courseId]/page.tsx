@@ -6,8 +6,7 @@ import Image from 'next/image'
 import CourseEnrolButton from '@/app/(courses)/courses/[courseId]/chapters/[chapterId]/_components/CourseEnrolButton'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { Edit, Edit2Icon } from 'lucide-react'
-import { Separator } from '@/components/ui/separator'
+import { Edit, EyeIcon, LockIcon, ViewIcon } from 'lucide-react'
 
 const CoursePage =
   async ({ params }: {
@@ -43,32 +42,46 @@ const CoursePage =
     const canView = course.isPublished &&( isOwner || hasPurchased)
     return (
       <div className="bg-gray-50 text-gray-800 dark:bg-black dark:text-gray-200">
-        <div className={'px-12 py-2 flex items-center justify-end'}>
-          <div className={'flex items-center space-x-4'}>
-            <UserButton afterSignOutUrl={'/'}/>
+        <div className={ 'hidden px-12 py-2 xl:flex items-center justify-end' }>
+          <div className={ 'flex items-center space-x-4' }>
+            <UserButton afterSignOutUrl={ '/' }/>
             <Button>
               Dashboard
             </Button>
           </div>
         </div>
-        <div className="container mx-auto px-6 pb-12">
+        <div className="container mx-auto px-6 pb-12 pt-4">
           <div className="flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-24">
             <div className="flex-1 items-center justify-center w-full h-full">
               <Image
-                src={course.imageUri || '/images/placeholder.jpg'}
+                src={ course.imageUri || '/images/placeholder.jpg' }
                 alt="Course Thumbnail"
-                width={400}
-                height={400}
+                width={ 400 }
+                height={ 400 }
                 className="rounded-lg shadow-md object-cover w-full h-[300px]"
               />
-              <div className="lg:col-span-2 mt-6 hidden md:block">
+              <div className="lg:col-span-2 mt-6">
                 <h2 className="text-2xl font-bold mb-6 text-primary dark:text-primary-foreground">
                   Course Chapters
                 </h2>
-                <div className="space-y-4">
-                  {course.chapters.map ((chapter) =>
-                    <div key={chapter.id} className={'border border-gray-300 dark:border-gray-700 rounded-lg p-4'}>
-                      {chapter.title}
+                <div className="space-y-1 bg-primary/5 dark:bg-primary-foreground/10 p-4 rounded-lg">
+                  { course.chapters.map ((chapter, index) =>
+                    <div key={ chapter.id } className={ 'border border-gray-300 dark:border-gray-700 rounded-lg p-4' }>
+                      <div className={ 'flex items-center justify-between' }>
+                        <h1 className={ 'text-lg font-semibold' }>
+                          { index + 1 }. { chapter.title }
+                        </h1>
+                        { chapter.isFree ? (
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                              <EyeIcon className="h-4 w-4 mr-1"/>
+                            </div>
+                          ) :
+                          <div className="text-sm text-gray-600 dark:text-gray-400">
+                            <LockIcon className="h-4 w-4 mr-1"/>
+                          </div>
+                        }
+                      </div>
+
                     </div>
                   )}
                 </div>
