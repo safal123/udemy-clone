@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 export function TopSection() {
   return (
-    <section className="min-h-[40vh] flex items-center justify-between overflow-hidden px-8 md:px-16">
+    <section className="min-h-[40vh] flex items-center justify-between overflow-hidden md:px-16">
       <div className={'container mx-auto flex items-center space-x-4'}>
         <div className="flex-1 text-left">
           <h1 className="text-3xl md:text-4xl font-bold mb-6 text-primary">

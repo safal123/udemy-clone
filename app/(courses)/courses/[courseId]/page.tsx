@@ -41,7 +41,7 @@ const CoursePage =
     const isOwner = course.userId === userId
     const canView = course.isPublished &&( isOwner || hasPurchased)
     return (
-      <div className="bg-gray-50 text-gray-800 dark:bg-black dark:text-gray-200">
+      <div className="bg-gray-50 text-gray-800 dark:bg-black dark:text-gray-200 min-h-screen">
         <div className={ 'hidden px-12 py-2 xl:flex items-center justify-end' }>
           <div className={ 'flex items-center space-x-4' }>
             <UserButton afterSignOutUrl={ '/' }/>

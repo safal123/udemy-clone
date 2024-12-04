@@ -57,8 +57,11 @@ export const CourseSidebarItem =
               isCompleted && hasPurchase && 'text-primary'
             ) }
           />
-          { label }
+          <span className="text-slate-500 truncate ... block overflow-hidden whitespace-nowrap">
+            { label }
+          </span>
         </div>
+
         { isFree &&
           <span className={ 'text-xs text-slate-500 ml-auto' }>
               <LockOpen size={ 16 } className={ cn (

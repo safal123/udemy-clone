@@ -1,6 +1,5 @@
 'use client'
 
-import { VideoIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Chapter, MuxData } from '@prisma/client'
 import Video from 'next-video'
@@ -44,30 +43,19 @@ export const ChapterVideoForm = ({chapter, courseId, chapterId}: ChapterVideoFor
           tooltip={ 'Edit video' }
         />
       </div>
-      { !isEditing && (
-        !videoUrl ? (
-          <div
-            onClick={ toggleEdit }
-            className="flex flex-col items-center justify-center min-h-200 bg-gray-100 rounded-md dark:bg-slate-800">
-            <VideoIcon
-              className="h-10 w-10 text-slate-500 border border-white rounded-full dark:border-bg-slate-100 p-2"
-            />
-            <span className="text-sm text-muted-foreground ml-2">No video uploaded</span>
-          </div>
-        ) : (
-          <div className="relative aspect-video mt-2">
-            <Video
-              src={ videoUrl}
-              controls
-              onError={ getVideoUrl }
-              className="w-full h-full"
-              style={ {
-                aspectRatio: '16/9'
-              } }
-            />
-          </div>
-        )
-      ) }
+      { !isEditing && videoUrl &&
+        <div className="relative aspect-video mt-2">
+          <Video
+            src={ videoUrl }
+            controls
+            onError={ getVideoUrl }
+            className="w-full h-full"
+            style={ {
+              aspectRatio: '16/9'
+            } }
+          />
+        </div>
+      }
 
       { isEditing && (
         <div>
@@ -78,7 +66,7 @@ export const ChapterVideoForm = ({chapter, courseId, chapterId}: ChapterVideoFor
             toggleEdit={ toggleEdit }
           />
           <div className="text-xs text-muted-foreground mt-4">
-            Upload this chapter&apos;s video
+            {videoUrl ? 'Video will be updated after saving' : 'Upload a video to add to this chapter'}
           </div>
         </div>
       ) }

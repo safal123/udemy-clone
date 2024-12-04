@@ -8,7 +8,7 @@ type RecentlyAddedSectionProps = {
 
 export function RecentlyAddedSection ({ courses }: RecentlyAddedSectionProps) {
   return (
-    <section className="px-8 md:px-16 py-12">
+    <section className="md:px-16 py-12">
       <div className="container mx-auto">
         <div className={ 'flex flex-col md:flex-row justify-between items-center mb-4' }>
           <h2 className="text-2xl md:text-4xl font-bold text-primary">
@@ -32,12 +32,11 @@ export function RecentlyAddedSection ({ courses }: RecentlyAddedSectionProps) {
               />
               <Link
                 href={ `/courses/${ course.id }` }
-                className={ 'flex cursor-pointer absolute p-2 text-xs top-0 right-0 bg-primary text-white rounded-bl-lg' }
+                className="absolute top-0 right-0 bg-primary text-white rounded-bl-lg p-2 text-xs z-10 group-hover:z-20"
               >
                 View Course
               </Link>
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-300" />
               <div className="absolute inset-0 flex items-end p-4">
                 <Link href={ `/courses/${ course.id }` }>
                   <h3

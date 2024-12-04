@@ -57,6 +57,7 @@ const ChapterPage = async ({params}: {
       <div className={'p-2'}>
         { !chapter.isPublished && (
           <Banner
+            className={'w-full lg:w-fit bg-primary text-white'}
             variant="warning"
             label="This chapter is unpublished. It will not be visible in the course"
           />

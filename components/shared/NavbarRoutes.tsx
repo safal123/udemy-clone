@@ -24,7 +24,7 @@ export const NavbarRoutes = ({showTeacherMode = false, ...props}: {
             variant={ 'ghost' }
             className="border border-[#FFD700] text-[#FFD700] bg-[#FFD700] text-black hover:bg-black hover:text-[#FFD700] dark:border-[#FFD700] dark:text-[#FFD700] dark:bg-black dark:hover:bg-[#FFD700] dark:hover:text-black"
           >
-            Back to Dashboard
+            Dashboard
           </Button>
         </Link>
       }

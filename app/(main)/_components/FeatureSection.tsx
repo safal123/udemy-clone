@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export function FeatureSection() {
   return (
-    <section className="px-6 md:px-16 py-12 bg-background">
+    <section className="md:px-16 py-12 bg-background">
       <div className="container mx-auto px-8">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-primary">
           Why Choose Our Platform?

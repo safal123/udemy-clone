@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 export function TestimonialSection () {
   return (
-    <section className="px-8 md:px-16 py-12">
+    <section className="md:px-16 py-12">
       <div className="container mx-auto px-6">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-primary">
           What Our Students Say
@@ -28,7 +28,7 @@ export function TestimonialSection () {
                 alt={testimonial.name}
                 width={60}
                 height={40}
-                className="rounded-full mr-4"
+                className="rounded-full mr-4 object-cover"
               />
               <div>
                 <p className="font-semibold">{testimonial.name}</p>

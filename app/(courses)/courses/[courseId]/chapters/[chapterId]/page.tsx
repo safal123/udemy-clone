@@ -78,6 +78,13 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
                       </Button>
                     </Link>
                   }
+                  { hasPurchased && !isOwner && (
+                    <ToggleChapterCompleted
+                      chapter={ chapter }
+                      isCompleted={ isCompleted as boolean }
+                      userId={ userId }
+                    />
+                  ) }
                   {
                     nextChapter &&
                     <Link href={ `/courses/${ params.courseId }/chapters/${ nextChapter.id }` }>
@@ -86,13 +93,6 @@ const ChapterIdPage = async ({ params }: { params: { courseId: string; chapterId
                       </Button>
                     </Link>
                   }
-                  { hasPurchased && !isOwner && (
-                    <ToggleChapterCompleted
-                      chapter={ chapter }
-                      isCompleted={ isCompleted as boolean }
-                      userId={ userId }
-                    />
-                  ) }
                 </div>
               </div>
             </CardHeader>

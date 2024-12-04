@@ -26,27 +26,19 @@ export const getChapter = async ({courseId, chapterId}: GetChapterProps) => {
         muxData: true,
       }
     })
-
     if (!chapter) {
       return {
         chapter: null,
         error: "Chapter not found"
       }
     }
-
-    const nextChapter = await db.chapter.findFirst({
-      where: {
-        courseId,
-        order: chapter.order + 1
-      }
+    const allChapters = await db.chapter.findMany({
+      where: { courseId, isPublished: true },
+      orderBy: { order: 'asc' }
     })
-
-    const previousChapter = await db.chapter.findFirst({
-      where: {
-        courseId,
-        order: chapter.order - 1
-      }
-    })
+    const currentIndex = allChapters.findIndex(ch => ch.id === chapter.id)
+    const nextChapter = allChapters[currentIndex + 1] || null
+    const previousChapter = allChapters[currentIndex - 1] || null
 
     return {
       chapter,
