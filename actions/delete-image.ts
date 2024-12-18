@@ -1,7 +1,9 @@
 "use server"
 
-import { utapi } from '@/app/api/uploadthing/route'
 import { db } from '@/lib/db'
+import { UTApi } from 'uploadthing/server'
+
+const utapi = new UTApi();
 
 export const deleteImage = async (key: string) => {
   try {
