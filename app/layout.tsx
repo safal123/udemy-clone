@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "@/app/api/uploadthing/core";
 import './globals.css'
 import { ClerkLoaded, ClerkLoading, ClerkProvider } from '@clerk/nextjs'
 import ToastProvider from '@/components/providers/ToastProvider'
@@ -7,6 +9,7 @@ import ThemeProvider from '@/components/providers/ThemeProvider'
 import NextTopLoader from 'nextjs-toploader'
 import { Loading } from '@/components/shared/Loading'
 import { Toaster } from '@/components/ui/toaster'
+import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 
 const inter = Inter ({subsets: ['latin']})
 
@@ -52,6 +55,15 @@ export default function RootLayout ({children}: Readonly<{ children: React.React
         enableSystem={ true }
         disableTransitionOnChange
       >
+        <NextSSRPlugin
+          /**
+           * The `extractRouterConfig` will extract **only** the route configs
+           * from the router to prevent additional information from being
+           * leaked to the client. The data passed to the client is the same
+           * as if you were to fetch `/api/uploadthing` directly.
+           */
+          routerConfig={extractRouterConfig(ourFileRouter)}
+        />
         <Toaster/>
         <ToastProvider/>
         <ClerkLoading>

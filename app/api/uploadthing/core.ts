@@ -16,6 +16,7 @@ export const ourFileRouter = {
   courseImage: f ({image: {maxFileSize: '4MB', maxFileCount: 1}})
     .middleware (() => handleAuth ())
     .onUploadComplete (() => {
+      // post api call to save the image
     }),
 
   courseAttachment: f (['text', 'video', 'audio', 'image', 'pdf'])

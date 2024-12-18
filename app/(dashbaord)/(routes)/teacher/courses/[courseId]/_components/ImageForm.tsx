@@ -25,11 +25,20 @@ const formSchema = z.object ({
 const ImageForm = ({initialData, courseId}: ImageProps) => {
   const router = useRouter ()
   const [isEditing, setIsEditing] = useState (false)
-
+  const [image, setImage] = useState<string> ('')
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch (`/api/courses/${ courseId }`, values)
+      await Promise.all ([
+        await axios.patch (`/api/courses/${ courseId }`, values),
+        await axios.post ('/api/media', {
+          courseId: courseId,
+          type: 'IMAGE',
+          url: values.imageUri,
+          mimeType: 'image/png',
+          name: 'Course Image'
+        })
+      ])
       toast.success ('Course updated')
       toggleEditing ()
       router.refresh ()
@@ -79,11 +88,15 @@ const ImageForm = ({initialData, courseId}: ImageProps) => {
         <>
           <FileUpload
             endpoint={ 'courseImage' }
-            onChange={ (url) => {
-              if (url) {
-                onSubmit ({imageUri: url})
+            onChange={ (response) => {
+              if (response) {
+                const url = response[0].url
+                onSubmit ({imageUri: url}).then(() => {
+                  console.log('url', url)
+                })
               }
-            } }/>
+            } }
+          />
           <div className={ 'text-xs text-muted mt-2' }>
             16:9 aspect ratio recommended
           </div>

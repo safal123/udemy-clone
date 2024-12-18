@@ -1,7 +1,7 @@
 'use server'
 
 import { auth } from '@clerk/nextjs'
-import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3'
+import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
 import {getSignedUrl} from '@aws-sdk/s3-request-presigner'
 
 const s3 = new S3Client({
@@ -35,10 +35,14 @@ export const getObjectFromS3 = async (objectId: string) => {
 
     // @ts-ignore
     const objectUrl = await getSignedUrl(s3, getObjectCommand, { expiresIn: 3600 })
+    const metadata = await s3.send(getObjectCommand)
 
     return {
       success: true,
-      objectUrl
+      objectUrl,
+      metadata: {
+        'userId':  metadata?.Metadata && metadata?.Metadata['x-amz-meta-userid'] || null
+      }
     }
   } catch (error) {
     console.error ('[GET_OBJECT_FROM_S3]', error)

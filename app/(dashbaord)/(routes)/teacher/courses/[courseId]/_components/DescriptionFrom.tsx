@@ -4,19 +4,19 @@ import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
-import { Loader2, Pencil } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import { Textarea } from '@/components/ui/textarea'
 import { Course } from '.prisma/client'
 import AddEditButton from '@/components/shared/AddEditButton'
+import { Editor } from '@/components/shared/Editor'
+import { Preview } from '@/components/shared/Preview'
 
 interface DescriptionFormProps {
-  initialData: Course,
-  courseId: string;
+  course: Course,
 }
 
 const formSchema = z.object ({
@@ -25,13 +25,13 @@ const formSchema = z.object ({
   })
 })
 
-const DescriptionForm = ({initialData, courseId}: DescriptionFormProps) => {
+const DescriptionForm = ({course}: DescriptionFormProps) => {
   const router = useRouter ()
   const [isEditing, setIsEditing] = useState (false)
   const form = useForm<z.infer<typeof formSchema>> ({
     resolver: zodResolver (formSchema),
     defaultValues: {
-      description: initialData?.description || ''
+      description: course?.description || ''
     }
   })
 
@@ -39,7 +39,7 @@ const DescriptionForm = ({initialData, courseId}: DescriptionFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch (`/api/courses/${ courseId }`, values)
+      await axios.patch (`/api/courses/${ course.id }`, values)
       toast.success ('Course updated')
       toggleEditing ()
       router.refresh ()
@@ -64,7 +64,7 @@ const DescriptionForm = ({initialData, courseId}: DescriptionFormProps) => {
       </div>
       { !isEditing ? <>
           <p className={"text-sm mt-2 font-semibold"}>
-            { initialData.description || 'No description provided' }
+            { course.description && <Preview value={ course.description }/> }
           </p>
         </>
         :
@@ -77,11 +77,7 @@ const DescriptionForm = ({initialData, courseId}: DescriptionFormProps) => {
                 render={ ({field}) => (
                   <FormItem>
                     <FormControl>
-                      <Textarea
-                        disabled={ isSubmitting }
-                        placeholder={ 'e.g. React Hooks Fundamentals' }
-                        { ...field }
-                      />
+                      <Editor {...field}/>
                     </FormControl>
                     <FormMessage/>
                   </FormItem>

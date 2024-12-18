@@ -57,9 +57,9 @@ export const CourseSidebarItem =
               isCompleted && hasPurchase && 'text-primary'
             ) }
           />
-          <span className="text-slate-500 truncate ... block overflow-hidden whitespace-nowrap">
-            { label }
-          </span>
+          <p className="text-slate-500">
+            { label.length > 20 ? `${ label.slice (0, 28) }...` : label }
+          </p>
         </div>
 
         { isFree &&

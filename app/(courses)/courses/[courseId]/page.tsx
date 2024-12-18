@@ -7,6 +7,7 @@ import CourseEnrolButton from '@/app/(courses)/courses/[courseId]/chapters/[chap
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Edit, EyeIcon, LockIcon, ViewIcon } from 'lucide-react'
+import { Preview } from '@/components/shared/Preview'
 
 const CoursePage =
   async ({ params }: {
@@ -64,7 +65,7 @@ const CoursePage =
                 <h2 className="text-2xl font-bold mb-6 text-primary dark:text-primary-foreground">
                   Course Chapters
                 </h2>
-                <div className="space-y-1 bg-primary/5 dark:bg-primary-foreground/10 p-4 rounded-lg">
+                <div className="space-y-1 bg-white dark:bg-primary-foreground/10 p-4 rounded-lg">
                   { course.chapters.map ((chapter, index) =>
                     <div key={ chapter.id } className={ 'border border-gray-300 dark:border-gray-700 rounded-lg p-4' }>
                       <div className={ 'flex items-center justify-between' }>
@@ -110,10 +111,10 @@ const CoursePage =
                   <span className={'font-semibold underline text-primary'}>{ course.author.firstName }</span>
                 </p>
               </div>
-              <p className="mb-6">
-                { course.description }
+              <p className="border rounded-md">
+                { course.description  && <Preview value={ course.description }/> }
               </p>
-              <div className="text-4xl font-semibold mb-6">
+              <div className="text-4xl font-semibold my-6">
                 A${ course.price }
               </div>
               {canPurchase ?

@@ -33,7 +33,7 @@ export function FeatureSection() {
           ].map((feature, index) => (
             <div
               key={index}
-              className="border p-6 text-center bg-gradient-to-r from-primary to-primary-dark shadow rounded-lg dark:bg-primary/10"
+              className="border p-6 text-center bg-gradient-to-r from-primary/10 to-primary-dark shadow rounded-lg dark:bg-primary/10"
             >
               <div className="text-4xl mb-4">{feature.icon}</div>
               <h3 className="text-xl font-semibold mb-2 text-primary">{feature.title}</h3>

@@ -5,8 +5,8 @@ import { ourFileRouter } from '@/app/api/uploadthing/core'
 import toast from 'react-hot-toast'
 
 interface FileUploadProps {
-  onChange?: (url?: string) => void
-  endpoint: keyof typeof ourFileRouter
+  onChange?: (response: any) => void,
+  endpoint: keyof typeof ourFileRouter,
 }
 
 const FileUpload
@@ -15,13 +15,14 @@ const FileUpload
     <div>
       <UploadDropzone
         endpoint={ endpoint }
-        onClientUploadComplete={ (res) => {
+        onClientUploadComplete={ (response) => {
           if (onChange) {
-            onChange (res[0].url)
+            onChange (response)
           }
         } }
         onUploadError={ (error: Error) => {
-          toast.error ('Something went wrong')
+          console.error (error.name)
+          toast.error ('Images must be less than 4MB')
         } }
       />
     </div>

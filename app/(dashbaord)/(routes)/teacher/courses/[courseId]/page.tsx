@@ -77,10 +77,10 @@ const CoursePage = async ({ params }: {
   }
 
   return (
-    <>
-      <div className={'px-6 py-4'}>
+    <div className={ 'pb-12' }>
+      <div className={ 'px-6 py-4' }>
         { !course.isPublished && <Banner
-          className={'bg-primary text-white dark:bg-primary/10'}
+          className={ 'bg-primary text-white dark:bg-primary/10' }
           label="This course is unpublished. It will not be visible to the students."/> }
       </div>
       <div className={ 'px-6' }>
@@ -122,10 +122,7 @@ const CoursePage = async ({ params }: {
                 initialData={ course }
                 courseId={ course.id }
               />
-              <DescriptionFrom
-                initialData={ course }
-                courseId={ course.id }
-              />
+              <DescriptionFrom course={ course }/>
               <ImageForm initialData={ course } courseId={ course.id }/>
               <CategoryForm
                 initialData={ course }
@@ -172,7 +169,7 @@ const CoursePage = async ({ params }: {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

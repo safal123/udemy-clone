@@ -1,6 +1,17 @@
 'use client'
 
-import { BarChart, Compass, DollarSign, Layout, List, LogInIcon, Settings, UserIcon } from 'lucide-react'
+import {
+  BarChart,
+  Compass,
+  DollarSign,
+  ImageIcon,
+  Layout,
+  List,
+  LogInIcon,
+  Settings,
+  UserIcon,
+  VideoIcon
+} from 'lucide-react'
 import SidebarItem from '@/app/(dashbaord)/_components/SidebarItem'
 import { usePathname } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
@@ -33,6 +44,18 @@ const teacherRoutes = [
     label: 'Analytics',
     href: '/teacher/analytics',
     key: 'analytics'
+  },
+  {
+    icon: VideoIcon,
+    label: 'Videos',
+    href: '/teacher/videos',
+    key: 'videos'
+  },
+  {
+    icon: ImageIcon,
+    label: 'Images',
+    href: '/teacher/images',
+    key: 'images'
   }
 ]
 

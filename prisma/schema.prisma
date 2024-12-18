@@ -22,6 +22,7 @@ model Course {
   purchases   Purchase[]
   attachments Attachment[]
   chapters    Chapter[]
+  media       Media[]
   author      User         @relation(fields: [userId], references: [userId])
 
   createdAt DateTime @default(now())
@@ -67,9 +68,9 @@ model Chapter {
 
   muxData MuxData?
 
-  courseId String
-  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
-
+  courseId     String
+  course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  media        Media[]
   userProgress UserProgress[]
 
   createdAt DateTime @default(now())
@@ -132,6 +133,8 @@ model User {
   updatedAt            DateTime               @updatedAt
   courses              Course[]
   teacherAccessRequest TeacherAccessRequest[]
+  createdMedia         Media[]                @relation("Owner")
+  approvedMedia        Media[]                @relation("Approver")
 
   @@map("users")
 }
@@ -155,4 +158,67 @@ enum REQUEST_STATUS {
   CANCELLED_BY_USER
   APPROVED_BY_ADMIN
   REJECTED_BY_ADMIN
+}
+
+model Media {
+  id           String        @id @default(uuid())
+  name         String
+  storageId    String?       @unique
+  type         MediaType     @default(IMAGE)
+  size         Int?
+  length       Int?
+  mimeType     String?
+  url          String?       @db.Text
+  thumbnailUrl String?       @db.Text
+  processedUrl String?       @db.Text
+  originalUrl  String?       @db.Text
+  status       MediaStatus   @default(UPLOADED)
+  quality      MediaQuality?
+  isPublic     Boolean       @default(false)
+  description  String?
+  views        Int           @default(0)
+  downloads    Int           @default(0)
+  tags         String[]
+  latitude     Float?
+  longitude    Float?
+
+  courseId   String?
+  chapterId  String?
+  createdBy  String
+  approvedBy String?
+  reviewedAt DateTime?
+
+  course   Course?  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  chapter  Chapter? @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  owner    User     @relation("Owner", fields: [createdBy], references: [userId])
+  approver User?    @relation("Approver", fields: [approvedBy], references: [userId])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+  @@index([chapterId])
+  @@index([createdBy])
+  @@index([approvedBy])
+  @@map("media")
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  AUDIO
+  DOCUMENT
+}
+
+enum MediaStatus {
+  UPLOADED
+  PROCESSING
+  READY
+  FAILED
+}
+
+enum MediaQuality {
+  LOW
+  MEDIUM
+  HIGH
 }

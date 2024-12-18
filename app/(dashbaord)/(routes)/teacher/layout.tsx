@@ -19,9 +19,7 @@ const DashboardLayout = async ({children}: {
       <div className={ 'h-[80px] lg:pl-56 fixed w-full inset-y-0 z-50' }>
         <div className={ 'flex items-center justify-between h-full p-4 border-b bg-white dark:bg-black shadow-sm' }>
           <MobileSidebar/>
-          <NavbarRoutes
-            showTeacherMode={ isTeacher }
-          />
+          <NavbarRoutes showTeacherMode={ isTeacher }/>
         </div>
       </div>
       <div className={ 'h-full hidden lg:flex w-72 fixed inset-y-0 z-50' }>

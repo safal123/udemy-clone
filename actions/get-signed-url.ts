@@ -31,10 +31,15 @@ export const getS3SignedUrl = async (chapterId: string, contentType: string) => 
     const putObjectCommand = new PutObjectCommand({
       Bucket: process.env.AWS_BUCKET_NAME!,
       Key: chapterId,
-      ContentType: contentType
+      ContentType: contentType,
+      Metadata: {
+        'x-amz-meta-userId': userId
+      }
     })
     // @ts-ignore
-    const signedUrl = await getSignedUrl(client, putObjectCommand, { expiresIn: 3600 })
+    const signedUrl = await getSignedUrl(client, putObjectCommand, {
+      expiresIn: 3600 ,
+    })
 
     return {
       success: true,
