@@ -2,113 +2,103 @@
 
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import Image from 'next/image'
 import { ChevronRight } from 'lucide-react'
 
 const categories = [
   {
-    id: "development",
-    title: 'Development',
-    description: 'Web, mobile, and software development courses',
-    image: '/Software code testing-rafiki.svg',
-    bgColor: 'bg-blue-50',
-    borderColor: 'border-blue-200',
-    textColor: 'text-blue-800',
+    title: 'Programming & Development',
+    description: 'Master coding, web development, and software engineering',
+    icon: '/icons/code.png',
     count: 425,
-    link: '/courses/development'
+    featured: ['React', 'Python', 'JavaScript'],
+    link: '/courses/programming'
   },
   {
-    id: "design",
-    title: 'UI/UX Design',
-    description: 'User interface and user experience design',
-    image: '/UI-UX team-rafiki.svg',
-    bgColor: 'bg-purple-50',
-    borderColor: 'border-purple-200',
-    textColor: 'text-purple-800',
+    title: 'Design & Creative',
+    description: 'Learn UI/UX, graphic design, and creative skills',
+    icon: '/icons/design.png',
     count: 310,
+    featured: ['Figma', 'UI/UX', 'Photoshop'],
     link: '/courses/design'
   },
   {
-    id: "business",
-    title: 'Business & Growth',
-    description: 'Business strategy, marketing, and leadership',
-    image: '/Business growth-rafiki.svg',
-    bgColor: 'bg-green-50',
-    borderColor: 'border-green-200',
-    textColor: 'text-green-800',
+    title: 'Marketing & Business',
+    description: 'Develop marketing strategies and business acumen',
+    icon: '/icons/marketing.png',
     count: 283,
-    link: '/courses/business'
+    featured: ['SEO', 'Social Media', 'Analytics'],
+    link: '/courses/marketing'
   },
   {
-    id: "analytics",
-    title: 'Data Analytics',
-    description: 'Data science, visualization, and business intelligence',
-    image: '/Analytics-rafiki.svg',
-    bgColor: 'bg-amber-50',
-    borderColor: 'border-amber-200',
-    textColor: 'text-amber-800',
+    title: 'Data Science & Analytics',
+    description: 'Analyze data, build models, and derive insights',
+    icon: '/icons/data.png',
     count: 198,
-    link: '/courses/analytics'
+    featured: ['Python', 'Machine Learning', 'Visualization'],
+    link: '/courses/data-science'
   }
 ];
 
 export function CategorySection() {
   return (
-    <section className="py-16 bg-slate-50">
+    <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <span className="text-primary font-semibold uppercase tracking-wider text-sm">Find your path</span>
-          <h2 className="text-3xl font-bold text-gray-900 mt-2 mb-4">
-            Explore Course Categories
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            Explore Categories
           </h2>
-          <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover professional courses designed to help you advance your career and build valuable skills.
+            Browse our wide range of courses designed to enhance your skills and advance your career.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-          {categories.map((category) => (
-            <Link
-              key={category.id}
-              href={category.link}
-              className="group h-full"
-            >
-              <div className={`h-full ${category.bgColor} ${category.borderColor} border rounded-xl p-6 flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1`}>
-                <div className="mb-5 mx-auto">
-                  <div className="w-24 h-24 relative">
-                    <Image
-                      src={category.image}
-                      alt={category.title}
-                      fill
-                      className="object-contain"
-                      sizes="(max-width: 768px) 100px, 150px"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {categories.map((category, index) => (
+            <div key={index} className="group bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-shadow duration-300">
+              <div className="p-6">
+                <div className="flex items-start mb-4">
+                  <div className="bg-gray-100 p-3 rounded-lg mr-4">
+                    <img
+                      src={category.icon}
+                      alt=""
+                      className="w-8 h-8"
+                      onError={(e) => {
+                        e.currentTarget.src = `https://ui-avatars.com/api/?name=${category.title.charAt(0)}&background=random`;
+                      }}
                     />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-1">{category.title}</h3>
+                    <p className="text-gray-500 text-sm">{category.count}+ courses</p>
                   </div>
                 </div>
 
-                <h3 className={`text-xl font-bold mb-3 text-center ${category.textColor}`}>
-                  {category.title}
-                </h3>
-                <p className="text-gray-600 mb-4 flex-grow text-center">
-                  {category.description}
-                </p>
+                <p className="text-gray-600 mb-5">{category.description}</p>
 
-                <div className="mt-auto flex items-center justify-between">
-                  <span className="bg-white/80 text-gray-700 text-sm px-3 py-1 rounded-full font-medium">
-                    {category.count}+ courses
-                  </span>
-                  <span className={`${category.textColor} font-medium text-sm inline-flex items-center group-hover:translate-x-1 transition-transform`}>
-                    Explore <ChevronRight className="h-4 w-4 ml-1" />
-                  </span>
+                <div className="mb-4">
+                  <div className="text-sm text-gray-500 mb-2">Popular Topics:</div>
+                  <div className="flex flex-wrap gap-2">
+                    {category.featured.map((tag, i) => (
+                      <span key={i} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
+
+                <Link
+                  href={category.link}
+                  className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+                >
+                  Browse Courses <ChevronRight className="h-4 w-4 ml-1" />
+                </Link>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
 
         <div className="mt-12 text-center">
-          <Button className="bg-primary hover:bg-primary/90">
+          <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50">
             <Link href="/categories" className="flex items-center">
               View All Categories
               <ChevronRight className="ml-2 h-4 w-4" />
