@@ -78,8 +78,8 @@ const TeacherRequestForm = ({userId, hasRequested}: TeacherRequestFormProps) => 
         { hasRequested ?
           <>
             <div className={ 'flex flex-col' }>
-              <div className={ 'md:block rounded-md bg-indigo-50 p-4 mb-2 mb-4 dark:bg-indigo-900' }>
-                <div className={ 'text-sm text-indigo-700 dark:text-indigo-300' }>
+              <div className={ 'md:block rounded-md bg-orange-50 p-4 mb-2 mb-4 dark:bg-orange-900' }>
+                <div className={ 'text-sm text-orange-700 dark:text-orange-300' }>
                   Your request has been submitted successfully. It may take up
                   to 24 hours to review your request.
                 </div>

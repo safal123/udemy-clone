@@ -14,8 +14,8 @@ import { Eye, Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { deleteImage } from '@/actions/delete-image'
 import { toast } from '@/components/ui/use-toast'
+import { deleteImage } from '@/actions/media'
 
 type ImagePreviewModalProps = {
   imageUrl: string,
@@ -33,7 +33,7 @@ export function ImagePreviewModal ({ imageUrl, altText, imageKey, imageId }: Ima
       if (!imageKey || !imageId) {
         throw new Error ('Image key is missing')
       }
-      await deleteImage (imageKey || imageId)
+      await deleteImage(imageKey || imageId)
       toast ({
         title: 'Image deleted',
         description: '🎉 Your image has been deleted successfully'

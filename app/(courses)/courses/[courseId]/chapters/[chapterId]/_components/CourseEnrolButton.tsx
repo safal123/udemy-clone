@@ -10,9 +10,7 @@ import { CircleCheck, Loader2 } from 'lucide-react'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import { ReloadIcon } from "@radix-ui/react-icons"
-import { getUserProgress } from '@/actions/get-user-progress'
 import { getHasPurchased } from '@/actions/get-has-purchased'
-import Link from 'next/link'
 
 interface CourseEnrolButtonProps {
   course: Course

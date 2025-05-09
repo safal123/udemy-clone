@@ -40,6 +40,7 @@ const UploadImage = ({ courseId, handleUpload }: UploadImageProps) => {
       })
     }
   }
+
   return (
     <FileUpload
       endpoint={ 'courseImage' }

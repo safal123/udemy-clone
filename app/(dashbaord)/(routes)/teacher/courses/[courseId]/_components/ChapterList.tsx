@@ -82,7 +82,9 @@ export const ChaptersList = ({ items, onReorder }: ChaptersListProps) => {
                     >
                       <Grip className="h-5 w-5" />
                     </div>
-                    {chapter.title}
+                    <p className={cn("flex-1 px-2 py-3 truncate")}>
+                      {chapter.title}
+                    </p>
                     <div className="ml-auto pr-2 flex items-center gap-x-2">
                       {chapter.isFree && (
                         <Badge>

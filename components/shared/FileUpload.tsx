@@ -14,6 +14,7 @@ const FileUpload
   return (
     <div>
       <UploadDropzone
+        className={ 'm-0 w-full sm:h-[275px]' }
         endpoint={ endpoint }
         onClientUploadComplete={ (response) => {
           if (onChange) {
@@ -21,9 +22,18 @@ const FileUpload
           }
         } }
         onUploadError={ (error: Error) => {
-          console.error (error.name)
-          toast.error ('Images must be less than 4MB')
+          toast.error ('There was an error uploading the file')
         } }
+        onBeforeUploadBegin={(files) => {
+          // TODO: Add a check for file type
+          return files.filter((f) => {
+            if (f.size > 10 * 1024 * 1024) {
+              toast.error('Images must be less than 10MB');
+              return false;
+            }
+            return true;
+          });
+        }}
       />
     </div>
   )

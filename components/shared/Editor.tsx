@@ -3,7 +3,6 @@
 import dynamic from "next/dynamic";
 import {useMemo} from "react";
 import "react-quill/dist/quill.snow.css";
-import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css";
 
 interface EditorProps {

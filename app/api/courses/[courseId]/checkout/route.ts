@@ -32,6 +32,8 @@ export async function POST (req: Request, { params }: { params: { courseId: stri
       }
     })
 
+    console.log('purchase', purchase)
+
     if (purchase) {
       return NextResponse.json ('Already purchased', { status: 400 })
     }
